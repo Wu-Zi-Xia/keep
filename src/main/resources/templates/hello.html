@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/Keep.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="center-block">
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group row">
+            <input id="number" type="text" class="form-control" placeholder="电话号码">
+            <button id="btn-sendSms" type="button" class="btn success" onclick="sendSms(this)">获取验证码</button>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</html>

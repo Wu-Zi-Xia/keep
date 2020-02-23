@@ -1,0 +1,1 @@
+alter table keep_user add column avatarUrl varchar(100) not null;

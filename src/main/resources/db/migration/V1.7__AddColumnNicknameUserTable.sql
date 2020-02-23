@@ -1,0 +1,1 @@
+alter table keep_user add column nickname varchar(100);

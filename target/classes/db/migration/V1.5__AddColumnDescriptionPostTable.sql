@@ -1,0 +1,1 @@
+alter table keep_post add column description varchar(200) not null COMMENT '动态具体信息';
