@@ -17,8 +17,8 @@ public class FriendController {
     public Object AddFriend(@RequestParam(value="FriendNumber")String friendNumber,
                             HttpSession session){
         int i = friendService.addFriend(friendNumber, session);
-if(i>0){
-    return ResultDto.oxOf("添加好友成功！！");
-}
+      if(i>0){
+               return ResultDto.oxOf("添加好友成功！！");
+         }
         return ResultDto.errorOf(500,"添加好友失败！！");    }
 }

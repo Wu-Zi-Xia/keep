@@ -15,17 +15,6 @@ import java.util.List;
 
 @Controller
 public class CommunityController {
-    @Autowired
-    CommunityService communityService;
-    @RequestMapping("getFriendPost")
-    @ResponseBody
-    //获取关注的朋友的动态
-    public Object getFriendPost(HttpServletRequest request)
-    {
-        HttpSession session = request.getSession();
-        List<CommunityDto> friendPosts = communityService.getFriendPost(session);
-        ResultDto resultDto = ResultDto.oxOf(friendPosts);
-        return  resultDto;
-    }
+
 
 }

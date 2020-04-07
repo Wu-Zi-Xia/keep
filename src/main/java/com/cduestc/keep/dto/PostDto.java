@@ -1,13 +1,19 @@
 package com.cduestc.keep.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
 
 @Data
+@Setter
+@Getter
 public class PostDto {
-    private long ownerID;
+    private long ownerId;
     private String imageUrl;
     private String videoUrl;
     private String description;
-    private String createDate;
+    private Date createDate;
 
 }

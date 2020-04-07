@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.service.RedisHelloService;
 import com.cduestc.keep.service.UserService;
 import com.zhenzi.sms.ZhenziSmsClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ import java.util.Random;
 public class HelloController {
     @Autowired
     UserService userService;
+    @Autowired
+    RedisHelloService redisHelloService;
 
     @RequestMapping("/")
     public String hello(HttpServletRequest request, Model model) {
@@ -38,9 +42,10 @@ public class HelloController {
 
         JSONObject json;
         String verifyCode = String.valueOf(new Random().nextInt() + 100000);
+        String expireTime = String.valueOf(redisHelloService.setVerifyCode(number, verifyCode));
         ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "104374", "9d6ba6a4-cb38-4ead-b8fb-7795cf64da68");
         Map<String, String> params = new HashMap<String, String>();
-        params.put("message", "验证码为:+" + verifyCode);
+        params.put("message", "验证码为：" + verifyCode+"，过期时间为："+expireTime);
         params.put("number", number);
         String isSuccess = client.send(params);
         json = JSON.parseObject(isSuccess);//json字符串转成json对象
@@ -53,13 +58,21 @@ public class HelloController {
     }
 
     @RequestMapping("login")
-    public String loginOrRegister(@RequestParam(name = "number") String number,
+    public @ResponseBody ResultDto loginOrRegister(@RequestParam(name = "number") String number,
                                   HttpServletRequest request,
                                   HttpServletResponse response) {
-        int insert = userService.insertUser(number,request.getSession());
-        if(insert>0){
-            response.addCookie(new Cookie("number",number));
+
+        if(!redisHelloService.isEnptyKey(number)){
+            int insert = userService.insertUser(number,request.getSession());
+            if(insert>0){
+                response.addCookie(new Cookie("number",number));
+                return ResultDto.oxOf("主页的url地址");
+            }
         }
-        return "keep";
+        else{
+            return ResultDto.errorOf(500,"验证码过期！！！");
+        }
+
+        return ResultDto.errorOf(500,"注册失败！！");
     }
 }

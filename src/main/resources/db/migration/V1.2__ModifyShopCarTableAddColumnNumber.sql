@@ -1,0 +1,1 @@
+alter table shop_car add column number int not null;

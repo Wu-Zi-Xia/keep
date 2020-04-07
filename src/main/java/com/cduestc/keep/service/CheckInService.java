@@ -2,24 +2,29 @@ package com.cduestc.keep.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.mapper.CheckInMapper;
 import com.cduestc.keep.model.CheckIn;
 import com.cduestc.keep.model.CheckInExample;
 import com.cduestc.keep.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CheckInService {
     @Autowired
     CheckInMapper checkInMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
 //签到逻辑，接口直接调用
-    public void checkIn(HttpServletRequest request) {
+    public int checkIn(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         Long userId = user.getUserId();
         //获取系统当前的月和天
@@ -27,7 +32,11 @@ public class CheckInService {
         String pattern = "yyyy-MM";
         SimpleDateFormat stf = new SimpleDateFormat(pattern);
         String month = stf.format(calendar1.getTime());
+        //获取当前日期在所在月份的第几天
         int days = calendar1.get(Calendar.DAY_OF_MONTH);
+        if( isSigned(request,days)){
+            return 0;
+        }
         //获取系统的年份和月份来计算每月有多少天，用来设置数组的长度
         int year = calendar1.get(Calendar.YEAR);
         int months = calendar1.get(Calendar.MONTH);
@@ -54,7 +63,10 @@ public class CheckInService {
          //定义连续签到的天数
         int conSigns = 1;
         userSign.setContinueSign(conSigns);
+        //签到信息插入数据库
         checkInMapper.insert(userSign);
+        //同步redis中
+            redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
         //map.put("conSigns", conSigns);
         }
         else{
@@ -62,24 +74,28 @@ public class CheckInService {
             CheckInExample checkInExample=new CheckInExample();
             CheckInExample.Criteria criteria = checkInExample.createCriteria().andOwnerIdEqualTo(userId);
             criteria.andMonthEqualTo(month);
+            //获取签到信息
             List<CheckIn> checkIns = checkInMapper.selectByExample(checkInExample);
-            //如果us为空，说明1号没有签到，这里需要重新生成一条数据插入到数据库中
-             if(checkIns.get(0)==null){
+            //如果checkIns为空，说明1号没有签到，这里需要重新生成一条数据插入到数据库中
+             if(checkIns.size()==0){
                  CheckIn userSign = new CheckIn();
                  userSign.setOwnerId(userId);
                  userSign.setMonth(month);
                  userSign.setResults(jsonString);
-                 //签到
+
                  //logger.info("用户中心", "签到的provider：提交签到", false,"月初第一次签到："+ JsonUtils.objectToJson(userSign));
 
                  //定义连续签到的天数
                  int conSigns = 1;
                  userSign.setContinueSign(conSigns);
+                 //签到
                  checkInMapper.insert(userSign);
+                 //同步redis中
+                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
              }
              else {//说明一号已经签到了
                  //现在判断连续签到的天数
-              String resultsString=checkIns.get(0).getResults();
+                  String resultsString=checkIns.get(0).getResults();
                  //将string类型和JSONArray进行互相转换
                  JSONArray parseArray = JSONObject.parseArray(resultsString);
                  //对于拿到的签到数组进行判断，计算连续签到的天数
@@ -97,7 +113,6 @@ public class CheckInService {
                   conSigns += 1;
                  //map.put("conSigns", conSigns);
                 }
-
                 //如果未签到不是昨天的情况，退出循环
                 if(signs == 0 && i != (days-2)) {
                   break;
@@ -113,9 +128,11 @@ public class CheckInService {
                  CheckIn checkIn=new CheckIn();
                  checkIn.setResults(jsonString2);
                  checkInMapper.updateByExampleSelective(checkIn,checkInExample1);
+                 //同步redis中
+                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
              }
         }
-
+         return 1;
     }
 
 //按照月份和用户的ID获取到这个月的签到列表
@@ -127,4 +144,35 @@ public class CheckInService {
         List<CheckIn> checkIns = checkInMapper.selectByExample(checkInExample);
         return checkIns;
     }
+
+
+    public boolean isSigned(HttpServletRequest request,int index){
+        User user = (User) request.getSession().getAttribute("user");
+        Long userId = user.getUserId();
+        //获取系统当前的月和天
+        Calendar calendar1 = Calendar.getInstance();
+        String pattern = "yyyy-MM";
+        SimpleDateFormat stf = new SimpleDateFormat(pattern);
+        String month = stf.format(calendar1.getTime());
+        CheckInExample checkInExample=new CheckInExample();
+        CheckInExample.Criteria criteria = checkInExample.createCriteria().andOwnerIdEqualTo(userId);
+        criteria.andMonthEqualTo(month);
+        //获取签到信息
+        List<CheckIn> checkIns = checkInMapper.selectByExample(checkInExample);
+        if(checkIns==null){
+            return false;
+        }
+        else{
+            String resultsString=checkIns.get(0).getResults();
+            //将string类型和JSONArray进行互相转换
+            JSONArray parseArray = JSONObject.parseArray(resultsString);
+            Byte signs = parseArray.getByte(index-1);
+               if(signs==1){
+                   return true;
+               }
+        }
+
+        return false;
+    }
+
 }

@@ -17,13 +17,13 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     UserMapper userMapper;
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         Cookie[] cookies = request.getCookies();
         if(cookies!=null&&cookies.length!=0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("number")){
                     UserExample userExample=new UserExample();
-                    userExample.createCriteria().andUserNumberEqualTo(Integer.valueOf(cookie.getValue()));
+                    userExample.createCriteria().andUserNumberEqualTo(cookie.getValue());
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users.size()!=0){
                         request.getSession().setAttribute("user",users.get(0));

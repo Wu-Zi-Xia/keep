@@ -28,7 +28,7 @@ public class SportsEquipmentService {
         int totalCount=0;
         SportEquipmentExample equipmentExample=new SportEquipmentExample();
 
-        if(type!=null){
+        if(!type.equals("null")){
             equipmentExample.createCriteria().andEquipmentTagEqualTo(type);
             totalCount=sportExEquipmentMapper.countByTag(type);
         }else {
@@ -49,8 +49,8 @@ public class SportsEquipmentService {
             offset=size*(page-1);
             sportsEquipmentResultDto.setEnd(true);
         }
-        equipmentExample.setOffset(offset);
-        equipmentExample.setLimit(size);
+       // equipmentExample.setOffset(offset);
+        //equipmentExample.setLimit(size);
         List<SportEquipment> sportEquipments = sportEquipmentMapper.selectByExample(equipmentExample);
         sportsEquipmentResultDto.setSportEquipmentList(sportEquipments);
         return sportsEquipmentResultDto;
