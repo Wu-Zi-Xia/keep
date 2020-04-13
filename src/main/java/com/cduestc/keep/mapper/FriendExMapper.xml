@@ -23,4 +23,7 @@
             select LAST_INSERT_ID() as friend_id
         </selectKey>
     </insert>
+    <select id="countByOwner" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count (*) from keep_friend where friend_userID=ownerId
+    </select>
 </mapper>

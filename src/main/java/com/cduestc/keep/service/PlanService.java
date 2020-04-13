@@ -9,6 +9,7 @@ import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.Sports;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -62,15 +63,31 @@ public class PlanService {
     RedisPlanProgressService redisPlanProgressService;
     @Autowired
     RedisTemplate redisTemplate;
-
+    @Autowired
+    PlanProgressService planProgressService;
+    @Value("${redis.keep.planTable}")
+    String redisPlanTable;
+    @Value("${redis.keep.planSort}")
+    String redisPlanSort;
     //创建一个计划 接口
-    public int createPlan(AchievePlanDto planDto, HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        String redisTableName="user:"+user.getUserId()+":plan:*";
+    public int createPlan(AchievePlanDto planDto, User user, HttpServletResponse response) {
+        int insert=0;
+        Integer planState= planProgressExMapper.selectStateByOwnerId(user.getUserId());
+        if(planState!=null&&planState.equals(0)){//证明当前用户还有一个计划没有完成
+            insert=0;
+            return insert;
+        }
         //将redis中的计划表删除(这样可以使得用户访问到redis的时候是会去mysql中找最新的值)
-        if(redisTemplate.keys(redisTableName)!=null){
-             redisTemplate.delete(redisTableName);
+        if(redisTemplate.hasKey(redisPlanSort+user.getUserId())){
+            //如果已经存在与redis中，那么就删除redis中的数据
+            //删除计划的sort集合
+            Set planIds= redisTemplate.opsForZSet().range(redisPlanSort + user.getUserId(), 0, -1);
+            Iterator iterator = planIds.iterator();
+           //删除每一条计划
+            while (iterator.hasNext()){
+                Object next = iterator.next();
+                redisTemplate.delete(next);
+            }
         }
         String sportsType = planDto.getSportsType();
         String[] arr = sportsType.split(","); // 用,分割
@@ -110,7 +127,6 @@ public class PlanService {
 
             planStringList.add(s.toString());
         }
-          int insert=0;
         Iterator<String> iterator = planStringList.iterator();
         int i=0;
         while (iterator.hasNext()){
@@ -121,95 +137,79 @@ public class PlanService {
             plan.setOwnerId(user.getUserId());
             plan.setState(0);
             insert=planExMapper.insert(plan);
-            String redisTableName1 = "user:" + user.getUserId() + ":plan:" + plan.getPlanId();
-            //同步到redis中
-            redisPlanService.insert(redisTableName1,plan);
             if(i==planDto.getDays()){//设置初始的计划的进程值(可以异步的去做)
                 PlanProgress planProgress=new PlanProgress();
                 planProgress.setOwnerId(user.getUserId());
                 planProgress.setCurrentState(plan.getPlanId()-planDto.getDays()+1);
                 planProgress.setStartPlanid(plan.getPlanId()-planDto.getDays()+1);
                 planProgress.setEndPlanid(plan.getPlanId());
+                planProgress.setState(0);
                 //插入数据库，并且ID会返回在planProgress的planProgressid
                 planProgressExMapper.insert(planProgress);
-                //同步到redis
-                String redisTableName3="user:"+user.getUserId()+":PP:"+planProgress.getPlanProgressid();
-                redisPlanProgressService.insert(redisTableName3,planProgress);
             }
         }
            return insert;
-
     }
 
 
 
     //修改当前计划为已经完成的状态 接口
     public int updateState(Long ID,User user){
-        String redisTableName="user:"+user.getUserId()+":plan:"+ID;
+        //修改redis中的信息
+        Map entries = redisTemplate.opsForHash().entries(redisPlanTable + ID);
+        DeliverPlanDTO deliverPlanDTO = (DeliverPlanDTO)JSONObject.
+                toJavaObject((JSON)JSONObject.toJSON(entries),
+                        DeliverPlanDTO.class);
+        deliverPlanDTO.setState(1);
+       //再存入redis
+        JSON jsons = (JSON)JSON.toJSON(deliverPlanDTO);
+        Map paramMap = (Map)JSONObject.parseObject(jsons.toString());
+        redisTemplate.opsForHash().putAll(redisPlanTable+ID,paramMap);
+
+        //可以异步的去修改数据库中的状态
         Plan plan=new Plan();
         plan.setPlanId(ID);
         plan.setState(1);
-        //修改数据库中的状态
         int i = planMapper.updateByPrimaryKeySelective(plan);
-        //同步到redis中
-        if(redisTemplate.keys(redisTableName).size()==0){//同步到redis中
-            PlanExample planExample=new PlanExample();
-            planExample.createCriteria().andOwnerIdEqualTo(user.getUserId());
-            List<Plan> plans = planMapper.selectByExample(planExample);
-            Iterator<Plan> iterator = plans.iterator();
-            while (iterator.hasNext()){
-                Plan next = iterator.next();
-                redisPlanService.insert("user:"+user.getUserId()+":plan:"+plan.getPlanId(),next);
-            }
-
-        }
-        else{//如果redis里面有这个键值，那么就直接改变这个键值
-            redisTemplate.opsForHash().put(redisTableName,"state",1);
-        }
         return i;
     }
 
 
+
+
     //获取所有的计划 接口
-    public List<DeliverPlanDTO> getAllPlansByUserId(HttpServletRequest request) {
+    public List<DeliverPlanDTO> getAllPlansByUserId(User user) {
         List<DeliverPlanDTO> deliverPlanDTOS=new ArrayList<>();
+        //获取所有的计划的信息
         PlanExample planExample=new PlanExample();
-        User user = (User) request.getSession().getAttribute("user");
         planExample.createCriteria().andOwnerIdEqualTo(user.getUserId());
         List<Plan> plans = planMapper.selectByExample(planExample);
-        Long currentState=0l;//当前运动的状态
+
+        //如果没有计划，就返会null
         if(plans==null||plans.size()==0){
             return null;
         }
-        else{
-            if(redisTemplate.keys("user:"+user.getUserId()+":PP:*").size()==0){//判断计划进程表是否存在于redis中
-                //查询计划进程表
-                //将计划的状态同步到redis
-                PlanProgressExample planProgress=new PlanProgressExample();
-                planProgress.createCriteria().andOwnerIdEqualTo(user.getUserId());
-                List<PlanProgress> planProgresses = planProgressMapper.selectByExample(planProgress);
-                String redisTableName3="user:"+user.getUserId()+":PP:"+planProgresses.get(0).getPlanProgressid();
-                redisPlanProgressService.insert(redisTableName3,planProgresses.get(0));
-                currentState=planProgresses.get(0).getCurrentState();
+        //当前计划的状态
+        Long currentState=planProgressExMapper.selectCurrentStateByOwnerId(user.getUserId());
+        Iterator<Plan> iterator = plans.iterator();
+        while(iterator.hasNext()){
+            Plan next = iterator.next();
+            DeliverPlanDTO deliverPlanDTO=new DeliverPlanDTO();
+            deliverPlanDTO.setState(next.getState());
+            deliverPlanDTO.setPlanId(next.getPlanId());
+            deliverPlanDTO.setSports(getSportsURLS(next.getSports()));
+            if(deliverPlanDTO.getPlanId().equals(currentState)){
+                deliverPlanDTO.setCurrent(true);
             }
-              //将计划表同步到redis中
-            Iterator<Plan> iterator = plans.iterator();
-            while(iterator.hasNext()){
-                Plan next = iterator.next();
-                DeliverPlanDTO deliverPlanDTO=new DeliverPlanDTO();
-                deliverPlanDTO.setState(next.getState());
-                deliverPlanDTO.setPlanId(next.getPlanId());
-                deliverPlanDTO.setSports(getSportsURLS(next.getSports()));
-                if(deliverPlanDTO.getPlanId().equals(currentState)){
-                 deliverPlanDTO.setCurrent(true);
-                }
-                 deliverPlanDTOS.add(deliverPlanDTO);
-                 //运动计划同步到redis中
-                    Map<String,Object> map = JSONObject.parseObject(JSON.toJSONString(next));
-                    redisTemplate.opsForHash().putAll("user:"+user.getUserId()+":plan:"+next.getPlanId(),map);
-
-                }
-            }
+            deliverPlanDTOS.add(deliverPlanDTO);
+            //运动计划同步到redis中
+            redisTemplate.opsForZSet().add(
+                    redisPlanSort+user.getUserId(),
+                    redisPlanTable+next.getPlanId(),
+                    next.getPlanId());
+                    Map<String,Object> map = JSONObject.parseObject(JSON.toJSONString(deliverPlanDTO));
+                    redisTemplate.opsForHash().putAll(redisPlanTable+deliverPlanDTO.getPlanId(),map);
+        }
         return deliverPlanDTOS;
     }
 
@@ -220,7 +220,7 @@ public class PlanService {
         for (String a:strings){
             switch (a){
                 case"A":
-                    List integersA = armSportsExMapper.selectIdByWeight(weight);
+                    List<Long> integersA = armSportsExMapper.selectIdByWeight(weight);
                     idListMap.put("A",integersA);
                     break;
                 case"F":
@@ -272,7 +272,6 @@ public class PlanService {
         List<Sports> sportsList=new ArrayList<>();
         String[] arr = sportsString.split(","); // 用,分割
         Map a;
-        Sports sports=new Sports();
         JSON o;
         String sportsID;
         for(int i=0;i<arr.length;i++){
@@ -281,51 +280,58 @@ public class PlanService {
                 case 'A':
                     sportsID=arr[i].substring(1);
                     ArmSports armSports;
+                    Sports sports1 = new Sports();
                     armSports=armSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                    BeanUtils.copyProperties(armSports,sports);
-                    sportsList.add(sports);
+                    BeanUtils.copyProperties(armSports,sports1);
+                    sportsList.add(sports1);
                     break;
                 case 'F':
                     sportsID= arr[i].substring(1);
                     ForearmSports forearmSports;
+                    Sports sports2 = new Sports();
                     forearmSports=forearmSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                    BeanUtils.copyProperties(forearmSports,sports);
-                    sportsList.add(sports);
+                    BeanUtils.copyProperties(forearmSports,sports2);
+                    sportsList.add(sports2);
                     break;
                 case 'C':
                     sportsID=arr[i].substring(1);
                     ChestSports chestSports;
+                    Sports sports3 = new Sports();
                     chestSports=chestSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                    BeanUtils.copyProperties(chestSports,sports);
-                    sportsList.add(sports);
+                    BeanUtils.copyProperties(chestSports,sports3);
+                    sportsList.add(sports3);
                     break;
                 case 'B':
                     sportsID=arr[i].substring(1);
                     BackSports backSports;
+                    Sports sports4 = new Sports();
                     backSports=backSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                    BeanUtils.copyProperties(backSports,sports);
-                    sportsList.add(sports);
+                    BeanUtils.copyProperties(backSports,sports4);
+                    sportsList.add(sports4);
                     break;
                 case 'E':
                     sportsID=arr[i].substring(1);
                    BellySports bellySports;
+                    Sports sports5 = new Sports();
                    bellySports=bellySportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                   BeanUtils.copyProperties(bellySports,sports);
-                sportsList.add(sports);
+                   BeanUtils.copyProperties(bellySports,sports5);
+                sportsList.add(sports5);
                     break;
                 case 'T':
                     sportsID=arr[i].substring(1);
                    ThighSports thighSports;
+                    Sports sports6 = null;
                    thighSports=thighSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                   BeanUtils.copyProperties(thighSports,sports);
-                   sportsList.add(sports);
+                   BeanUtils.copyProperties(thighSports,sports6);
+                   sportsList.add(sports6);
                     break;
                 case 'S':
                     sportsID=arr[i].substring(1);
                     ShankSports shankSports;
+                    Sports sports7 = new Sports();
                     shankSports=shankSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
-                    BeanUtils.copyProperties(shankSports,sports);
-                    sportsList.add(sports);
+                    BeanUtils.copyProperties(shankSports,sports7);
+                    sportsList.add(sports7);
                     break;
             }
         }

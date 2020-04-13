@@ -7,8 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="keep" />
+        <module name="boot-jedis" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="boot-jedis" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

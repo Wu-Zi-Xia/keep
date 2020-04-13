@@ -7,6 +7,7 @@ import com.cduestc.keep.model.User;
 import com.cduestc.keep.service.RedisHelloService;
 import com.cduestc.keep.service.UserService;
 import com.zhenzi.sms.ZhenziSmsClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,15 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
+@Slf4j
 @Controller
 public class HelloController {
     @Autowired
     UserService userService;
     @Autowired
     RedisHelloService redisHelloService;
-
+    @Autowired
+    RedisTemplate redisTemplate;
     @RequestMapping("/")
     public String hello(HttpServletRequest request, Model model) {
         return "hello";
@@ -50,7 +52,7 @@ public class HelloController {
         String isSuccess = client.send(params);
         json = JSON.parseObject(isSuccess);//json字符串转成json对象
         if (json.getIntValue("code") != 0) {
-            return ResultDto.errorOf(433, "验证码发送失败！！");
+            return ResultDto.errorOf(500, "验证码发送失败！！");
         }
         ResultDto<String> result = ResultDto.oxOf();
         result.setData(verifyCode);
@@ -58,13 +60,21 @@ public class HelloController {
     }
 
     @RequestMapping("login")
-    public @ResponseBody ResultDto loginOrRegister(@RequestParam(name = "number") String number,
+    public @ResponseBody ResultDto loginOrRegister(
+            @RequestParam(name = "number") String number,
+            @RequestParam(name = "verificationCode ") String verificationCode,
                                   HttpServletRequest request,
                                   HttpServletResponse response) {
-
+        //判断是否过期
         if(!redisHelloService.isEnptyKey(number)){
+            //判断验证码是否正确
+            if(!redisHelloService.isCorrect(number,verificationCode)){
+                return ResultDto.errorOf(500,"您输入的验证码有误！！");
+            }
+            //将用户信息插入到数据库中
             int insert = userService.insertUser(number,request.getSession());
             if(insert>0){
+                //向客户端颁发cookie
                 response.addCookie(new Cookie("number",number));
                 return ResultDto.oxOf("主页的url地址");
             }
@@ -72,7 +82,6 @@ public class HelloController {
         else{
             return ResultDto.errorOf(500,"验证码过期！！！");
         }
-
         return ResultDto.errorOf(500,"注册失败！！");
     }
 }

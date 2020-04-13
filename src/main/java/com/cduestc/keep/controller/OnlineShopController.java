@@ -8,6 +8,7 @@ import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.shopcarqueue.ProductStack;
 import com.cduestc.keep.service.ShopCarService;
 import com.cduestc.keep.service.SportsEquipmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+@Slf4j
 //关于商品的搜索
 @Controller
 public class OnlineShopController {

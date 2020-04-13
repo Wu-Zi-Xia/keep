@@ -8,6 +8,7 @@ import com.cduestc.keep.model.User;
 import com.cduestc.keep.pojo.Car;
 import com.cduestc.keep.service.RedisShopCarService;
 import com.cduestc.keep.service.ShopCarService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
+@Slf4j
 @Controller
 public class ShopCarController {
     @Autowired

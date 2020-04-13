@@ -4,13 +4,14 @@ import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.mapper.ArmSportsMapper;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-
+@Slf4j
 @Controller
 public class SportsController {
     //A：大臂，F：小臂，C：胸部，B：背部，E：腹部，T：大腿，S：小腿

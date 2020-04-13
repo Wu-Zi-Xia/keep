@@ -29,4 +29,10 @@
     <select id="selectSimpleUserINFOByID" parameterType="java.lang.Long" resultType="com.cduestc.keep.dto.DeliverUserINFODTO">
         select user_id,avatar_url,nickname from keep_user where user_id=#{userId}
     </select>
+    <select id="selectAvatarURLByIDs" parameterType="java.util.Set" resultType="java.lang.String">
+        SELECT avatar_url FROM keep_user WHERE user_id in
+        <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

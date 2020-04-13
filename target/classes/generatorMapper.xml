@@ -90,5 +90,8 @@
         <table schema="DB2ADMIN" tableName="friend_circle" domainObjectName="FriendCircle" >
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table schema="DB2ADMIN" tableName="zan" domainObjectName="Zan" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>

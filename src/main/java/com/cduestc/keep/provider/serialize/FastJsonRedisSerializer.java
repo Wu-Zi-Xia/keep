@@ -47,6 +47,7 @@ private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
         ParserConfig.getGlobalInstance().addAccept("com.cduestc.keep.provider.Sports");
         ParserConfig.getGlobalInstance().addAccept("com.cduestc.keep.model");
         ParserConfig.getGlobalInstance().addAccept("com.cduestc.keep.pojo");
+        ParserConfig.getGlobalInstance().addAccept("com.cduestc.keep.dto");
     }
 
     @Override

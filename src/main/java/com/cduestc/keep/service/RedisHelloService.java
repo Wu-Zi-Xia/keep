@@ -19,4 +19,7 @@ public class RedisHelloService {
         return redisTemplate.hasKey(key);
     }
 
+    public boolean isCorrect(String num,String ver) {
+        return redisTemplate.opsForValue().get(num).equals(ver);
+    }
 }

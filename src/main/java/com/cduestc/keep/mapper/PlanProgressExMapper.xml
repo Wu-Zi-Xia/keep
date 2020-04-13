@@ -12,6 +12,7 @@
         <result column="start_planID" jdbcType="BIGINT" property="startPlanid" />
         <result column="current_state" jdbcType="BIGINT" property="currentState" />
         <result column="end_planID" jdbcType="BIGINT" property="endPlanid" />
+        <result column="state" jdbcType="INTEGER" property="state" />
     </resultMap>
     <insert id="insert" parameterType="com.cduestc.keep.model.PlanProgress">
         <!--
@@ -20,14 +21,20 @@
           This element was generated on Thu Mar 26 17:15:33 CST 2020.
         -->
         insert into plan_progress (plan_ProgressID, owner_ID, start_planID,
-        current_state, end_planID)
+        current_state, end_planID,state)
         values (#{planProgressid,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, #{startPlanid,jdbcType=BIGINT},
-        #{currentState,jdbcType=BIGINT}, #{endPlanid,jdbcType=BIGINT})
+        #{currentState,jdbcType=BIGINT}, #{endPlanid,jdbcType=BIGINT},#{state,jdbcType=INTEGER})
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="planProgressid">
             SELECT LAST_INSERT_ID() AS plan_ProgressID
         </selectKey>
     </insert>
     <select id="selectPriKeyByOwnerID" resultType="java.lang.Long" parameterType="java.lang.Long">
         select plan_ProgressID from plan_progress where owner_ID=#{ID}
+    </select>
+    <select id="selectStateByOwnerId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select state from plan_progress where owner_ID=#{ownerId}
+    </select>
+    <select id="selectCurrentStateByOwnerId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select current_state from plan_progress where owner_ID=#{userId}
     </select>
 </mapper>

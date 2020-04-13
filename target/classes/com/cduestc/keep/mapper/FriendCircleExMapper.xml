@@ -11,13 +11,46 @@
         <result column="owner_ID" jdbcType="BIGINT" property="ownerId" />
         <result column="post_ID" jdbcType="BIGINT" property="postId" />
         <result column="is_own" jdbcType="INTEGER" property="isOwn" />
+        <result column="create_date" jdbcType="BIGINT" property="createDate" />
+        <result column="post_OwnerId" jdbcType="BIGINT" property="postOwnerid" />
     </resultMap>
     <insert id="insert" parameterType="com.cduestc.keep.model.FriendCircle">
-         insert into friend_circle (id, owner_ID, post_ID, is_own)
+         insert into friend_circle (id, owner_ID, post_ID, is_own,create_date,post_OwnerId)
          values (#{id,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT},
-            #{postId,jdbcType=BIGINT}, #{isOwn,jdbcType=INTEGER})
+            #{postId,jdbcType=BIGINT}, #{isOwn,jdbcType=INTEGER},#{createDate,jdbcType=BIGINT},
+            #{postOwnerid,jdbcType=BIGINT})
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
         </selectKey>
     </insert>
+    <!-- 批量插入生成的兑换码 -->
+<!--    <insert id ="insertFriCirS" parameterType="com.cduestc.keep.model.FriendCircle">-->
+<!--        insert into friend_circle(owner_ID,post_ID,is_own,create_date,post_OwnerId) values-->
+<!--        <foreach close=")" collection="list" item="item" open="(" separator=",">-->
+<!--            #{item.ownerId},-->
+<!--            #{item.postId},#{item.isOwn},-->
+<!--            #{item.createDate},#{item.postOwnerid}-->
+<!--        </foreach>-->
+<!--    </insert >-->
+    <insert id="insertFriCirS" parameterType="java.util.List">
+<!--        <selectKey resultType ="java.lang.Long" keyProperty= "id" order= "AFTER">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey >-->
+        insert into friend_circle
+        (owner_ID,post_ID,is_own,create_date,post_OwnerId)
+        values
+        <foreach collection="friendCircleList" item="item" separator="," >
+        (#{item.ownerId},#{item.postId},#{item.isOwn},#{item.createDate},#{item.postOwnerid})
+        </foreach>
+    </insert>
+    <select id="selectByLimit" resultType="java.lang.Long" parameterType="com.cduestc.keep.provider.PostSelectParameter">
+    select post_ID from friend_circle
+    where owner_ID=#{parameter.ownerId}
+    and is_own=#{parameter.isOwn}
+    order by create_date desc
+    limit #{parameter.offset},#{parameter.size}
+</select>
+    <select id="countByOwnerId"   resultType="java.lang.Integer">
+    select count(*) from friend_circle where owner_ID=#{id} and is_own=#{isOwn}
+</select>
 </mapper>

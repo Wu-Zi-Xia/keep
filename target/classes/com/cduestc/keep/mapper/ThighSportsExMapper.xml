@@ -16,10 +16,10 @@
     <select id="count" resultType="java.lang.Integer">
         select count(*) from thigh_sports
     </select>
-    <select id="selectIdByWeight" resultType="java.util.List" parameterType="java.lang.Integer">
+    <select id="selectIdByWeight" resultType="java.lang.Long" parameterType="java.lang.Integer">
         select sports_id from thigh_sports where weight=#{record}
     </select>
     <select id="selectByLimit" parameterType="java.lang.Integer" resultType="com.cduestc.keep.model.ThighSports">
-        select * from thigh_sports where weight = 1 and sports_id limit 1,10
+        select * from thigh_sports where weight = 1 and sports_id limit 0,10
     </select>
 </mapper>

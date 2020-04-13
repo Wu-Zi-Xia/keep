@@ -3,8 +3,11 @@ package com.cduestc.keep.service;
 import com.cduestc.keep.model.PlanProgress;
 import com.cduestc.keep.mapper.PlanProgressMapper;
 import com.cduestc.keep.model.PlanProgressExample;
+import com.cduestc.keep.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PlanProgressService {
@@ -24,6 +27,21 @@ public class PlanProgressService {
         int i = planProgressMapper.updateByExampleSelective(planProgress, planProgressExample);
         return i;
     }
-
+    public boolean isEnd(User user){
+        PlanProgressExample planProgressExample=new PlanProgressExample();
+        planProgressExample
+                .createCriteria().andOwnerIdEqualTo(user.getUserId());
+        List<PlanProgress> planProgresses = planProgressMapper.selectByExample(planProgressExample);
+        if(planProgresses.size()==0){
+            return false;
+        }
+        PlanProgress planProgress = planProgresses.get(0);
+        if(planProgress.getCurrentState()==planProgress.getEndPlanid()){
+         return true;
+        }else
+        {
+            return false;
+        }
+    }
 
 }

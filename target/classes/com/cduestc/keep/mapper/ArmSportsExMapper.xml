@@ -19,4 +19,7 @@
     <select id="selectByLimit" parameterType="java.lang.Integer" resultType="com.cduestc.keep.model.ArmSports">
         select * from arm_sports where weight = 1 and sports_id limit 1,10
     </select>
+    <select id="selectIdByWeight" resultType="java.lang.Long" parameterType="java.lang.Integer">
+        select sports_id from arm_sports where weight=#{weight}
+    </select>
 </mapper>

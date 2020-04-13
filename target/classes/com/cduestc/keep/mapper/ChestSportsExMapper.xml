@@ -16,7 +16,7 @@
     <select id="count" resultType="java.lang.Integer">
         select count(*) from chest_sports
     </select>
-    <select id="selectIdByWeight" resultType="java.util.List" parameterType="java.lang.Integer">
+    <select id="selectIdByWeight" resultType="java.lang.Long" parameterType="java.lang.Integer">
         select sports_id from chest_sports where weight=#{record}
     </select>
     <select id="selectByLimit" parameterType="java.lang.Integer" resultType="com.cduestc.keep.model.ChestSports">

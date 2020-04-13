@@ -26,7 +26,7 @@
         values (#{planId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, #{sports,jdbcType=VARCHAR},
         #{state,jdbcType=INTEGER})
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="planId">
-            SELECT LAST_INSERT_ID() AS plan_ID
+            SELECT LAST_INSERT_ID() AS planId
         </selectKey>
 
     </insert>

@@ -14,6 +14,7 @@ public class PostDto {
     private String imageUrl;
     private String videoUrl;
     private String description;
-    private Date createDate;
-
+    private Long createDate;
+    private Integer likeCount;
+    private Integer commentCount;
 }

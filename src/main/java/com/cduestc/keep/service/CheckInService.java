@@ -7,10 +7,13 @@ import com.cduestc.keep.mapper.CheckInMapper;
 import com.cduestc.keep.model.CheckIn;
 import com.cduestc.keep.model.CheckInExample;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.provider.CookieProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,9 +26,14 @@ public class CheckInService {
     CheckInMapper checkInMapper;
     @Autowired
     RedisTemplate redisTemplate;
+    @Value("${cookie.name.preFix}")
+    String cookieName;
+    @Value("${session.name.preFix}")
+    String sessionName;
 //签到逻辑，接口直接调用
     public int checkIn(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieName);
+        User user = (User)request.getSession().getAttribute(sessionName + cookie.getValue());
         Long userId = user.getUserId();
         //获取系统当前的月和天
         Calendar calendar1 = Calendar.getInstance();

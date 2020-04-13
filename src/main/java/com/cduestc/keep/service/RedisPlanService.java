@@ -8,6 +8,7 @@ import com.cduestc.keep.model.Post;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.Sports;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -26,6 +27,10 @@ public class RedisPlanService {
     RedisPlanProgressService redisPlanProgressService;
     @Autowired
     DefaultRedisScript<List> defaultRedisScript;
+    @Value("${redis.keep.planTable}")
+    String redisPlanTable;
+    @Value("${redis.keep.planSort}")
+    String redisPlanSort;
     //插入到redis中
     public  void insert(String tableName, Plan plan){
         //将计划信息放入到redis中
@@ -34,27 +39,16 @@ public class RedisPlanService {
         redisTemplate.opsForHash().putAll(tableName,planMap);
     }
 
-    public List<DeliverPlanDTO> getPlan(String redisTableName, User user) {
+    public List<DeliverPlanDTO> getPlan(Long userId) {
         List<DeliverPlanDTO> deliverPlanDTOS=new ArrayList<>();
-        defaultRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("luaScript/select2.lua")));
-        List mysqlKeys =(List) redisTemplate.execute(defaultRedisScript,Collections.singletonList(redisTableName),"null");
-        //System.out.println(mysqlKeys);
-        Iterator iterator = mysqlKeys.iterator();
-        while (iterator.hasNext()){
-            DeliverPlanDTO deliverPlanDTO=new DeliverPlanDTO();
-            Long mysqlID =(Long)iterator.next();
-            Map entries = redisTemplate.opsForHash().entries("user:" + user.getUserId() + ":plan:" + mysqlID);
-            //deliverPlanDTO.setOwnerID(entries.get("ownerId"));
-            deliverPlanDTO.setState((Integer)entries.get("state"));
-            Long planId = mysqlID;
-            deliverPlanDTO.setPlanId(planId);//设置ID
-            List<Sports> sports = getSportsURLS((String) entries.get("sports"));
-            deliverPlanDTO.setSports(sports);
-            Long currentID = Long.valueOf(redisPlanProgressService.isCurrent(user.getUserId()));
 
-            if(planId.equals(currentID)){//判断是否是当天的运动
-            deliverPlanDTO.setCurrent(true);
-            }
+        Set redisPlanIds= redisTemplate.opsForZSet().range(redisPlanSort + userId, 0, -1);
+        Iterator iterator = redisPlanIds.iterator();
+        while(iterator.hasNext()){
+            Object next = iterator.next();
+            Map entries = redisTemplate.opsForHash().entries(next);
+            JSON json = (JSON) JSON.toJSON(entries);
+            DeliverPlanDTO deliverPlanDTO=JSONObject.toJavaObject(json, DeliverPlanDTO.class);
             deliverPlanDTOS.add(deliverPlanDTO);
         }
           return deliverPlanDTOS;
@@ -132,5 +126,12 @@ public class RedisPlanService {
             }
         }
         return sportsList;
+    }
+
+    public DeliverPlanDTO getPlanById(String planId) {
+        Map entries = redisTemplate.opsForHash().entries(redisPlanTable + planId);
+        JSONObject o = (JSONObject) JSONObject.toJSON(entries);
+        DeliverPlanDTO deliverPlanDTO = JSON.toJavaObject(o, DeliverPlanDTO.class);
+        return deliverPlanDTO;
     }
 }

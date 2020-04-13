@@ -6,11 +6,13 @@ import com.cduestc.keep.dto.*;
 import com.cduestc.keep.model.Comment;
 import com.cduestc.keep.model.Post;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.provider.GetRequestBody;
 import com.cduestc.keep.service.PostService;
 
 import com.cduestc.keep.service.RedisPostService;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,19 +24,17 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
-
-@Controller
+@Slf4j
+@RestController
 public class PostController {
     @Autowired
     RedisTemplate redisTemplate;
@@ -44,145 +44,195 @@ public class PostController {
     RedisPostService redisPostService;
     @Autowired
     DefaultRedisScript<List> defaultRedisScript;
-
-    //创建动态
+    @Value("${cookie.name.preFix}")
+    private String cookieNamePre;
+    @Value("${session.name.preFix}")
+    private String sessionNamePre;
+    @Value("${redis.keep.FriCirMyself}")
+    String redisFriTableNameM;
+    @Value("${redis.keep.FriCirMyselfSort}")
+    String redisFriCriSortSetM;
+    @Value("${domin}")
+    String domin;
+    @Value("${redis.keep.zan}")
+    String redisZanTableName;
+    @Value("${redis.keep.FriCirMyFriend}")
+    String redisFriTableNameF;
+    @Value("${redis.keep.FriCirMyFriendSort}")
+    String redisFriCriSortSetF;
+    //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
-    public @ResponseBody Object createPost(HttpServletRequest request/**@RequestBody PostDto newPost**/) throws IOException {
-        String requestBody = GetRequestBody.getRequestBody(request);
-        JSONObject jsonObject= JSON.parseObject(requestBody);
-        PostDto newPost=new PostDto();
-        newPost.setVideoUrl((String) jsonObject.get("videoUrl"));
-        newPost.setImageUrl((String) jsonObject.get("imageUrl"));
-        newPost.setDescription((String) jsonObject.get("description"));
-        BeanUtils.copyProperties(jsonObject,newPost);
-       //System.out.println(newPost);
-        int i = postService.insertNewPost(request.getSession(), newPost);
+    public @ResponseBody Object createPost(HttpServletRequest request,@RequestBody PostDto newPost) throws IOException {
+       //获取前端传过来的数据
+//        String requestBody = GetRequestBody.getRequestBody(request);
+//        JSONObject jsonObject= JSON.parseObject(requestBody);
+        //查找登录人
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        User user = null;
+        if(cookie!=null){
+         user=(User) request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        }
+        else{
+            return ResultDto.errorOf(500,"还没有登录！！");
+        }
+        //插入数据库
+        int i = postService.insertNewPost(user, newPost);
+        //向前端返回数据
         if(i>0) {
             return ResultDto.oxOf();
         }
-        return ResultDto.errorOf(300,"发表动态失败！！");
+        return ResultDto.errorOf(500,"发表动态失败！！");
     }
 
     //获取本人的动态
-    @RequestMapping("getPost")
-    public @ResponseBody Object getPost(HttpServletRequest request){
-        //获取登录的用户id
-        User user = (User)request.getSession().getAttribute("user");
-        List<DeliverPostDTO> postByOwnerID;
-        if(redisTemplate.hasKey("userPost:"+user.getUserId())){
-            //redis里面去取值
-            postByOwnerID=redisPostService.getPostByOwnerID(user);
-            System.out.println("redis");
+    @RequestMapping("getPosts")
+    public @ResponseBody Object getPost(HttpServletRequest request,
+                                        @RequestParam(name = "offset",defaultValue ="0") int redisOffset,
+                                        @RequestParam(name = "size",defaultValue="4") int redisSize,
+                                        HttpServletResponse response) throws IOException {
+        if(redisOffset<0||redisSize<=0){
+           return ResultDto.errorOf(500,"参数非法！！");
         }
+        //获取cookie
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        //获取登录的用户id
+        User user = (User)request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        List<DeliverPostDTO> postByOwnerID;
+        if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
+            //redis里面去取值
+            postByOwnerID=redisPostService.getPostByOwnerID(user,redisOffset,redisSize,response);
+            if (postByOwnerID == null||postByOwnerID.size() == 0) {
+                return ResultDto.errorOf(500, "你还没有发布动态哦！！");
+            }
+            if(postByOwnerID.get(0).isEnd()){
+                return ResultDto.errorOf(500,"不能再刷新了！！");
+            }
+            else{
+                return ResultDto.oxOf(postByOwnerID);
+            }
+            }
         else {
-            //从数据库里面去查找
-             postByOwnerID= postService.getPostByOwnerID(user);
+            int mysqlOffset=redisOffset;
+            int mysqlSize=10;
+            //从数据库里面去查找50条数据，前十条返回给前端
+             postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
             if (postByOwnerID == null || postByOwnerID.size() == 0) {
                 return ResultDto.errorOf(500, "你还没有发布动态哦！！");
             }
+            if(postByOwnerID.get(0).isEnd()){
+                return ResultDto.errorOf(500,"不能再刷新了！！");
+            }else{
+                response.sendRedirect(domin+"getPosts?"+"offset="+redisOffset+"&size="+redisSize);
+                return null;
+            }
         }
-        return  ResultDto.oxOf(postByOwnerID);
+        //return ResultDto.errorOf(500,"");
     }
 
     //获取朋友的动态
-    @RequestMapping("getFriendPost")
-    public Object getFriendPost(HttpServletRequest request,
-                                @RequestParam(value="pos",defaultValue = "1")long pos,
-                                @RequestParam(value="offset",defaultValue = "10") long offset){
-        User user = (User)request.getSession().getAttribute("user");
-        DeliverUserINFODTO deliverUserINFODTO=new DeliverUserINFODTO();
-        List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();
-        deliverUserINFODTO.setNickname(user.getNickname());
-        deliverUserINFODTO.setAvatarUrl(user.getAvatarUrl());
-        deliverUserINFODTO.setUserId(user.getUserId());
-        String redisTableName="FriCir:"+user.getUserId();
-        if(redisTemplate.hasKey(redisTableName)){//看用户的朋友圈是否在redis中存在
-            List redisPostIDs = redisTemplate.opsForList().range(redisTableName, pos, offset);
-            Iterator iterator = redisPostIDs.iterator();
-                while(iterator.hasNext()){//遍历动态的id
-                    Object next = iterator.next();
-                    DeliverPostDTO deliverPostDTO
-                            =new DeliverPostDTO();
-                    //设置返回的用户的简单信息
-                    deliverPostDTO.setDeliverUserINFODTO(deliverUserINFODTO);
+    @RequestMapping("getFriendPosts")
+    public @ResponseBody Object getFriendPost(HttpServletRequest request,
+                                @RequestParam(name = "offset",defaultValue ="0") int redisOffset,
+                                @RequestParam(name = "size",defaultValue="4") int redisSize,
+                                HttpServletResponse response) throws IOException {
 
-                    Map entries = redisTemplate.opsForHash().entries(next);
-                    JSON json = (JSON) JSON.toJSON(entries);
-                    Post post = JSONObject.toJavaObject(json,Post.class);
-                    String postKey = next.toString();
-                    String postMysqlID = postKey.substring(postKey.length() - 1);
-                    post.setPostId(Long.parseLong(postMysqlID));
-                    //设置动态的详细信息
-                    deliverPostDTO.setPost(post);
-                    //评论的操作
-                    List<DeliverCommentDto> deliverCommentDtoList=new ArrayList<>();
-
-                    List keepCommentIDs1 =(List) redisTemplate.
-                            execute(defaultRedisScript,new StringRedisSerializer(), new StringRedisSerializer(),
-                                    Collections.singletonList("keepComment:*"),"owner_ID",postMysqlID,"type","1");
-                    if(keepCommentIDs1.size()!=0){//证明当前这条动态是有评论的
-                        Iterator iterator2 = keepCommentIDs1.iterator();
-                        while(iterator2.hasNext()){
-                            String commentRedisKey =(String)iterator2.next();
-                            DeliverCommentDto deliverCommentDto=new DeliverCommentDto();
-                            Map entries1 = redisTemplate.opsForHash().entries(commentRedisKey);
-                            JSON json1 = (JSON) JSON.toJSON(entries1);
-                            Comment comment =JSONObject.toJavaObject(json1,Comment.class);
-                            comment.setCommentId(Long.parseLong(commentRedisKey.substring(commentRedisKey.length()-1)));
-                            deliverCommentDto.setComment(comment);//将一级评论设置上去
-                            //截取redis的key的最后一个
-                            String commentMysqlID = commentRedisKey.substring(commentRedisKey.length()-1);
-                            List keepCommentIDs2 =(List) redisTemplate.
-                                    execute(defaultRedisScript,new StringRedisSerializer(), new StringRedisSerializer(),
-                                            Collections.singletonList("keepComment:*"),"owner_ID",commentMysqlID,"type","2");
-                            if (keepCommentIDs2.size()!=0){//当前评论的二级评论存在
-                                Iterator iterator1 = keepCommentIDs2.iterator();
-                                List <Comment> commentList=new ArrayList<>();
-                                while(iterator1.hasNext()){//循环的将二级评论查询出来
-
-                                    String commentRedisKey2 = (String) iterator1.next();
-                                    Map entries2 = redisTemplate.opsForHash().entries(commentRedisKey2);
-                                    JSON json2 = (JSON) JSON.toJSON(entries2);
-                                    Comment comment2 =JSONObject.toJavaObject(json2,Comment.class);
-                                    comment2.setCommentId(Long.parseLong(commentRedisKey2.substring(commentRedisKey2.length()-1)));
-                                    commentList.add(comment2);
-                                }
-                                deliverCommentDto.setCommentList(commentList);//将二级评论设置上去
-                            }
-                            deliverCommentDtoList.add(deliverCommentDto);
-                        }
-                        deliverPostDTO.setComments(deliverCommentDtoList);//将一个动态的评论设置上去
-                    }
-                    deliverPostDTOList.add(deliverPostDTO);
-
-                }
+        if (redisOffset < 0 || redisSize <= 0) {
+            return ResultDto.errorOf(500, "参数非法！！");
         }
-        return deliverPostDTOList;
+        //获取cookie
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        //获取登录的用户id
+        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        List<DeliverPostDTO> postByOwnerID;
+        if (redisTemplate.hasKey(redisFriCriSortSetF+ user.getUserId())) {
+            //redis里面去取值
+            postByOwnerID = redisPostService.getFriendPostByOwnerID(user, redisOffset, redisSize, response);
+            if (postByOwnerID == null || postByOwnerID.size() == 0) {
+                return ResultDto.errorOf(500, "你的朋友还没有发布动态哦！！");
+            }
+            if (postByOwnerID.get(0).isEnd()) {
+                System.out.println("redis");
+                return ResultDto.errorOf(500, "不能再刷新了！！");
+            } else {
+                return ResultDto.oxOf(postByOwnerID);
+            }
+
+        } else {
+            int mysqlOffset = redisOffset;
+            int mysqlSize = 10;
+            //从数据库里面去查找50条数据，前十条返回给前端
+            postByOwnerID = postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
+            if (postByOwnerID == null || postByOwnerID.size() == 0) {
+                return ResultDto.errorOf(500, "你的朋友还没有发布动态哦！！");
+            }
+            if (postByOwnerID.get(0).isEnd()) {
+                return ResultDto.errorOf(500, "不能再刷新了！！");
+            } else {
+                response.sendRedirect(domin + "getFriendPosts?" + "offset=" + redisOffset + "&size=" + redisSize);
+                return null;
+            }
+        }
     }
+
+    //获取动态详情
+    @RequestMapping("getPost")
+    public @ResponseBody  Object getPost(@RequestParam("postId") String postId,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) throws IOException {
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        User user =(User) request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){//判断redis中是否有值
+            Map entries = redisTemplate.opsForHash().entries(redisFriTableNameM+postId);
+            JSON o = (JSON)JSONObject.toJSON(entries);
+            DeliverPostDTO deliverPostDTO = JSON.toJavaObject(o, DeliverPostDTO.class);
+            return ResultDto.oxOf(deliverPostDTO);
+        }
+        else{//从数据库里面去查出来，然后放入到redis中
+            DeliverPostDTO postByOwnerID = postService.getPostByOwnerID(user,postId);
+            response.sendRedirect(domin+"getPost?postId="+postId);
+            return null;
+        }
+    }
+
     //点赞功能
     @RequestMapping("zan")
-    public Object zan(@RequestParam(value = "ID" )long ID,
-                    HttpServletRequest request){
-        User user=(User) request.getSession().getAttribute("user");
-        String tableName="zan:"+ID;
+    public Object zan(@RequestParam(value = "postId" )long postId,
+                    HttpServletRequest request,
+                      HttpServletResponse response) throws IOException {
+        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        User user = (User)request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String keyName=redisZanTableName+postId;
         Long userId = user.getUserId();
-        ResultDto<Boolean> resultDto=new ResultDto<>();
-        if(redisTemplate.opsForSet().isMember(tableName,userId)){//看当前用户是否已经点赞
-            redisTemplate.opsForSet().remove(tableName,userId);
-            //发异步请求到mysql修改字段
-            resultDto.setCode(200);
-            resultDto.setData(false);
-            return resultDto;
+        if(redisPostService.isEnpty(keyName)){//存在当前键值对
+            //redis里面去更新赞的信息
+            boolean isZan=postService.updateZan(keyName, userId, postId);
+            return  ResultDto.oxOf(isZan);
+        }else{//不存在当前键值对
+            //去数据库获取用户id并且更新到redis中
+            postService.getZan(keyName,postId);
+            //更新完了之后再让前端访问一次这个接口，重定向
+            response.sendRedirect(domin+"zan?"+"postId="+postId);
+            return null;
         }
-        else{
-        redisTemplate.opsForSet().add(tableName,userId);
-            //发异步请求到mysql修改字段
-        resultDto.setData(true);
-        resultDto.setCode(200);
+    }
+
+    //获取当前动态的所有赞的功能
+    @RequestMapping("getZan")
+    public @ResponseBody Object getZan(@RequestParam(name ="postId") long postId,
+                         HttpServletResponse response) throws IOException {
+        String keyName = redisZanTableName + postId;
+        if(redisTemplate.hasKey(keyName)){//如果存在就从redis里面查
+            List<String> avatarURLs= redisPostService.getZan(keyName);
+            return ResultDto.oxOf(avatarURLs);
         }
-        resultDto.setCode(500);
-        resultDto.setData(null);
-        return resultDto;
+        else//不存在
+        {
+            //去数据库获取用户id并且更新到redis中
+            postService.getZan(keyName,postId);
+            //更新完了之后再让前端访问一次这个接口，重定向
+            response.sendRedirect(domin+"getZan?"+"postId="+postId);
+            return null;
+        }
     }
 
 }
