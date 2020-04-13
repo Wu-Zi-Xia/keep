@@ -1,0 +1,1 @@
+alter table  keep_comment modify column create_date bigint(20) not null COMMENT '评论的创建时间';

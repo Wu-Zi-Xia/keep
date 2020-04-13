@@ -1,0 +1,1 @@
+alter table friend_circle add column create_date bigint(20) COMMENT '动态创建时间';

@@ -1,0 +1,1 @@
+alter table  friend_circle add column user_userId bigint(20) not null COMMENT '动态的拥有者';

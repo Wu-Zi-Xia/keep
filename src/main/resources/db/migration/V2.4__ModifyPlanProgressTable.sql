@@ -1,0 +1,1 @@
+alter table  plan_progress add column  state integer COMMENT '这个用户是否完成了整个计划';

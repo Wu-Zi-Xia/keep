@@ -151,6 +151,8 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveCommentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveCommentDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverCommentDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverCommentDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverPostDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverPostDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/PostDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/PostDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" afterDir="false" />
@@ -193,6 +195,10 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Comment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criterion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$GeneratedCriteria.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criteria.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criterion.class" afterDir="false" />
@@ -205,6 +211,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criteria.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criterion.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" afterDir="false" />
@@ -469,7 +476,7 @@
       <workItem from="1586483550513" duration="27314000" />
       <workItem from="1586582525663" duration="25400000" />
       <workItem from="1586663289805" duration="30573000" />
-      <workItem from="1586744280419" duration="38458000" />
+      <workItem from="1586744280419" duration="39197000" />
     </task>
     <servers />
   </component>

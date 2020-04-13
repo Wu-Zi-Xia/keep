@@ -1,0 +1,1 @@
+alter table  keep_comment add column review_id bigint(20) not null COMMENT '评论者的id';

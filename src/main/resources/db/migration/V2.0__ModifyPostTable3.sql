@@ -1,0 +1,1 @@
+alter table  keep_post modify column create_date date COMMENT '动态创建时间';
