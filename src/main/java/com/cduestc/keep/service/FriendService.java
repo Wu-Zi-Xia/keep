@@ -103,4 +103,17 @@ public class FriendService {
         int i = friendCircleMapper.deleteByExample(friendCircleExample);
         return i;
     }
+
+    public long getFans(User user) {
+        FriendExample friendExample=new FriendExample();
+        friendExample.createCriteria().andFriendFriendidEqualTo(user.getUserId());
+        long l = friendMapper.countByExample(friendExample);
+        return l;
+    }
+    public long getFocus(User user){
+        FriendExample friendExample=new FriendExample();
+        friendExample.createCriteria().andFriendUseridEqualTo(user.getUserId());
+        long l = friendMapper.countByExample(friendExample);
+        return l;
+    }
 }

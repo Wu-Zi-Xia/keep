@@ -268,7 +268,7 @@ public class PlanService {
 
     //A：大臂，F：小臂，C：胸部，B：背部，E：腹部，T：大腿，S：小腿
     //辅助方法,获取运动的地址
-    private List<Sports> getSportsURLS(String sportsString){
+    public List<Sports> getSportsURLS(String sportsString){
         List<Sports> sportsList=new ArrayList<>();
         String[] arr = sportsString.split(","); // 用,分割
         Map a;
@@ -320,7 +320,7 @@ public class PlanService {
                 case 'T':
                     sportsID=arr[i].substring(1);
                    ThighSports thighSports;
-                    Sports sports6 = null;
+                    Sports sports6 = new Sports();
                    thighSports=thighSportsMapper.selectByPrimaryKey(Long.parseLong(sportsID));
                    BeanUtils.copyProperties(thighSports,sports6);
                    sportsList.add(sports6);

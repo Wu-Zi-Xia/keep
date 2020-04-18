@@ -2,6 +2,8 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleExMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/KeepLessonExMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1.0__CreateFriendCircleTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1.1__CreatePlanTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1.3__ModifyProductTables.sql" dialect="MySQL" />
@@ -21,5 +23,14 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V2.7__ModifyCommentTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V2.8__ModifyConmentTable2.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V2.9__ModifyFriCirTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.0__CreateLessonTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.1__ModifyKeepUserTableAddClumnSex.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.2__ModifySportsHistoryAddColumns.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.3__CreateProductCategory.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.4__ModifyProductTableAddColumnName.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.5__ModifyProductTbaleAddClumnDescription.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.6__ModifyProductModifyUrls.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.7__ModifyProductTableAddClumnPrice.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.8__ModifyKeepUserAddColumnState.sql" dialect="MySQL" />
   </component>
 </project>

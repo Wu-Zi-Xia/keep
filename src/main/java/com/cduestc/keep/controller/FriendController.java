@@ -26,8 +26,8 @@ public class FriendController {
     private String sessionNamePre;
     @RequestMapping("makeFriends")
     public @ResponseBody Object AddFriend(@RequestParam(value="userId")Long userId, HttpServletRequest request){
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre +token);
         int i = friendService.addFriend(userId, user);
 
         if(i>0){
@@ -39,8 +39,8 @@ public class FriendController {
     @RequestMapping("deleteFriend")
     public @ResponseBody Object deleteFriend(@RequestParam(value = "userId") String userId,
                                              HttpServletRequest request){
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         int i = friendService.deleteFriend(userId, user);
         if(i>0){
            return ResultDto.oxOf();

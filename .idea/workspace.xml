@@ -4,67 +4,52 @@
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/059144d6-260c-4356-84f5-1a24861e213b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/059144d6-260c-4356-84f5-1a24861e213b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CheckInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CheckInController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FileController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FriendController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/HelloController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/OnlineShopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/OnlineShopController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanProgressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanProgressController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/SportsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/SportsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveCommentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveCommentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverCommentDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverCommentDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveUserINFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveUserINFO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverPostDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/PostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/PostDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverUserINFODTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverSimpleUserINFODTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/interceptor/SessionInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/interceptor/SessionInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BellySportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CheckInMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CheckInMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CheckInMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CheckInMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ChestSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CommentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CommentMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/CommentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForeamSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForeamSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleExMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanExMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressExMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShankSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShopCarMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ShopCarMapper.java" afterDir="false" />
@@ -77,13 +62,14 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SportWearMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SportWearMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SubstituteFoodMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SubstituteFoodMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SubstituteFoodMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/SubstituteFoodMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ThighSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserExMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ZanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ZanMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ZanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ZanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ArmSports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ArmSports.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ArmSportsExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ArmSportsExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/BackSports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/BackSports.java" afterDir="false" />
@@ -124,103 +110,75 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ThighSportsExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ThighSportsExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/UserExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/UserExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/Zan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/Zan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ZanExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ZanExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/TimerTaskByMyself.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/TimerTaskByMyself.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CheckInService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CheckInService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/FriendService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PlanProgressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PlanProgressService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PlanService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisHelloService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisHelloService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPlanService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/generatorMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generatorMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CheckInController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CheckInController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CommentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CommunityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CommunityController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FileController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FriendController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FriendController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/HelloController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/OnlineShopController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/OnlineShopController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanProgressController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanProgressController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveCommentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveCommentDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverCommentDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverCommentDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveUserINFO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveUserINFO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverPostDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverPostDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/PostDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/PostDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsExMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverUserINFODTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverUserINFODTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/CheckInMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/CheckInMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ChestSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ChestSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ChestSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ChestSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/CommentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ForeamSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ForeamSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ForearmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ForearmSportsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleExMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendCircleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendExMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/FriendMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanExMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressExMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShopCarMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShopCarMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportEquipmentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportEquipmentMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportLifeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportLifeMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportWearMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SportWearMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SubstituteFoodMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/SubstituteFoodMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$Criterion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ZanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ZanMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CheckInExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CheckInExample$GeneratedCriteria.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/CommentExample$GeneratedCriteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$Criterion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/FriendCircleExample$GeneratedCriteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgress.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$Criteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$Criterion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanExample$GeneratedCriteria.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PlanProgressExample$GeneratedCriteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/Post.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$Criterion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/PostExample$GeneratedCriteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/serialize/FastJsonRedisSerializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ShopCarExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ShopCarExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportEquipmentExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportEquipmentExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportLifeExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportLifeExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportWearExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SportWearExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SubstituteFoodExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/SubstituteFoodExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$Criteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$Criterion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/UserExample$GeneratedCriteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/TimerTaskByMyself$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/TimerTaskByMyself$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/TimerTaskByMyself.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/TimerTaskByMyself.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PlanProgressService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PlanProgressService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PlanService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PostService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisHelloService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisHelloService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPlanService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/generatorMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generatorMapper.xml" afterDir="false" />
     </list>
@@ -265,7 +223,7 @@
         <item name="keep@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="keep: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="friend_circle: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="product_specs: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -275,8 +233,8 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -365,6 +323,13 @@
         </option>
       </MavenSettings>
       <method v="2" />
+    </configuration>
+    <configuration name="BootJedisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="boot-jedis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.BootJedisApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="KeepApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="keep" />
@@ -476,7 +441,13 @@
       <workItem from="1586483550513" duration="27314000" />
       <workItem from="1586582525663" duration="25400000" />
       <workItem from="1586663289805" duration="30573000" />
-      <workItem from="1586744280419" duration="39197000" />
+      <workItem from="1586744280419" duration="41754000" />
+      <workItem from="1586830362892" duration="35069000" />
+      <workItem from="1586916194471" duration="266000" />
+      <workItem from="1586926342759" duration="18415000" />
+      <workItem from="1587025341058" duration="10934000" />
+      <workItem from="1587109569308" duration="28451000" />
+      <workItem from="1587178079725" duration="30243000" />
     </task>
     <servers />
   </component>
@@ -506,11 +477,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ZanService.java</url>
           <line>25</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserService.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

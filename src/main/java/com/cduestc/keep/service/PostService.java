@@ -11,19 +11,11 @@ import com.cduestc.keep.mapper.ZanMapper;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.PostSelectParameter;
 import com.cduestc.keep.provider.UpdatePostParam;
-import com.qcloud.cos.COSClient;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpSession;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -133,7 +125,7 @@ public class PostService {
         List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();
         DeliverPostDTO deliverPostDTO=new DeliverPostDTO();
         //获取发布者的简单信息
-        DeliverUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(ID);
+        DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(ID);
        // BeanUtils.copyProperties(user,simpleUserINFOById);
 
         //从朋友圈表获取当前用户所有的动态的总数
@@ -175,7 +167,7 @@ public class PostService {
         while(iterator1.hasNext()){
             DeliverPostDTO deliverPostDTO1=new DeliverPostDTO();
             //设置发布者的简单信息
-            deliverPostDTO1.setDeliverUserINFODTO(simpleUserINFOById);
+            deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
             //设置动态
             Post next = iterator1.next();
             deliverPostDTO1.setPost(next);
@@ -252,8 +244,8 @@ public class PostService {
             //设置动态
             Post next = iterator1.next();
             //设置发布者的简单信息
-            DeliverUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getOwnerId());
-            deliverPostDTO1.setDeliverUserINFODTO(simpleUserINFOById);
+            DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getOwnerId());
+            deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
             deliverPostDTO1.setPost(next);
 
             List<Comment> comments;
@@ -352,8 +344,8 @@ public class PostService {
     public DeliverPostDTO getPostByOwnerID(User user, String postId) {
         DeliverPostDTO deliverPostDTO=new DeliverPostDTO();
         //获取发布者的简单信息
-        DeliverUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(user.getUserId());
-        deliverPostDTO.setDeliverUserINFODTO(simpleUserINFOById);
+        DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(user.getUserId());
+        deliverPostDTO.setDeliverSimpleUserINFODTO(simpleUserINFOById);
         long postId1 = Long.parseLong(postId);
         Post post = postMapper.selectByPrimaryKey(postId1);
         deliverPostDTO.setPost(post);

@@ -1,17 +1,17 @@
 package com.cduestc.keep.service;
 
 import com.cduestc.keep.dto.AchieveUserINFO;
-import com.cduestc.keep.dto.DeliverUserINFODTO;
+import com.cduestc.keep.dto.DeliverSimpleUserINFODTO;
+import com.cduestc.keep.dto.DeliverUserINFODto;
 import com.cduestc.keep.mapper.UserExMapper;
 import com.cduestc.keep.mapper.UserMapper;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.model.UserExample;
-import org.springframework.beans.BeanUtils;
+import com.cduestc.keep.provider.StringProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -20,10 +20,17 @@ public class UserService {
     UserMapper userMapper;
     @Autowired
     UserExMapper userExMapper;
+    @Autowired
+    FriendService friendService;
     public int insertUser(String number, HttpSession session) {
         User user=new User();
         user.setUserNumber(number);
         user.setAvatarUrl("https://wuzixia-1300212146.cos.ap-chengdu.myqcloud.com/keep/avatarURL/37.png");
+        String random = StringProvider.getRandomString(10);
+        long l = System.currentTimeMillis();
+        String randomNickname=random+l;
+        user.setNickname(randomNickname);
+        user.setState(1);
         int insert = userMapper.insert(user);
         //将用户信息放入session中保存登录状态
         session.setAttribute("user"+number,user);//放入session中，代表当前用户已经登陆
@@ -37,9 +44,9 @@ public class UserService {
         return users.get(0).getUserId();
     }
 
-    public DeliverUserINFODTO getSimpleUserINFOById(long id){
-        DeliverUserINFODTO deliverUserINFODTO = userExMapper.selectSimpleUserINFOByID(id);
-        return deliverUserINFODTO;
+    public DeliverSimpleUserINFODTO getSimpleUserINFOById(long id){
+        DeliverSimpleUserINFODTO deliverSimpleUserINFODTO = userExMapper.selectSimpleUserINFOByID(id);
+        return deliverSimpleUserINFODTO;
     }
 
     public int update(AchieveUserINFO achieveUserINFO,Long userId) {
@@ -63,9 +70,22 @@ public class UserService {
         }
         if(achieveUserINFO.getNickname()!=null){
             user.setNickname(achieveUserINFO.getNickname());
+            //判断是否已经存在这个昵称
+            UserExample userExample=new UserExample();
+            userExample.createCriteria().andNicknameEqualTo(achieveUserINFO.getNickname());
+            List<User> users = userMapper.selectByExample(userExample);
+            if(users!=null||users.size()!=0){
+                return 4500;
+            }
         }
         else{
             user.setNickname(null);
+        }
+        if(achieveUserINFO.getSex()!=null){
+            user.setSex(achieveUserINFO.getSex());
+        }
+        else{
+            user.setSex(null);
         }
         UserExample userExample=new UserExample();
         userExample.createCriteria().andUserIdEqualTo(userId);
@@ -73,8 +93,33 @@ public class UserService {
         return i;
     }
 
-    public User selectUserINFO(Long userId) {
+    public DeliverUserINFODto selectUserINFO(Long userId) {
+        DeliverUserINFODto deliverUserINFODto=new DeliverUserINFODto();
         User user = userMapper.selectByPrimaryKey(userId);
-        return user;
+        deliverUserINFODto.setUser(user);
+        deliverUserINFODto.setFans(friendService.getFans(user));
+        deliverUserINFODto.setFocus(friendService.getFocus(user));
+        return deliverUserINFODto;
+    }
+
+    public String getSexById(User user) {
+
+        User user1 = userMapper.selectByPrimaryKey(user.getUserId());
+        return user1.getSex();
+    }
+
+    public User selectUserByNumber(String number) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andUserNumberEqualTo(number);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.get(0);
+    }
+
+    public void updateStateByNumber(String number) {
+        User user=new User();
+        user.setState(1);
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andUserNumberEqualTo(number);
+        userMapper.updateByExampleSelective(user,userExample);
     }
 }

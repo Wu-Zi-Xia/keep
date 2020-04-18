@@ -1,0 +1,1 @@
+alter table  keep_user add column sex char comment '用户性别'

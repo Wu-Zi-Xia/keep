@@ -30,14 +30,15 @@ public class FileController {
     @RequestMapping("updateUserINFO")
     public @ResponseBody
     Object updateUserINFO(HttpServletRequest request, @RequestBody AchieveUserINFO achieveUserINFO){
-
-    Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-    User user = (User)request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User)request.getSession().getAttribute(sessionNamePre + token);
     if(user==null){
             return null;
         }
         int update = userService.update(achieveUserINFO,user.getUserId());
-
+       if(update==4500){
+           return ResultDto.errorOf(500,"用户已经存在！！！");
+         }
         if(update>0){
             return ResultDto.oxOf("修改成功！！！");
         }

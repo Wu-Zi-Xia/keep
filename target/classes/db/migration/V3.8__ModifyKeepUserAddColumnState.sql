@@ -1,0 +1,1 @@
+ALTER TABLE keep_user add COLUMN state int not null comment '用户登录状态';

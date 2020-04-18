@@ -1,15 +1,13 @@
 package com.cduestc.keep.provider;
 
+import com.cduestc.keep.mapper.PlanProgressExMapper;
 import com.cduestc.keep.mapper.PlanProgressMapper;
 import com.cduestc.keep.model.PlanProgress;
 import com.cduestc.keep.model.PlanProgressExample;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class TimerTaskByMyself {
     @Autowired
@@ -30,16 +28,24 @@ public class TimerTaskByMyself {
         dTimer.schedule(new TimerTask() {
             @Autowired
             PlanProgressMapper planProgressMapper;
+            @Autowired
+            PlanProgressExMapper planProgressExMapper;
             @Override
             public void run() {
-                PlanProgress pp = (PlanProgress) request.getSession().getAttribute("PP");
-                long currentState = pp.getCurrentState() + 1;
-                pp.setCurrentState(currentState);
-                PlanProgressExample planProgressExample=new PlanProgressExample();
-                planProgressExample.createCriteria().andOwnerIdEqualTo(pp.getOwnerId());
-                PlanProgress planProgress=new PlanProgress();
-                planProgress.setCurrentState(currentState);
-                planProgressMapper.updateByExampleSelective(planProgress,planProgressExample);
+
+                List<PlanProgress> planProgresses = planProgressExMapper.selectAllCurrentState();
+                Iterator<PlanProgress> iterator = planProgresses.iterator();
+
+                while(iterator.hasNext()){
+                    PlanProgress next = iterator.next();
+                    next.setCurrentState(next.getCurrentState()+1l);
+                    next.setState(null);
+                    next.setEndPlanid(null);
+                    next.setStartPlanid(null);
+                    next.setOwnerId(null);
+                    planProgressMapper.updateByPrimaryKeySelective(next);
+                }
+
             }
         }, defaultDate , 24* 60* 60 * 1000);// 24* 60* 60 * 1000  24小时
     }

@@ -7,8 +7,13 @@
     <!--<classPathEntry location="/src" />-->
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 自动识别数据库关键字，默认false -->
+        <property name="autoDelimitKeywords" value="true" />
+        <!--可以使用``包括字段名，避免字段名与sql保留字冲突报错 -->
+        <property name="beginningDelimiter" value="`" />
+        <property name="endingDelimiter" value="`" />
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/keep?serverTimezone=GMT"
+                        connectionURL="jdbc:mysql://localhost:3306/keep?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true&amp;useSSL=true&amp;serverTimezone=Asia/Shanghai"
                         userId="root"
                         password="cgx980701...">
         </jdbcConnection>
@@ -91,6 +96,24 @@
             <property name="useActualColumnNames" value="false"/>
         </table>
         <table schema="DB2ADMIN" tableName="zan" domainObjectName="Zan" >
+        <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="keep_lesson" domainObjectName="KeepLesson" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="choose_lesson" domainObjectName="ChooseLesson" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="sports_history" domainObjectName="SportsHistory" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="product" domainObjectName="Product" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="product_category" domainObjectName="ProductCategory" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="product_specs" domainObjectName="ProductSpecs" >
             <property name="useActualColumnNames" value="false"/>
         </table>
     </context>

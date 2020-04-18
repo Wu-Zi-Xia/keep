@@ -1,0 +1,1 @@
+ALTER TABLE product modify COLUMN urls varchar(500) not null comment '商品urls';

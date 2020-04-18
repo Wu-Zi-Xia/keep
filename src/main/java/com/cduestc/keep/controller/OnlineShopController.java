@@ -1,16 +1,15 @@
 package com.cduestc.keep.controller;
 
-import com.cduestc.keep.dto.ResultDto;
-import com.cduestc.keep.dto.SportsEquipmentResultDto;
-import com.cduestc.keep.model.ShopCar;
-import com.cduestc.keep.model.SportEquipment;
-import com.cduestc.keep.model.User;
+import com.cduestc.keep.dto.*;
+import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.shopcarqueue.ProductStack;
+import com.cduestc.keep.service.ProductService;
 import com.cduestc.keep.service.ShopCarService;
 import com.cduestc.keep.service.SportsEquipmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,26 +27,41 @@ public class OnlineShopController {
     SportsEquipmentService sportsEquipmentService;
     @Autowired
     ShopCarService shopCarService;
-    @RequestMapping("shop/getSportsEquipment")
+    @Autowired
+    ProductService productService;
+    @RequestMapping("getProducts")
     public @ResponseBody
-    Object getSportsEquipment(
-            @RequestParam(value = "page",defaultValue ="1") int page,
+    Object getProducts(
+            @RequestParam(value = "limit",defaultValue ="0") int limit,
             @RequestParam(value = "size",defaultValue = "20") int size,
-            @RequestParam("type") String type,
-            @RequestParam(value = "search",required =false) String search){
-        if(search==null){//证明用户没有使用搜索的功能
-            SportsEquipmentResultDto sportsEquipmentList = sportsEquipmentService.getByTag(type,page,size);
-            return ResultDto.oxOf(sportsEquipmentList);
+            @RequestParam(value = "type") String type){
+        List<DelieverSimpleProductDto> products = productService.selectByLimit(limit, size, type);
+        if(products==null){
+          return ResultDto.errorOf(500,"已经到底了！！");
         }
-        //加了搜索条件
-        List<SportEquipment> sportEquipments = sportsEquipmentService.selectBySearch(page, size, search,type);
-        return ResultDto.oxOf(sportEquipments);
+        return ResultDto.oxOf(products);
     }
-
-    @RequestMapping("shop/getProductByID")
+    @RequestMapping("search")
     @ResponseBody
     public SportEquipment getSportsEquipmentById(@RequestParam("id")Integer id){
         SportEquipment sportEquipment = sportsEquipmentService.getByID(id);
         return sportEquipment;
+    }
+    @RequestMapping("getProductById")
+    public @ResponseBody Object getFourProducts(@RequestParam(name = "id") Long id){
+        DelieverProductDto productById = productService.getProductById(id);
+        if(productById==null){
+            return ResultDto.errorOf(500,"商品飞走了！！！");
+        }
+        return productById;
+    }
+    @RequestMapping("getProductDetils")
+    public @ResponseBody Object  getProduct(@RequestBody AchieveProductDTO achieveProductDTO)
+    {
+        DeliverProductSpecsDto detils = productService.getDetils(achieveProductDTO);
+        if(detils==null){
+            return ResultDto.errorOf(500,"商品飞走了！！！");
+        }
+        return ResultDto.oxOf(detils);
     }
 }

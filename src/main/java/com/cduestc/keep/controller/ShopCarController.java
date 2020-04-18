@@ -3,14 +3,17 @@ package com.cduestc.keep.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.AchieveProductDTO;
+import com.cduestc.keep.dto.AchieveShopCarProductDto;
 import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.pojo.Car;
+import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.service.RedisShopCarService;
 import com.cduestc.keep.service.ShopCarService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +37,20 @@ public class ShopCarController {
     RedisShopCarService redisShopCarService;
     @Autowired
     HttpServletRequest request;
+    @Value("${cookie.name.preFix}")
+    String cookieNamePre;
+    @Value("${session.name.preFix}")
+    String sessionNamePre;
     @RequestMapping("addShopCar")
-    public @ResponseBody Object addShopCar(@RequestBody AchieveProductDTO achieveProductDTO,HttpServletResponse response){
+    public @ResponseBody Object addShopCar(@RequestBody AchieveShopCarProductDto achieveProductDTO,
+                                           HttpServletResponse response,
+                                           HttpServletRequest request){
         try {
-            User user =(User) request.getSession().getAttribute("user");
+            String token = request.getHeader("token");
+            if(token==null){//判断cookie是否为空
+                return null;
+            }
+            User user= (User) request.getSession().getAttribute(sessionNamePre + token);
             //User user =null;
             //提取购物车
             Car car1 = findCar(request,response);
@@ -63,7 +76,11 @@ public class ShopCarController {
     //辅助方法提取购物车
     @RequestMapping("findShopCar")
     public @ResponseBody Car findCar( HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
-        User user =(User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        if(token==null){//判断cookie是否为空
+            return null;
+        }
+        User user= (User) request.getSession().getAttribute(sessionNamePre + token);
         String car1String = null;
         //从cookie中取出购物车
         Cookie[] cookies = request.getCookies();
@@ -85,9 +102,9 @@ public class ShopCarController {
             Car mergeCar = shopCarService.mergeShopCar(carFromCookie, carFromRedis);
             saveCarToRedis(user.getNickname(),mergeCar);
             //删除本地购物车
-           Cookie cookie=new Cookie("car1",null);
-           cookie.setMaxAge(0);
-            response.addCookie(cookie);
+           Cookie cookie1=new Cookie("car1",null);
+           cookie1.setMaxAge(0);
+            response.addCookie(cookie1);
             //返回
             return mergeCar;
         }

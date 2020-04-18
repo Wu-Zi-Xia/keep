@@ -33,9 +33,8 @@ public class CommentController {
     String redisFriCriSortSetF;
     @RequestMapping("createComment")
     public @ResponseBody Object createComment(HttpServletRequest request, @RequestBody AchieveCommentDTO achieveCommentDTO){
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user =(User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
-
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre + token);
         int i = commentService.insertComment(user, achieveCommentDTO);
         if(i>0){
             return ResultDto.oxOf();

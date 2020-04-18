@@ -37,4 +37,7 @@
     <select id="selectCurrentStateByOwnerId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select current_state from plan_progress where owner_ID=#{userId}
     </select>
+    <select id="selectAllCurrentState" resultType="com.cduestc.keep.model.PlanProgress">
+        select * from plan_progress
+    </select>
 </mapper>

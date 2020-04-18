@@ -23,19 +23,12 @@ public class SessionInterceptor implements HandlerInterceptor {
     private String sessionNamePre;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null&&cookies.length!=0) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(cookieNamePre)){
-                    UserExample userExample=new UserExample();
-                    userExample.createCriteria().andUserNumberEqualTo(cookie.getValue());
-                    List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size()!=0){
-                        request.getSession().setAttribute(sessionNamePre+cookie.getValue(),users.get(0));
-                    }
-                    break;
-                }
-            }
+        String token = request.getHeader("token");
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andUserNumberEqualTo(token);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users.size()!=0){
+            request.getSession().setAttribute(sessionNamePre+token,users.get(0));
         }
         return true;
     }

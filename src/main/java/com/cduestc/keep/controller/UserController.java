@@ -1,5 +1,6 @@
 package com.cduestc.keep.controller;
 
+import com.cduestc.keep.dto.DeliverUserINFODto;
 import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.CookieProvider;
@@ -29,13 +30,22 @@ public class UserController {
     private String sessionNamePre;
     @RequestMapping("getUserINFO")
     public @ResponseBody Object getUserINFO(HttpServletRequest request){
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user =(User) request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre+token);
         if(user==null){
             return ResultDto.errorOf(500,"用户不存在！！");
         }
-        User user1 = userService.selectUserINFO(user.getUserId());
-        return ResultDto.oxOf(user1);
+        DeliverUserINFODto deliverUserINFODto = userService.selectUserINFO(user.getUserId());
+        return ResultDto.oxOf(deliverUserINFODto);
     }
-
+    @RequestMapping("getSex")
+     public @ResponseBody Object  getSex(HttpServletRequest request){
+        String token = request.getHeader("token");
+         if(token==null){
+             return ResultDto.errorOf(500,"没有登录！！");
+         }
+         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+         String sexById = userService.getSexById(user);
+         return ResultDto.oxOf(sexById);
+     }
 }

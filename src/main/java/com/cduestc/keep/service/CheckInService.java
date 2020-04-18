@@ -42,7 +42,8 @@ public class CheckInService {
         String month = stf.format(calendar1.getTime());
         //获取当前日期在所在月份的第几天
         int days = calendar1.get(Calendar.DAY_OF_MONTH);
-        if( isSigned(request,days)){
+        if( isSigned(user,days)){
+
             return 0;
         }
         //获取系统的年份和月份来计算每月有多少天，用来设置数组的长度
@@ -74,7 +75,7 @@ public class CheckInService {
         //签到信息插入数据库
         checkInMapper.insert(userSign);
         //同步redis中
-            redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
+            redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.MINUTES);
         //map.put("conSigns", conSigns);
         }
         else{
@@ -99,7 +100,7 @@ public class CheckInService {
                  //签到
                  checkInMapper.insert(userSign);
                  //同步redis中
-                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
+                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.MINUTES);
              }
              else {//说明一号已经签到了
                  //现在判断连续签到的天数
@@ -137,16 +138,15 @@ public class CheckInService {
                  checkIn.setResults(jsonString2);
                  checkInMapper.updateByExampleSelective(checkIn,checkInExample1);
                  //同步redis中
-                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.HOURS);
+                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.MINUTES);
              }
         }
          return 1;
     }
 
-//按照月份和用户的ID获取到这个月的签到列表
-    public List<CheckIn> getCheckIn(String month, HttpServletRequest request) {
+    //按照月份和用户的ID获取到这个月的签到列表
+    public List<CheckIn> getCheckIn(String month, User user) {
         CheckInExample checkInExample=new CheckInExample();
-        User user= (User)request.getSession().getAttribute("user");
         CheckInExample.Criteria criteria = checkInExample.createCriteria().andOwnerIdEqualTo(user.getUserId());
         criteria.andMonthEqualTo(month);
         List<CheckIn> checkIns = checkInMapper.selectByExample(checkInExample);
@@ -154,8 +154,7 @@ public class CheckInService {
     }
 
 
-    public boolean isSigned(HttpServletRequest request,int index){
-        User user = (User) request.getSession().getAttribute("user");
+    public boolean isSigned(User user,int index){
         Long userId = user.getUserId();
         //获取系统当前的月和天
         Calendar calendar1 = Calendar.getInstance();
@@ -179,7 +178,6 @@ public class CheckInService {
                    return true;
                }
         }
-
         return false;
     }
 

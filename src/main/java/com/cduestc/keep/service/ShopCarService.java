@@ -1,6 +1,7 @@
 package com.cduestc.keep.service;
 
 import com.cduestc.keep.dto.AchieveProductDTO;
+import com.cduestc.keep.dto.AchieveShopCarProductDto;
 import com.cduestc.keep.mapper.*;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.pojo.Car;
@@ -25,7 +26,7 @@ public class ShopCarService {
     SubstituteFoodMapper substituteFoodMapper;
 
 
-   public Car insertShopCar(Car car, AchieveProductDTO achieveProductDTO){
+   public Car insertShopCar(Car car, AchieveShopCarProductDto achieveProductDTO){
        String type = achieveProductDTO.getType();
        switch (type){
            case "W":
@@ -89,7 +90,7 @@ public class ShopCarService {
          return car;
    }
    //辅助方法
-   public  boolean productIsExit(Car car,String type,Long ID,AchieveProductDTO achieveProductDTO){
+   public  boolean productIsExit(Car car,String type,Long ID,AchieveShopCarProductDto achieveProductDTO){
        List<ProductItem> productItems = car.getProductItems();
        if(productItems==null||productItems.size()==0){
            car.setSellerName("keep自营");

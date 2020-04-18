@@ -55,8 +55,8 @@ public class PlanController {
     //创建一个计划
     @RequestMapping("makePlan")
     public @ResponseBody Object makePlan(@RequestBody AchievePlanDto planDto, HttpServletRequest request, HttpServletResponse response){
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre +token);
         int insert = planService.createPlan(planDto, user,response);
         if(insert>0){
            return ResultDto.oxOf();
@@ -69,8 +69,8 @@ public class PlanController {
     public @ResponseBody Object getPlans(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
 
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         //判断当前的整个计划是否已经结束了
         if(planProgressService.isEnd(user)){//结束了当前的计划,
             ResultDto resultDto=new ResultDto();
@@ -108,8 +108,8 @@ public class PlanController {
     public @ResponseBody void updatePlan(@RequestParam("planId") String planID,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws IOException {
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user =(User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre + token);
         long l = Long.parseLong(planID);
         if(redisTemplate.hasKey(redisPlanTable+planID)){//判断redis中是否有值
             planService.updateState(l,user);
@@ -125,8 +125,8 @@ public class PlanController {
     public @ResponseBody Object getPlan(@RequestParam("planId") String planId,
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException {
-    Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-    User user =(User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre +token);
         long l = Long.parseLong(planId);
     if(redisTemplate.hasKey(redisPlanSort+user.getUserId())){//判断redis中是否存在表
         DeliverPlanDTO planById = redisPlanService.getPlanById(planId);

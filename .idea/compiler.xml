@@ -10,12 +10,10 @@
         <module name="boot-jedis" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="boot-jedis" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="boot-jedis" options="-parameters" />
       <module name="keep" options="-parameters" />
     </option>
   </component>

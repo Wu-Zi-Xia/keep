@@ -62,15 +62,16 @@ public class PostController {
     String redisFriCriSortSetF;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
-    public @ResponseBody Object createPost(HttpServletRequest request,@RequestBody PostDto newPost) throws IOException {
+    public @ResponseBody Object createPost(HttpServletRequest request,
+                                           @RequestBody PostDto newPost) throws IOException {
        //获取前端传过来的数据
 //        String requestBody = GetRequestBody.getRequestBody(request);
 //        JSONObject jsonObject= JSON.parseObject(requestBody);
         //查找登录人
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        String token = request.getHeader("token");
         User user = null;
-        if(cookie!=null){
-         user=(User) request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        if(token!=null){
+         user=(User) request.getSession().getAttribute(sessionNamePre+token);
         }
         else{
             return ResultDto.errorOf(500,"还没有登录！！");
@@ -94,9 +95,9 @@ public class PostController {
            return ResultDto.errorOf(500,"参数非法！！");
         }
         //获取cookie
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        String token = request.getHeader("token");
         //获取登录的用户id
-        User user = (User)request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        User user = (User)request.getSession().getAttribute(sessionNamePre+token);
         List<DeliverPostDTO> postByOwnerID;
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
             //redis里面去取值
@@ -140,9 +141,9 @@ public class PostController {
             return ResultDto.errorOf(500, "参数非法！！");
         }
         //获取cookie
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
+        String token = request.getHeader("token");
         //获取登录的用户id
-        User user = (User) request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         List<DeliverPostDTO> postByOwnerID;
         if (redisTemplate.hasKey(redisFriCriSortSetF+ user.getUserId())) {
             //redis里面去取值
@@ -179,8 +180,8 @@ public class PostController {
     public @ResponseBody  Object getPost(@RequestParam("postId") String postId,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws IOException {
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user =(User) request.getSession().getAttribute(sessionNamePre+cookie.getValue());
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre+token);
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){//判断redis中是否有值
             Map entries = redisTemplate.opsForHash().entries(redisFriTableNameM+postId);
             JSON o = (JSON)JSONObject.toJSON(entries);
@@ -199,8 +200,8 @@ public class PostController {
     public Object zan(@RequestParam(value = "postId" )long postId,
                     HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieNamePre);
-        User user = (User)request.getSession().getAttribute(sessionNamePre + cookie.getValue());
+        String token = request.getHeader("token");
+        User user = (User)request.getSession().getAttribute(sessionNamePre + token);
         String keyName=redisZanTableName+postId;
         Long userId = user.getUserId();
         if(redisPostService.isEnpty(keyName)){//存在当前键值对

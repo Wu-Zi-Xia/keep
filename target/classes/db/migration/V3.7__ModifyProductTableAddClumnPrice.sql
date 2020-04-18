@@ -1,0 +1,1 @@
+ALTER TABLE product add COLUMN price varchar(20) not null comment '商品价格范围';
