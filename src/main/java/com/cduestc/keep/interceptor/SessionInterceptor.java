@@ -24,11 +24,13 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         String token = request.getHeader("token");
-        UserExample userExample=new UserExample();
-        userExample.createCriteria().andUserNumberEqualTo(token);
-        List<User> users = userMapper.selectByExample(userExample);
-        if (users.size()!=0){
-            request.getSession().setAttribute(sessionNamePre+token,users.get(0));
+        if(token!=null){
+            UserExample userExample=new UserExample();
+            userExample.createCriteria().andUserNumberEqualTo(token);
+            List<User> users = userMapper.selectByExample(userExample);
+            if (users.size()!=0){
+                request.getSession().setAttribute(sessionNamePre+token,users.get(0));
+            }
         }
         return true;
     }

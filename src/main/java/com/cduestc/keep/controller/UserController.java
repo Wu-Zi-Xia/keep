@@ -33,7 +33,7 @@ public class UserController {
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre+token);
         if(user==null){
-            return ResultDto.errorOf(500,"用户不存在！！");
+            return ResultDto.errorOf(1004,"用户未登录");
         }
         DeliverUserINFODto deliverUserINFODto = userService.selectUserINFO(user.getUserId());
         return ResultDto.oxOf(deliverUserINFODto);
@@ -41,10 +41,10 @@ public class UserController {
     @RequestMapping("getSex")
      public @ResponseBody Object  getSex(HttpServletRequest request){
         String token = request.getHeader("token");
-         if(token==null){
-             return ResultDto.errorOf(500,"没有登录！！");
-         }
          User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
          String sexById = userService.getSexById(user);
          return ResultDto.oxOf(sexById);
      }

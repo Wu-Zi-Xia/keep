@@ -1,5 +1,6 @@
 package com.cduestc.keep.pojo;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,5 +13,5 @@ public class ProductItem implements Serializable {
     private String resourceUrl;//商品图片地址
     private int number;//几个商品
     private Double totalFee;//总价值
-    private String type;
+    private JSON productSpecs;//规格
 }

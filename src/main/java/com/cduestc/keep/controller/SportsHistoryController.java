@@ -1,6 +1,7 @@
 package com.cduestc.keep.controller;
 
 import com.cduestc.keep.dto.AchieveSportsHistoryDto;
+import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.service.RedisSportsHistoryService;
@@ -34,16 +35,22 @@ public class SportsHistoryController {
     RedisSportsHistoryService redisSportsHistoryService;
 
     @RequestMapping("insertSportsHistory")
-     public @ResponseBody void insertSportsHistory(@RequestBody AchieveSportsHistoryDto achieveSportsHistoryDto,
+     public @ResponseBody Object insertSportsHistory(@RequestBody AchieveSportsHistoryDto achieveSportsHistoryDto,
                              HttpServletRequest request){
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         sportsHistoryService.insertSportsHistory(achieveSportsHistoryDto,user);
+        return ResultDto.oxOf();
      }
      public @ResponseBody Object getSportsHistory(HttpServletRequest request){
          String token = request.getHeader("token");
          User user = (User) request.getSession().getAttribute(sessionNamePre + token);
-
+         if(user==null){
+             return ResultDto.errorOf(1004,"用户未登录");
+         }
          if(redisTemplate.hasKey(redisSportsHistory+user.getUserId())){
              //redisSportsHistoryService.getHistoryService();
          }

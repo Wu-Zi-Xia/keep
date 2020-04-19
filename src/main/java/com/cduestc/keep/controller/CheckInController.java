@@ -34,6 +34,9 @@ public class CheckInController {
     public @ResponseBody Object checkIn(HttpServletRequest request){
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre +token);
+       if(user==null){
+           return ResultDto.errorOf(1004,"用户未登录");
+       }
         ResultDto resultDto=new ResultDto();
         if(redisTemplate.hasKey("checkIn:"+user.getUserId())){//redis中是否有已经签到的标志位
             //表示今天已经签到
@@ -45,7 +48,7 @@ public class CheckInController {
             }
         }
         else{//没有就到数据库里面去签到，如果已经签到
-            int i = checkInService.checkIn(request);
+            int i = checkInService.checkIn(user);
             if(i==0){
                 //同步redis中
                 redisTemplate.opsForValue().set("checkIn:"+user.getUserId(),"1",1l, TimeUnit.MINUTES);
@@ -76,7 +79,7 @@ public class CheckInController {
          List<CheckIn> checkIn = checkInService.getCheckIn(month, user);
      if((checkIn==null||checkIn.size()==0)){//判断签到的信息
 
-        return ResultDto.errorOf(500,"获取签到列表失败！！，（那个时候我们还没有相识呢！！）");
+        return ResultDto.errorOf(1008,"获取签到列表失败！！，（那个时候我们还没有相识呢！！）");
      }
      return ResultDto.oxOf(checkIn);
 

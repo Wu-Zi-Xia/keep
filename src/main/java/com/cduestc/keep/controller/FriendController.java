@@ -4,6 +4,7 @@ import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.service.FriendService;
+import com.cduestc.keep.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,10 +25,19 @@ public class FriendController {
     private String cookieNamePre;
     @Value("${session.name.preFix}")
     private String sessionNamePre;
+    @Autowired
+    UserService userService;
     @RequestMapping("makeFriends")
     public @ResponseBody Object AddFriend(@RequestParam(value="userId")Long userId, HttpServletRequest request){
+        //判断用户是否存在
+        if(userService.selectUserByID(userId)==null){
+            return ResultDto.errorOf(1001,"用户不存在");
+        }
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre +token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         int i = friendService.addFriend(userId, user);
 
         if(i>0){
@@ -41,6 +51,9 @@ public class FriendController {
                                              HttpServletRequest request){
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         int i = friendService.deleteFriend(userId, user);
         if(i>0){
            return ResultDto.oxOf();

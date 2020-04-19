@@ -32,12 +32,12 @@ public class FileController {
     Object updateUserINFO(HttpServletRequest request, @RequestBody AchieveUserINFO achieveUserINFO){
         String token = request.getHeader("token");
         User user = (User)request.getSession().getAttribute(sessionNamePre + token);
-    if(user==null){
-            return null;
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
         }
         int update = userService.update(achieveUserINFO,user.getUserId());
        if(update==4500){
-           return ResultDto.errorOf(500,"用户已经存在！！！");
+           return ResultDto.errorOf(1009,"昵称已经存在！！！");
          }
         if(update>0){
             return ResultDto.oxOf("修改成功！！！");

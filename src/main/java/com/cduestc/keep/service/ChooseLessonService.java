@@ -111,4 +111,14 @@ public class ChooseLessonService {
 
         }
     }
+
+    public long countByIdAndOwnerId(Long id,Long ownerId) {
+        ChooseLessonExample chooseLessonExample=new ChooseLessonExample();
+        ChooseLessonExample.Criteria criteria = chooseLessonExample.createCriteria();
+        criteria.andOwnerIdEqualTo(ownerId);
+        criteria.andLessonIdEqualTo(id);
+        long l = chooseLessonMapper.countByExample(chooseLessonExample);
+        return l;
+
+    }
 }

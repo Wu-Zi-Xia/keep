@@ -31,9 +31,7 @@ public class CheckInService {
     @Value("${session.name.preFix}")
     String sessionName;
 //签到逻辑，接口直接调用
-    public int checkIn(HttpServletRequest request) {
-        Cookie cookie = CookieProvider.getCookie(request.getCookies(), cookieName);
-        User user = (User)request.getSession().getAttribute(sessionName + cookie.getValue());
+    public int checkIn(User user) {
         Long userId = user.getUserId();
         //获取系统当前的月和天
         Calendar calendar1 = Calendar.getInstance();
@@ -166,7 +164,7 @@ public class CheckInService {
         criteria.andMonthEqualTo(month);
         //获取签到信息
         List<CheckIn> checkIns = checkInMapper.selectByExample(checkInExample);
-        if(checkIns==null){
+        if(checkIns.size()==0){
             return false;
         }
         else{

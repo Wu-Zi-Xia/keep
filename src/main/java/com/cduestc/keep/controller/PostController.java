@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.*;
 import com.cduestc.keep.model.Comment;
+import com.cduestc.keep.model.Friend;
 import com.cduestc.keep.model.Post;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.provider.GetRequestBody;
+import com.cduestc.keep.service.FriendService;
 import com.cduestc.keep.service.PostService;
 
 import com.cduestc.keep.service.RedisPostService;
@@ -60,6 +62,8 @@ public class PostController {
     String redisFriTableNameF;
     @Value("${redis.keep.FriCirMyFriendSort}")
     String redisFriCriSortSetF;
+    @Autowired
+    FriendService friendService;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
@@ -69,12 +73,9 @@ public class PostController {
 //        JSONObject jsonObject= JSON.parseObject(requestBody);
         //查找登录人
         String token = request.getHeader("token");
-        User user = null;
-        if(token!=null){
-         user=(User) request.getSession().getAttribute(sessionNamePre+token);
-        }
-        else{
-            return ResultDto.errorOf(500,"还没有登录！！");
+        User user=(User) request.getSession().getAttribute(sessionNamePre+token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
         }
         //插入数据库
         int i = postService.insertNewPost(user, newPost);
@@ -98,12 +99,15 @@ public class PostController {
         String token = request.getHeader("token");
         //获取登录的用户id
         User user = (User)request.getSession().getAttribute(sessionNamePre+token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         List<DeliverPostDTO> postByOwnerID;
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
             //redis里面去取值
             postByOwnerID=redisPostService.getPostByOwnerID(user,redisOffset,redisSize,response);
             if (postByOwnerID == null||postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(500, "你还没有发布动态哦！！");
+                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
             }
             if(postByOwnerID.get(0).isEnd()){
                 return ResultDto.errorOf(500,"不能再刷新了！！");
@@ -118,7 +122,7 @@ public class PostController {
             //从数据库里面去查找50条数据，前十条返回给前端
              postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
             if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(500, "你还没有发布动态哦！！");
+                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
             }
             if(postByOwnerID.get(0).isEnd()){
                 return ResultDto.errorOf(500,"不能再刷新了！！");
@@ -138,18 +142,25 @@ public class PostController {
                                 HttpServletResponse response) throws IOException {
 
         if (redisOffset < 0 || redisSize <= 0) {
-            return ResultDto.errorOf(500, "参数非法！！");
+            return ResultDto.errorOf(1012, "参数非法！！");
         }
         //获取cookie
         String token = request.getHeader("token");
         //获取登录的用户id
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
+        long l = friendService.countFriendByUserId(user.getUserId());
+        if(l==0){
+           return ResultDto.errorOf(1000,"还没有关注的人哦！！");
+        }
         List<DeliverPostDTO> postByOwnerID;
         if (redisTemplate.hasKey(redisFriCriSortSetF+ user.getUserId())) {
             //redis里面去取值
             postByOwnerID = redisPostService.getFriendPostByOwnerID(user, redisOffset, redisSize, response);
             if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(500, "你的朋友还没有发布动态哦！！");
+                return ResultDto.errorOf(1002, "你的朋友还没有发布动态哦！！");
             }
             if (postByOwnerID.get(0).isEnd()) {
                 System.out.println("redis");
@@ -164,7 +175,7 @@ public class PostController {
             //从数据库里面去查找50条数据，前十条返回给前端
             postByOwnerID = postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
             if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(500, "你的朋友还没有发布动态哦！！");
+                return ResultDto.errorOf(1002, "你的朋友还没有发布动态哦！！");
             }
             if (postByOwnerID.get(0).isEnd()) {
                 return ResultDto.errorOf(500, "不能再刷新了！！");
@@ -182,6 +193,9 @@ public class PostController {
                                          HttpServletResponse response) throws IOException {
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre+token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){//判断redis中是否有值
             Map entries = redisTemplate.opsForHash().entries(redisFriTableNameM+postId);
             JSON o = (JSON)JSONObject.toJSON(entries);
@@ -202,6 +216,9 @@ public class PostController {
                       HttpServletResponse response) throws IOException {
         String token = request.getHeader("token");
         User user = (User)request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         String keyName=redisZanTableName+postId;
         Long userId = user.getUserId();
         if(redisPostService.isEnpty(keyName)){//存在当前键值对

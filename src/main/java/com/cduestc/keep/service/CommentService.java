@@ -52,11 +52,23 @@ public class CommentService {
     public int insertComment(User user, AchieveCommentDTO achieveCommentDTO) {
         Comment comment=new Comment();
         comment.setOwnerId(achieveCommentDTO.getOwnerID());
+        Long userId=null;
+        UpdatePostParam updatePostParam=new UpdatePostParam();
         if(achieveCommentDTO.getType().equals("P")){
+
             comment.setType(CommentTypeEnum.POST.getType());
+            //设置postID
+            updatePostParam.setPostId(achieveCommentDTO.getOwnerID());
+            //设置userID
+            userId = postExMapper.selectOwnerIdByKey(achieveCommentDTO.getOwnerID());
         }
         if(achieveCommentDTO.getType().equals("C")){
             comment.setType(CommentTypeEnum.COMMENT.getType());
+            //设置postID
+            updatePostParam.setPostId(commentExMapper.selectOwnerIdByKey(achieveCommentDTO.getOwnerID()));
+            //设置userID
+            Long postId=commentExMapper.selectOwnerIdByKey(achieveCommentDTO.getOwnerID());
+            userId=postExMapper.selectOwnerIdByKey(postId);
         }
         comment.setContent(achieveCommentDTO.getContent());
         Long createDate=System.currentTimeMillis();
@@ -64,21 +76,10 @@ public class CommentService {
         comment.setReviewId(user.getUserId());
         int insert = commentMapper.insert(comment);
         //异步修改动态的评论数
-        UpdatePostParam updatePostParam=new UpdatePostParam();
-        updatePostParam.setPostId(achieveCommentDTO.getOwnerID());
         updatePostParam.setNum(1);
         postExMapper.updatePostCommentCount(updatePostParam);
         //异步的去删除redis中的朋友圈表或者删除自己的相册表
         //获取到这个动态的拥有者
-        Long userId=null;
-        if(achieveCommentDTO.getType().equals("P")){
-            userId = postExMapper.selectOwnerIdByKey(achieveCommentDTO.getOwnerID());
-        }
-        if(achieveCommentDTO.getType().equals("C")){
-            Long commentId=commentExMapper.selectOwnerIdByKey(achieveCommentDTO.getOwnerID());
-            Long postId=commentExMapper.selectOwnerIdByKey(commentId);
-            userId=postExMapper.selectOwnerIdByKey(postId);
-        }
         if(userId.equals(user.getUserId())){//判断这个动态的拥有者和评论这条的动态的人是否是同一个人
             if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){//存在就删除自己的相册表
                 Set range = redisTemplate.opsForZSet().range(redisFriCriSortSetM + user.getUserId(), 0, -1);

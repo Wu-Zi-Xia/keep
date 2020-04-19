@@ -11,4 +11,5 @@ public class DeliverProductSpecsDto {
     private Integer productStock;
     private Double productPrice;
     private Integer status;
+    private String url;
 }

@@ -69,14 +69,15 @@ public class UserService {
             user.setWeight(null);
         }
         if(achieveUserINFO.getNickname()!=null){
-            user.setNickname(achieveUserINFO.getNickname());
+
             //判断是否已经存在这个昵称
             UserExample userExample=new UserExample();
             userExample.createCriteria().andNicknameEqualTo(achieveUserINFO.getNickname());
             List<User> users = userMapper.selectByExample(userExample);
-            if(users!=null||users.size()!=0){
+            if(users.size()!=0){
                 return 4500;
             }
+            user.setNickname(achieveUserINFO.getNickname());
         }
         else{
             user.setNickname(null);
@@ -112,6 +113,9 @@ public class UserService {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andUserNumberEqualTo(number);
         List<User> users = userMapper.selectByExample(userExample);
+        if(users==null||users.size()==0){
+         return null;
+        }
         return users.get(0);
     }
 
@@ -121,5 +125,10 @@ public class UserService {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andUserNumberEqualTo(number);
         userMapper.updateByExampleSelective(user,userExample);
+    }
+
+    public User selectUserByID(Long id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        return user;
     }
 }

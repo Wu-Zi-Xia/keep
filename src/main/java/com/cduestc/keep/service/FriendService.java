@@ -76,6 +76,12 @@ public class FriendService {
         List<Friend> friends = friendMapper.selectByExample(friendExample);
         return friends;
     }
+    public long countFriendByUserId(Long userId) {
+        FriendExample friendExample=new FriendExample();
+        friendExample.createCriteria().andFriendUseridEqualTo(userId);
+        long l = friendMapper.countByExample(friendExample);
+        return l;
+    }
 
     public int deleteFriend(String userId, User user) {
         FriendExample friendExample=new FriendExample();

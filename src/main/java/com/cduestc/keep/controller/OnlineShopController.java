@@ -3,6 +3,7 @@ package com.cduestc.keep.controller;
 import com.cduestc.keep.dto.*;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.shopcarqueue.ProductStack;
+import com.cduestc.keep.service.OnlineShopService;
 import com.cduestc.keep.service.ProductService;
 import com.cduestc.keep.service.ShopCarService;
 import com.cduestc.keep.service.SportsEquipmentService;
@@ -24,7 +25,7 @@ import java.util.List;
 @Controller
 public class OnlineShopController {
     @Autowired
-    SportsEquipmentService sportsEquipmentService;
+    OnlineShopService onlineShopService;
     @Autowired
     ShopCarService shopCarService;
     @Autowired
@@ -43,15 +44,15 @@ public class OnlineShopController {
     }
     @RequestMapping("search")
     @ResponseBody
-    public SportEquipment getSportsEquipmentById(@RequestParam("id")Integer id){
-        SportEquipment sportEquipment = sportsEquipmentService.getByID(id);
-        return sportEquipment;
+    public Object search(@RequestParam("search") String search){
+        onlineShopService.search(search);
+        return null;
     }
     @RequestMapping("getProductById")
     public @ResponseBody Object getFourProducts(@RequestParam(name = "id") Long id){
         DelieverProductDto productById = productService.getProductById(id);
         if(productById==null){
-            return ResultDto.errorOf(500,"商品飞走了！！！");
+            return ResultDto.errorOf(1007,"商品飞走了！！！");
         }
         return productById;
     }

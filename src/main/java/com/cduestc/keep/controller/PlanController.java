@@ -57,6 +57,9 @@ public class PlanController {
     public @ResponseBody Object makePlan(@RequestBody AchievePlanDto planDto, HttpServletRequest request, HttpServletResponse response){
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre +token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         int insert = planService.createPlan(planDto, user,response);
         if(insert>0){
            return ResultDto.oxOf();
@@ -67,17 +70,18 @@ public class PlanController {
     //获取用户的计划
     @RequestMapping("getPlans")
     public @ResponseBody Object getPlans(HttpServletRequest request,HttpServletResponse response) throws IOException {
-
-
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         //判断当前的整个计划是否已经结束了
         if(planProgressService.isEnd(user)){//结束了当前的计划,
             ResultDto resultDto=new ResultDto();
             List<String> urls=new ArrayList<>();
             urls.add(domin+"makePlan");
             urls.add(domin+"resetPlanState");
-            resultDto.setCode(201);
+            resultDto.setCode(1010);
             resultDto.setMessage("当前计划已经结束，你可以有如下选择。");
             resultDto.setData(urls);
             return resultDto;
@@ -105,11 +109,14 @@ public class PlanController {
 
     //修改一个计划的当前状态
     @RequestMapping("updatePlan")
-    public @ResponseBody void updatePlan(@RequestParam("planId") String planID,
+    public @ResponseBody Object updatePlan(@RequestParam("planId") String planID,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws IOException {
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         long l = Long.parseLong(planID);
         if(redisTemplate.hasKey(redisPlanTable+planID)){//判断redis中是否有值
             planService.updateState(l,user);
@@ -117,9 +124,9 @@ public class PlanController {
         else{//如果没有就去数据库里面拿并且放入到redis再重定向访问这个接口
             planService.getAllPlansByUserId(user);
             response.sendRedirect(domin+"updatePlan?planId="+planID);
-            return;
+            return ResultDto.oxOf();
         }
-
+return null;
     }
     @RequestMapping("getPlan")
     public @ResponseBody Object getPlan(@RequestParam("planId") String planId,
@@ -127,6 +134,9 @@ public class PlanController {
                                         HttpServletResponse response) throws IOException {
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre +token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         long l = Long.parseLong(planId);
     if(redisTemplate.hasKey(redisPlanSort+user.getUserId())){//判断redis中是否存在表
         DeliverPlanDTO planById = redisPlanService.getPlanById(planId);

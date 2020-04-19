@@ -1,5 +1,6 @@
 package com.cduestc.keep.service;
 
+import com.alibaba.fastjson.JSON;
 import com.cduestc.keep.dto.AchieveProductDTO;
 import com.cduestc.keep.dto.AchieveShopCarProductDto;
 import com.cduestc.keep.mapper.*;
@@ -17,80 +18,31 @@ import java.util.List;
 public class ShopCarService {
     //W:运动服饰，L：运动生活，E：运动装备，S：轻食代餐
 @Autowired
-    SportEquipmentMapper sportEquipmentMapper;
+ProductSpecsMapper productSpecsMapper;
 @Autowired
-    SportWearMapper sportWearMapper;
-@Autowired
-    SportLifeMapper sportLifeMapper;
-@Autowired
-    SubstituteFoodMapper substituteFoodMapper;
+ProductMapper productMapper;
 
 
    public Car insertShopCar(Car car, AchieveShopCarProductDto achieveProductDTO){
-       String type = achieveProductDTO.getType();
-       switch (type){
-           case "W":
-               SportWear sportWear = sportWearMapper.selectByPrimaryKey(achieveProductDTO.getProductID());
-              //判断商品是否在购物车里，在的话就将num加上接收过来的num参数，不在的话，新建一个productionItem
-             if(!productIsExit(car,type,sportWear.getWearId(),achieveProductDTO)){
+
+       Product product = productMapper.selectByPrimaryKey(achieveProductDTO.getProductId());
+       ProductSpecs productSpecs = productSpecsMapper.selectByPrimaryKey(achieveProductDTO.getId());
+       //判断商品是否在购物车里，在的话就将num加上接收过来的num参数，不在的话，新建一个productionItem
+             if(!productIsExit(car,achieveProductDTO)){
                  ProductItem productItem=new ProductItem();
-                 productItem.setId(sportWear.getWearId());
+                 productItem.setId(achieveProductDTO.getId());
                  productItem.setNumber(achieveProductDTO.getNumber());
-                 productItem.setPrice(sportWear.getPrice());
-                 productItem.setResourceUrl(sportWear.getImageUrl());
+                 productItem.setPrice(productSpecs.getProductPrice());
+                 productItem.setResourceUrl(productSpecs.getUrl());
                  productItem.setTotalFee(productItem.getPrice()*productItem.getNumber());
-                 productItem.setType(type);
-                 productItem.setProductName(sportWear.getWearName());
+                 productItem.setProductName(product.getName());
+                 productItem.setProductSpecs(JSON.parseObject(productSpecs.getProductSpecs()));
                  car.getProductItems().add(productItem);
-             }
-               break;
-           case "L":
-               SportLife sportLife = sportLifeMapper.selectByPrimaryKey(achieveProductDTO.getProductID());
-               if(!productIsExit(car,type,sportLife.getProductId(),achieveProductDTO)){
-                   ProductItem productItem=new ProductItem();
-                   productItem.setId(sportLife.getProductId());
-                   productItem.setNumber(achieveProductDTO.getNumber());
-                   productItem.setPrice(sportLife.getPrice());
-                   productItem.setResourceUrl(sportLife.getImageUrl());
-                   productItem.setTotalFee(productItem.getPrice()*productItem.getNumber());
-                   productItem.setType(type);
-                   productItem.setProductName(sportLife.getProductName());
-                   car.getProductItems().add(productItem);
-               }
-               break;
-           case "E":
-               SportEquipment sportEquipment = sportEquipmentMapper.selectByPrimaryKey(achieveProductDTO.getProductID());
-               if(!productIsExit(car,type,sportEquipment.getEquipmentId(),achieveProductDTO)){
-                   ProductItem productItem=new ProductItem();
-                   productItem.setId(sportEquipment.getEquipmentId());
-                   productItem.setNumber(achieveProductDTO.getNumber());
-                   productItem.setPrice(sportEquipment.getPrice());
-                   productItem.setResourceUrl(sportEquipment.getImageUrl());
-                   productItem.setTotalFee(productItem.getPrice()*productItem.getNumber());
-                   productItem.setType(type);
-                   productItem.setProductName(sportEquipment.getEquipmentName());
-                   car.getProductItems().add(productItem);
-               }
-               break;
-           case "S":
-               SubstituteFood substituteFood = substituteFoodMapper.selectByPrimaryKey(achieveProductDTO.getProductID());
-               if(!productIsExit(car,type,substituteFood.getFoodId(),achieveProductDTO)){
-                   ProductItem productItem=new ProductItem();
-                   productItem.setId(substituteFood.getFoodId());
-                   productItem.setNumber(achieveProductDTO.getNumber());
-                   productItem.setPrice(substituteFood.getPrice());
-                   productItem.setResourceUrl(substituteFood.getImageUrl());
-                   productItem.setTotalFee(productItem.getPrice()*productItem.getNumber());
-                   productItem.setType(type);
-                   productItem.setProductName(substituteFood.getFoodName());
-                   car.getProductItems().add(productItem);
-               }
-               break;
 }
          return car;
    }
    //辅助方法
-   public  boolean productIsExit(Car car,String type,Long ID,AchieveShopCarProductDto achieveProductDTO){
+   public  boolean productIsExit(Car car,AchieveShopCarProductDto achieveProductDTO){
        List<ProductItem> productItems = car.getProductItems();
        if(productItems==null||productItems.size()==0){
            car.setSellerName("keep自营");
@@ -100,7 +52,7 @@ public class ShopCarService {
        Iterator<ProductItem> iterator = productItems.iterator();
        while (iterator.hasNext()){
            ProductItem next = iterator.next();
-           if(next.getType().equals(type)&&next.getId().equals(ID)){
+           if(next.getId().equals(achieveProductDTO.getId())){
                next.setNumber(next.getNumber()+achieveProductDTO.getNumber());
               //当明细数量小于等于0,移除此商品
                if(next.getNumber()<=0){
@@ -131,7 +83,7 @@ public class ShopCarService {
             List<ProductItem> productItems2 = car2.getProductItems();
             for(int j=0;j<productItems2.size();j++){
                 ProductItem next2 = productItems2.get(j);
-                if(next1.getId()==next2.getId()&&next1.getType().equals(next2.getType())){//商品重复只需要将商品数量和总价算出即可
+                if(next1.getId()==next2.getId()){//商品重复只需要将商品数量和总价算出即可
                    next1.setNumber(next1.getNumber()+next2.getNumber());
                    next1.setTotalFee(next1.getNumber()*next1.getPrice());
                    productItems2.remove(next2);

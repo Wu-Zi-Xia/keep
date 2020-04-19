@@ -51,7 +51,7 @@ public class HelloController {
         String expireTime = String.valueOf(redisHelloService.setVerifyCode(number, verifyCode));
         ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "104374", "9d6ba6a4-cb38-4ead-b8fb-7795cf64da68");
         Map<String, String> params = new HashMap<String, String>();
-        params.put("message", "验证码为：" + verifyCode+"，过期时间为："+expireTime);
+        params.put("message", "验证码为：" + verifyCode+"，过期时间为："+expireTime+"S");
         params.put("number", number);
         String isSuccess = client.send(params);
         json = JSON.parseObject(isSuccess);//json字符串转成json对象

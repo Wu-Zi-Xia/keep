@@ -8,6 +8,7 @@ import com.cduestc.keep.mapper.KeepLessonExMapper;
 import com.cduestc.keep.mapper.KeepLessonMapper;
 import com.cduestc.keep.model.ChooseLesson;
 import com.cduestc.keep.model.KeepLesson;
+import com.cduestc.keep.model.KeepLessonExample;
 import com.cduestc.keep.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +79,10 @@ public class LessonService {
         keepLessonExMapper.updateHot(id,1);
     }
 
+    public long selectLessonByID(Long id) {
+        KeepLessonExample keepLessonExample=new KeepLessonExample();
+        keepLessonExample.createCriteria().andIdEqualTo(id);
+        long l = keepLessonMapper.countByExample(keepLessonExample);
+        return l;
+    }
 }

@@ -44,7 +44,6 @@ public class LessonController {
     RedisLessonService redisLessonService;
     @Autowired
     ChooseLessonService chooseLessonService;
-
     //获取热门课程
     @RequestMapping("getHotLesson")
              public @ResponseBody Object getHotLesson(HttpServletRequest request,
@@ -61,7 +60,6 @@ public class LessonController {
             }
               return ResultDto.oxOf(hotLesson);
              }
-
              //获取系列课程
              @RequestMapping("getSystemLesson")
              public @ResponseBody Object getSystemLesson(HttpServletResponse response,
@@ -88,8 +86,21 @@ public class LessonController {
                                           @RequestParam(name = "id")Long id){
             String token = request.getHeader("token");
             User user = (User) request.getSession().getAttribute(sessionNamePre + token);
-        lessonService.addLesson(user,id);
-        return ResultDto.oxOf("添加课程成功！！");
+            if(user==null){
+                return ResultDto.errorOf(1004,"你还没有登录哦！！");
+            }
+            if(lessonService.selectLessonByID(id)==0){
+                return ResultDto.errorOf(1005,"课程不存在");
+            }
+            if(chooseLessonService.countByIdAndOwnerId(id,user.getUserId())!=0){
+                return ResultDto.errorOf(1006,"课程已经存在！！");
+            }
+            //看redis中是否有值，有就删除
+            if(redisTemplate.hasKey(redisMyLessonTable+user.getUserId())){
+                redisTemplate.delete(redisMyLessonTable+user.getUserId());
+            }
+            lessonService.addLesson(user,id);
+            return ResultDto.oxOf("添加课程成功！！");
     }
     @RequestMapping("getMyLesson")
     public @ResponseBody Object getMyLesson(HttpServletRequest request){

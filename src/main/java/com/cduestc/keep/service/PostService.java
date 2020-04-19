@@ -200,6 +200,7 @@ public class PostService {
 
     //获取朋友的动态
     public List<DeliverPostDTO> getFriendPostByOwnerId(User user,int offset,int size) {
+
         long ID=user.getUserId();
         //动态详情的list
         List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();

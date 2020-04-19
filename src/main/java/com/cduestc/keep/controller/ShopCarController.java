@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Controller
 public class ShopCarController {
@@ -47,7 +50,7 @@ public class ShopCarController {
                                            HttpServletRequest request){
         try {
             String token = request.getHeader("token");
-            if(token==null){//判断cookie是否为空
+            if(token==null){//判断token是否为空
                 return null;
             }
             User user= (User) request.getSession().getAttribute(sessionNamePre + token);
@@ -77,9 +80,6 @@ public class ShopCarController {
     @RequestMapping("findShopCar")
     public @ResponseBody Car findCar( HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
         String token = request.getHeader("token");
-        if(token==null){//判断cookie是否为空
-            return null;
-        }
         User user= (User) request.getSession().getAttribute(sessionNamePre + token);
         String car1String = null;
         //从cookie中取出购物车
@@ -94,7 +94,6 @@ public class ShopCarController {
         }
         //JSON字符串转java对象
         Car carFromCookie = JSON.parseObject(car1String, Car.class);
-
         if(user==null){//session中没有值，用户没有登录，从cookie中去取购物车
             return carFromCookie;
         }else{//session中有值，用户登录，从redis中去取购物车
@@ -102,11 +101,10 @@ public class ShopCarController {
             Car mergeCar = shopCarService.mergeShopCar(carFromCookie, carFromRedis);
             saveCarToRedis(user.getNickname(),mergeCar);
             //删除本地购物车
-           Cookie cookie1=new Cookie("car1",null);
-           cookie1.setMaxAge(0);
+            Cookie cookie1=new Cookie("car1",null);
+            cookie1.setMaxAge(0);
             response.addCookie(cookie1);
-            //返回
-            return mergeCar;
+            return carFromRedis;
         }
     }
     //从redis中取出购物车

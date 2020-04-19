@@ -35,6 +35,9 @@ public class CommentController {
     public @ResponseBody Object createComment(HttpServletRequest request, @RequestBody AchieveCommentDTO achieveCommentDTO){
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         int i = commentService.insertComment(user, achieveCommentDTO);
         if(i>0){
             return ResultDto.oxOf();
