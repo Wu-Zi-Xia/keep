@@ -1,0 +1,1 @@
+ALTER TABLE product_specs add COLUMN URL varchar(100) not null comment '商品图片地址';
