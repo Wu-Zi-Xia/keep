@@ -16,6 +16,7 @@
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="description" jdbcType="VARCHAR" property="description" />
         <result column="urls" jdbcType="VARCHAR" property="urls" />
+        <result column="price" jdbcType="VARCHAR" property="price" />
     </resultMap>
 <select id="selectByLimit" resultType="com.cduestc.keep.model.Product" parameterType="map">
         select
@@ -25,4 +26,18 @@
         order by create_date desc
         limit #{page,jdbcType=INTEGER},#{offsize,jdbcType=INTEGER}
 </select>
+    <select id="countBySearch" parameterType="java.lang.String" resultType="java.lang.Long">
+        select count(*) from product
+        <where>
+            <if test="search != null and search!= ''">
+                and  name regexp #{search}
+            </if>
+        </where>
+    </select>
+    <select id="selectBySearch" parameterType="com.cduestc.keep.provider.ProductSelectParam" resultType="com.cduestc.keep.pojo.ProductSimpleINFO">
+        select id,name,urls,description,price
+        from product
+        where name regexp #{search}
+        limit #{offset},#{size}
+    </select>
 </mapper>

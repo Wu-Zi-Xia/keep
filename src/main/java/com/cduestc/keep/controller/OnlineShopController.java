@@ -1,7 +1,10 @@
 package com.cduestc.keep.controller;
 
 import com.cduestc.keep.dto.*;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.*;
+import com.cduestc.keep.pojo.ProductSimpleINFO;
 import com.cduestc.keep.provider.shopcarqueue.ProductStack;
 import com.cduestc.keep.service.OnlineShopService;
 import com.cduestc.keep.service.ProductService;
@@ -33,36 +36,39 @@ public class OnlineShopController {
     @RequestMapping("getProducts")
     public @ResponseBody
     Object getProducts(
-            @RequestParam(value = "limit",defaultValue ="0") int limit,
-            @RequestParam(value = "size",defaultValue = "20") int size,
-            @RequestParam(value = "type") String type){
+            @RequestParam(value = "limit",defaultValue ="0") long limit,
+            @RequestParam(value = "size",defaultValue = "20") long size,
+            @RequestParam(value = "type",required = false) String type){
         List<DelieverSimpleProductDto> products = productService.selectByLimit(limit, size, type);
         if(products==null){
           return ResultDto.errorOf(500,"已经到底了！！");
         }
         return ResultDto.oxOf(products);
     }
+
     @RequestMapping("search")
     @ResponseBody
-    public Object search(@RequestParam("search") String search){
-        onlineShopService.search(search);
-        return null;
+    public Object search(@RequestParam(value = "search",required = false) String search,
+                         @RequestParam("limit") long limit,
+                         @RequestParam("size") long size){
+        List<ProductSimpleINFO> search1 = onlineShopService.search(search, limit, size);
+            return ResultDto.oxOf(search1);
     }
+
     @RequestMapping("getProductById")
     public @ResponseBody Object getFourProducts(@RequestParam(name = "id") Long id){
         DelieverProductDto productById = productService.getProductById(id);
-        if(productById==null){
-            return ResultDto.errorOf(1007,"商品飞走了！！！");
-        }
+
         return productById;
     }
     @RequestMapping("getProductDetils")
     public @ResponseBody Object  getProduct(@RequestBody AchieveProductDTO achieveProductDTO)
     {
         DeliverProductSpecsDto detils = productService.getDetils(achieveProductDTO);
-        if(detils==null){
-            return ResultDto.errorOf(500,"商品飞走了！！！");
-        }
+
         return ResultDto.oxOf(detils);
     }
+
+
+
 }

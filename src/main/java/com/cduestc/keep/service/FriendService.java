@@ -2,6 +2,7 @@ package com.cduestc.keep.service;
 
 import com.cduestc.keep.mapper.FriendCircleExMapper;
 import com.cduestc.keep.mapper.FriendCircleMapper;
+import com.cduestc.keep.mapper.FriendExMapper;
 import com.cduestc.keep.mapper.FriendMapper;
 import com.cduestc.keep.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class FriendService {
     FriendCircleExMapper friendCircleExMapper;
     @Autowired
     FriendCircleMapper friendCircleMapper;
+    @Autowired
+    FriendExMapper friendExMapper;
     //添加一个好友关系
     public  int addFriend(Long userId, User user) {
         Friend friend=new Friend();
@@ -121,5 +124,10 @@ public class FriendService {
         friendExample.createCriteria().andFriendUseridEqualTo(user.getUserId());
         long l = friendMapper.countByExample(friendExample);
         return l;
+    }
+
+    public List<Long> getFriendIdByUserId(long userId) {
+        List<Long> friendIdByUserId = friendExMapper.getFriendIdByUserId(userId);
+        return friendIdByUserId;
     }
 }

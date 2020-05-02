@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.*;
 import com.cduestc.keep.enums.CommentTypeEnum;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.mapper.FriendCircleExMapper;
 import com.cduestc.keep.mapper.PostExMapper;
 import com.cduestc.keep.mapper.PostMapper;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
@@ -52,6 +55,8 @@ public class PostService {
     String redisFriTableNameF;
     @Value("${redis.keep.FriCirMyFriendSort}")
     String redisFriCriSortSetF;
+    @Autowired
+    CoachQualificationService coachQualificationService;
     //插入一条动态
     public int insertNewPost(User user, PostDto newPost){
         newPost.setOwnerId(user.getUserId());//设置动态的拥有者
@@ -130,19 +135,17 @@ public class PostService {
 
         //从朋友圈表获取当前用户所有的动态的总数
         int postCount = friendCircleExMapper.countByOwnerId(ID,1);
+        if(postCount==0){
+            throw new CustomizeException(CustomizeErrorCode.NOT_HAVE_POSTS);
+        }
         PostSelectParameter postExample=new PostSelectParameter();
         postExample.setOwnerId(ID);
         postExample.setIsOwn(1);
         postExample.setOrder("asc");
-        if(postCount==0){//证明没有动态
-            return null;
-        }
         int page=postCount-offset;
 
         if(page<=0){//证明请求的数据已经超过了数据库的总数
-            deliverPostDTO.setEnd(true);
-            deliverPostDTOList.add(deliverPostDTO);
-            return deliverPostDTOList;
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
         }
         if(page>size){
             postExample.setSize(size);
@@ -283,6 +286,7 @@ public class PostService {
     public boolean updateZan(String keyName, Long userId,Long postId) {
         UpdatePostParam updatePostParam=new UpdatePostParam();
         if(redisTemplate.opsForSet().isMember(keyName,userId.toString())){//看当前用户是否已经点赞
+            //删除redis中的点赞信息
             redisTemplate.opsForSet().remove(keyName,userId.toString());
             //发送异步请求将点赞信息持久化到数据库
             zanService.updateId(userId,postId,"D");
@@ -296,7 +300,7 @@ public class PostService {
             updatePostParam.setPostId(postId);
             //发异步请求到mysql修改字段
             updateLikeCount(updatePostParam);
-            return false;
+            return true;
         }
         else{
             //将点赞用户加入集合，
@@ -313,7 +317,7 @@ public class PostService {
             updatePostParam.setNum(1);
             updatePostParam.setPostId(postId);
             updateLikeCount(updatePostParam);
-            return true;
+            return false;
         }
     }
 
@@ -327,8 +331,8 @@ public class PostService {
         if(zans.size()==0){
             redisTemplate.opsForSet().add(keyName,"");
         }else{//点赞id不为空
-            JSONArray uids=JSONObject.parseArray(zans.get(0).getZanId());
-            String suids = JSONObject.toJSONString(uids);
+            String[] split1= zans.get(0).getZanId().split(",");
+            String suids = JSONObject.toJSONString(split1);
             redisTemplate.opsForSet().add(keyName,suids);
         }
 
@@ -366,5 +370,10 @@ public class PostService {
         }
         redisPostService.insertSort(deliverPostDTO, user.getUserId());
         return deliverPostDTO;
+    }
+
+    public void getRecommend(int mysqlOffset, int mysqlSize,long userId) {
+           //获取到教练和
+          coachQualificationService.getCoach(mysqlOffset,mysqlSize,userId);
     }
 }

@@ -3,6 +3,8 @@ package com.cduestc.keep.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.*;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.Comment;
 import com.cduestc.keep.model.Friend;
 import com.cduestc.keep.model.Post;
@@ -13,6 +15,7 @@ import com.cduestc.keep.service.FriendService;
 import com.cduestc.keep.service.PostService;
 
 import com.cduestc.keep.service.RedisPostService;
+import com.cduestc.keep.service.ZanService;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -64,6 +67,8 @@ public class PostController {
     String redisFriCriSortSetF;
     @Autowired
     FriendService friendService;
+    @Autowired
+    ZanService zanService;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
@@ -100,7 +105,7 @@ public class PostController {
         //获取登录的用户id
         User user = (User)request.getSession().getAttribute(sessionNamePre+token);
         if(user==null){
-            return ResultDto.errorOf(1004,"用户未登录");
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         List<DeliverPostDTO> postByOwnerID;
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
@@ -133,6 +138,32 @@ public class PostController {
         }
         //return ResultDto.errorOf(500,"");
     }
+    //获取推荐的用户
+    @RequestMapping("getRecommend")
+    //判断用户是否是有特别的编号，或者他的粉丝数量特别多，并且不是当前用户已经关注的人
+    public Object getRecommend(HttpServletRequest request,
+                               @RequestParam(name = "offset") int redisOffset,
+                               @RequestParam(name = "size") int redisSize){
+        //获取cookie
+        String token = request.getHeader("token");
+        //获取登录的用户id
+        User user = (User)request.getSession().getAttribute(sessionNamePre+token);
+        if(user==null){
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+        if(00==00){//到redis中去查询
+            redisPostService.getRecommend(redisOffset,redisSize);
+        }
+        else{//从数据库里面去查询
+            int mysqlOffset=0;
+            int mysqlSize=20;
+            postService.getRecommend(mysqlOffset,mysqlSize,user.getUserId());
+        }
+        return null;
+    }
+
+
+
 
     //获取朋友的动态
     @RequestMapping("getFriendPosts")
@@ -237,11 +268,22 @@ public class PostController {
     //获取当前动态的所有赞的功能
     @RequestMapping("getZan")
     public @ResponseBody Object getZan(@RequestParam(name ="postId") long postId,
-                         HttpServletResponse response) throws IOException {
+                         HttpServletResponse response,
+                                       HttpServletRequest request) throws IOException {
+        String token = request.getHeader("token");
+        User user = (User)request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            return ResultDto.errorOf(1004,"用户未登录");
+        }
         String keyName = redisZanTableName + postId;
         if(redisTemplate.hasKey(keyName)){//如果存在就从redis里面查
+            DeliverZanDto deliverZanDto=new DeliverZanDto();
             List<String> avatarURLs= redisPostService.getZan(keyName);
-            return ResultDto.oxOf(avatarURLs);
+            //先要判断当前用户是否已经点赞
+            boolean isZan = zanService.isZan(postId, user.getUserId());
+            deliverZanDto.setAvatarURLs(avatarURLs);
+            deliverZanDto.setZan(!isZan);
+            return ResultDto.oxOf(deliverZanDto);
         }
         else//不存在
         {

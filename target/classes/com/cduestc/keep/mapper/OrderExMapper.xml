@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cduestc.keep.mapper.OrderExMapper">
+    <resultMap id="BaseResultMap" type="com.cduestc.keep.model.Order">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="payment" jdbcType="DOUBLE" property="payment" />
+        <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
+        <result column="post_fee" jdbcType="DOUBLE" property="postFee" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_date" jdbcType="BIGINT" property="createDate" />
+        <result column="modify_date" jdbcType="BIGINT" property="modifyDate" />
+        <result column="payment_date" jdbcType="BIGINT" property="paymentDate" />
+        <result column="consign_date" jdbcType="BIGINT" property="consignDate" />
+        <result column="end_date" jdbcType="BIGINT" property="endDate" />
+        <result column="close_date" jdbcType="BIGINT" property="closeDate" />
+        <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
+        <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="buyer_message" jdbcType="VARCHAR" property="buyerMessage" />
+        <result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
+        <result column="buyer_rate" jdbcType="INTEGER" property="buyerRate" />
+    </resultMap>
+    <select id="selectOrdersByUserIdLimit" parameterType="com.cduestc.keep.provider.SelectOrderParams" resultType="com.cduestc.keep.model.Order">
+        select * from `order` where user_id=#{userId}
+        <if test="status != null and status != ''">
+        and `status`=#{status}
+        </if>
+        order by create_date desc limit #{offset},#{size}
+    </select>
+    <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(*) from `order` where user_id=#{userId}
+    </select>
+</mapper>

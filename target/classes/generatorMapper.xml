@@ -116,5 +116,20 @@
         <table schema="DB2ADMIN" tableName="product_specs" domainObjectName="ProductSpecs" >
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table schema="DB2ADMIN" tableName="product_order" domainObjectName="ProductOrder" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="order_item" domainObjectName="OrderItem" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="order_shipping" domainObjectName="OrderShipping" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="certification" domainObjectName="Certification" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="DB2ADMIN" tableName="coach_qualification" domainObjectName="CoachQualification" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>

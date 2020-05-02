@@ -6,7 +6,8 @@ import java.util.List;
 
 @Data
 public class ProductSelectParam {
-    private int offset;
-    private int size;
+    private long offset;
+    private long size;
+    private String search;
     private List<Long> ids;
 }

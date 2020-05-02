@@ -26,4 +26,7 @@
     <select id="countByOwner" parameterType="java.lang.Long" resultType="java.lang.Integer">
         select count (*) from keep_friend where friend_userID=ownerId
     </select>
+    <select id="getFriendIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select friend_friendID from keep_friend where friend_userID=#{userId}
+    </select>
 </mapper>

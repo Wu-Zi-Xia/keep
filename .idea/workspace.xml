@@ -2,24 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/059144d6-260c-4356-84f5-1a24861e213b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/059144d6-260c-4356-84f5-1a24861e213b.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CheckInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CheckInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/FriendController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/LessonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/LessonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/config/RedisConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/OnlineShopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/OnlineShopController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PlanController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/SportsHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/SportsHistoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveShopCarProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/AchieveShopCarProductDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverProductSpecsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DeliverProductSpecsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/interceptor/SessionInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/interceptor/SessionInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ArmSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/BackSportsMapper.java" afterDir="false" />
@@ -38,6 +28,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ForearmSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendCircleMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/FriendMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/KeepLessonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/KeepLessonMapper.java" afterDir="false" />
@@ -46,10 +38,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PlanProgressMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductCategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductCategoryMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductCategoryMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductCategoryMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductSpecsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductSpecsMapper.java" afterDir="false" />
@@ -128,27 +123,18 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/UserExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/UserExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/Zan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/Zan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ZanExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/model/ZanExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CheckInService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CheckInService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ChooseLessonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ChooseLessonService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/ProductSelectParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/provider/ProductSelectParam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/FriendService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/LessonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/LessonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/OnlineShopService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/OnlineShopService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CheckInController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/CheckInController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FileController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FriendController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/FriendController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/HelloController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/LessonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/LessonController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ZanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ZanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/generatorMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generatorMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/config/RedisConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/OnlineShopController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/OnlineShopController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PlanController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveShopCarProductDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/AchieveShopCarProductDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverProductSpecsDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/dto/DeliverProductSpecsDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/interceptor/SessionInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsHistoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/SportsHistoryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ArmSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BackSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/BellySportsMapper.xml" afterDir="false" />
@@ -162,8 +148,11 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/KeepLessonMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/KeepLessonMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PlanProgressMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductCategoryMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductCategoryMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductSpecsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductSpecsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ShankSportsMapper.xml" afterDir="false" />
@@ -176,19 +165,13 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ThighSportsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ZanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ZanMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$Criteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$Criterion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$Criterion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$GeneratedCriteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/model/ProductSpecsExample$GeneratedCriteria.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CheckInService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ChooseLessonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ChooseLessonService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/FriendService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/LessonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/LessonService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/ProductSelectParam.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/provider/ProductSelectParam.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/OnlineShopService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/OnlineShopService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/PostService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ProductService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ZanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ZanService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generatorMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generatorMapper.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -263,28 +246,28 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="database.data.extractors.current.id" value="HTML Table" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../community" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\idea\keep\src\main\resources\db\migration" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\idea\keep\src\main\resources\luaScript" />
-      <recent name="D:\idea\keep\src\main\java\com\cduestc\keep" />
       <recent name="D:\idea\keep\src\main\resources\static" />
-      <recent name="D:\idea\keep\src\main\resources\static\css" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.cduestc.keep.provider.serialize" />
       <recent name="com.cduestc.keep.config" />
       <recent name="com.cduestc.keep.dto" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\idea\keep\src\main\java\com\cduestc\keep" />
+      <recent name="D:\idea\keep\src\main\resources\db\migration" />
       <recent name="D:\idea\keep\src\main\resources\luaScript" />
       <recent name="D:\idea\keep\src\main\resources\static" />
+      <recent name="D:\idea\keep\src\main\resources\static\css" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -356,7 +339,22 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand />
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@637fdc81" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@637fdc81" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@32b60190" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@637fdc81" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@1cb64b9a" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+          </expand>
           <select />
         </treeState>
       </serviceView>
@@ -449,7 +447,18 @@
       <workItem from="1587025341058" duration="10934000" />
       <workItem from="1587109569308" duration="28451000" />
       <workItem from="1587178079725" duration="44266000" />
-      <workItem from="1587262575556" duration="17372000" />
+      <workItem from="1587262575556" duration="24356000" />
+      <workItem from="1587378812447" duration="1865000" />
+      <workItem from="1587444193785" duration="5091000" />
+      <workItem from="1587745589451" duration="3152000" />
+      <workItem from="1588150629661" duration="2988000" />
+      <workItem from="1588170821144" duration="6871000" />
+      <workItem from="1588182908736" duration="53000" />
+      <workItem from="1588182974803" duration="448000" />
+      <workItem from="1588227277078" duration="266000" />
+      <workItem from="1588227702848" duration="24375000" />
+      <workItem from="1588301125696" duration="36902000" />
+      <workItem from="1588389068349" duration="11658000" />
     </task>
     <servers />
   </component>
@@ -476,14 +485,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ZanService.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CommentService.java</url>
           <line>52</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/CoachQualificationService.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

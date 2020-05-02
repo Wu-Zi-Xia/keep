@@ -36,6 +36,8 @@ public class RedisPostService {
     String domin;
     @Autowired
     UserExMapper userExMapper;
+    @Autowired
+    ZanService zanService;
     //插入到redis中
     public  void insert(String tableName, Object post,String type){
         //将计划信息放入到redis中
@@ -141,6 +143,7 @@ public class RedisPostService {
     }
 
     public List<String> getZan(String key) {
+
         Set members = redisTemplate.opsForSet().members(key);
         if(members==null||members.size()==0){
             return null;
@@ -153,4 +156,7 @@ public class RedisPostService {
       return   redisTemplate.hasKey(keyName);
     }
 
+    public void getRecommend(int redisOffset, int redisSize) {
+
+    }
 }

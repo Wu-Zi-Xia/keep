@@ -34,5 +34,8 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.8__ModifyKeepUserAddColumnState.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V3.9__ModifyProductSpecsTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.0__ModifyProductSpecsTable2.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.1__CreateOrderTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.2__CreateCertificationTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.3__CreateCoachTable.sql" dialect="MySQL" />
   </component>
 </project>
