@@ -23,18 +23,14 @@
     </select>
 
     <select id="selectCoachNum" parameterType="java.util.List" resultType="java.lang.Long">
-        select count (*) from coach_qualification where user_id not in
-        <foreach collection="list" index="index" item="item" open="("
+        select count(*) from coach_qualification where user_id not in
+        <foreach collection="ids" index="index" item="item" open="("
                  separator="," close=")">
             #{item}
         </foreach>
     </select>
     <select id="selectCoachByLimit" parameterType="com.cduestc.keep.provider.SelectCoachParams" resultType="com.cduestc.keep.model.CoachQualification">
-        select * from coach_qualification where user_id not in
-        <foreach collection="list" index="index" item="item" open="("
-                 separator="," close=")">
-            #{item}
-        </foreach>
+select * from coach_qualification where user_id not in<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
         limit #{offset},#{size}
     </select>
 </mapper>

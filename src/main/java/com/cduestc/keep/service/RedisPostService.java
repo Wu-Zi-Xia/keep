@@ -3,6 +3,8 @@ package com.cduestc.keep.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.DeliverPostDTO;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.mapper.UserExMapper;
 import com.cduestc.keep.model.Post;
 import com.cduestc.keep.model.User;
@@ -38,6 +40,10 @@ public class RedisPostService {
     UserExMapper userExMapper;
     @Autowired
     ZanService zanService;
+    @Value("${redis.keep.hot.posts}")
+    String redisHotPostsSortSet;
+    @Value("${redis.keep.hot.posts.name}")
+    String redisHotPostsTableName;
     //插入到redis中
     public  void insert(String tableName, Object post,String type){
         //将计划信息放入到redis中
@@ -55,7 +61,6 @@ public class RedisPostService {
 
 
     }
-
     public void insertSort(DeliverPostDTO post,Long ID){
         JSON o = (JSON) JSON.toJSON(post);
         String text = o.toString();
@@ -65,6 +70,17 @@ public class RedisPostService {
         redisTemplate.opsForZSet().add(redisFriCriSortSetM+ID,redisFriTableNameM+postId.toString(),createDate);
         redisTemplate.opsForHash().putAll(redisFriTableNameM+postId,postMap);
     }
+
+    public void insertSort(DeliverPostDTO post){
+        JSON o = (JSON) JSON.toJSON(post);
+        String text = o.toString();
+        Map postMap= JSONObject.parseObject(text);
+        Long createDate = post.getPost().getCreateDate();
+        Long postId = post.getPost().getPostId();
+        redisTemplate.opsForZSet().add(redisHotPostsSortSet,redisHotPostsTableName+postId.toString(),createDate);
+        redisTemplate.opsForHash().putAll(redisHotPostsTableName+postId,postMap);
+    }
+
     public void insertFriendSort(DeliverPostDTO post,Long ID){
         JSON o = (JSON) JSON.toJSON(post);
         String text = o.toString();
@@ -158,5 +174,29 @@ public class RedisPostService {
 
     public void getRecommend(int redisOffset, int redisSize) {
 
+    }
+
+    public void setHotPosts(List<DeliverPostDTO> hotPosts) {
+
+    }
+    //获取热门的动态
+    public List<DeliverPostDTO> getHot(int page, Long userId,int size) {
+        //参数校验
+        if(page<0){
+            throw new CustomizeException(CustomizeErrorCode.PARAM_IS_WRONG);
+        }
+        Long totalCount = redisTemplate.opsForZSet().size(redisHotPostsSortSet);
+        long l = totalCount % size;
+        long totalPage=0;
+        if(l>0){
+            totalPage=totalCount/size+1;
+        }
+        if(l==0){
+            totalPage=totalCount/size;
+        }
+        if(page>totalPage){//如果已经超过了最大的page，那么就去mysql里面去取值
+            //postService.getHot()
+        }
+        return null;
     }
 }

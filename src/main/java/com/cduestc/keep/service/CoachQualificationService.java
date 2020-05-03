@@ -18,7 +18,7 @@ public class CoachQualificationService {
     @Autowired
     private FriendService friendService;
 
-    public void getCoach(long mysqlOffset, long mysqlSize,long userId) {
+    public  List<CoachQualification> getCoach(long mysqlOffset, long mysqlSize,long userId) {
         //获取当前用户的所有关注的人
         List<Long> friendIdByUserId = friendService.getFriendIdByUserId(userId);
         //获得(没有被当前用户关注的)教练的总数,
@@ -35,6 +35,6 @@ public class CoachQualificationService {
         selectCoachParams.setSize(mysqlSize);
         selectCoachParams.setIds(friendIdByUserId);
         List<CoachQualification> coachQualifications = coachQualificationExMapper.selectCoachByLimit(selectCoachParams);
-        return;
+        return coachQualifications;
     }
 }

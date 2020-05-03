@@ -18,7 +18,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     SEARCH_IS_ENPTY("手抖了一下吗?搜索内容不能为空哦！",2015),
     PRODUCT_CATEGORY_IS_ENPTY("商品类不能为空！！",2016),
     PRODUCT_CATEGORY_IS_NOT_EXIST("商品类不能为空！！",2016),
-    NOT_HAVE_POSTS("你还没有发布动态哦！",2017);
+    NOT_HAVE_POSTS("你还没有发布动态哦！",2017),
+    PARAM_IS_WRONG("参数非法！",2018);
     private String message;
     private Integer code;
     @Override

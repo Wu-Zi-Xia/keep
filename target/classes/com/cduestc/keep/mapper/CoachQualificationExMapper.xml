@@ -11,10 +11,26 @@
         <result column="user_id" jdbcType="BIGINT" property="userId" />
         <result column="certification_id" jdbcType="BIGINT" property="certificationId" />
     </resultMap>
-    <select id="selectCoachNum" resultType="java.lang.Long">
-        select count (*) from coach_qualification
+    <select id="selectById" parameterType="java.util.List"
+            resultMap="BaseResultMap">
+        select * from test
+        where status = 'A'
+        and id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectCoachNum" parameterType="java.util.List" resultType="java.lang.Long">
+        select count(*) from coach_qualification where user_id not in
+        <foreach collection="ids" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
     </select>
     <select id="selectCoachByLimit" parameterType="com.cduestc.keep.provider.SelectCoachParams" resultType="com.cduestc.keep.model.CoachQualification">
-        select * from coach_qualification limit #{offset},#{size}
+select * from coach_qualification where user_id not in<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+        limit #{offset},#{size}
     </select>
 </mapper>

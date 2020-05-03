@@ -6,12 +6,10 @@ import com.cduestc.keep.dto.*;
 import com.cduestc.keep.enums.CommentTypeEnum;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
-import com.cduestc.keep.mapper.FriendCircleExMapper;
-import com.cduestc.keep.mapper.PostExMapper;
-import com.cduestc.keep.mapper.PostMapper;
-import com.cduestc.keep.mapper.ZanMapper;
+import com.cduestc.keep.mapper.*;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.PostSelectParameter;
+import com.cduestc.keep.provider.ProductSelectParam;
 import com.cduestc.keep.provider.UpdatePostParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,6 +55,12 @@ public class PostService {
     String redisFriCriSortSetF;
     @Autowired
     CoachQualificationService coachQualificationService;
+    @Autowired
+    CertificationMapper certificationMapper;
+    @Autowired
+    UserService keepUserService;
+    @Autowired
+    PostService postService;
     //插入一条动态
     public int insertNewPost(User user, PostDto newPost){
         newPost.setOwnerId(user.getUserId());//设置动态的拥有者
@@ -207,7 +211,6 @@ public class PostService {
         long ID=user.getUserId();
         //动态详情的list
         List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();
-        DeliverPostDTO deliverPostDTO=new DeliverPostDTO();
         //从朋友圈表获取当前用户的朋友的所有的动态的总数
         int postCount = friendCircleExMapper.countByOwnerId(ID,0);
         PostSelectParameter postExample=new PostSelectParameter();
@@ -220,9 +223,7 @@ public class PostService {
         int page=postCount-offset;
 
         if(page<=0){//证明请求的数据已经超过了数据库的总数
-            deliverPostDTO.setEnd(true);
-            deliverPostDTOList.add(deliverPostDTO);
-            return deliverPostDTOList;
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
         }
         if(page>size){
             postExample.setSize(size);
@@ -335,9 +336,8 @@ public class PostService {
             String suids = JSONObject.toJSONString(split1);
             redisTemplate.opsForSet().add(keyName,suids);
         }
-
-
     }
+
 
     public List<Post> selectPostsByOwnerId(long userId) {
         PostExample postExample=new PostExample();
@@ -371,9 +371,116 @@ public class PostService {
         redisPostService.insertSort(deliverPostDTO, user.getUserId());
         return deliverPostDTO;
     }
-
-    public void getRecommend(int mysqlOffset, int mysqlSize,long userId) {
+     //获取推荐的动态
+    public  List<DeliverRecomendDto> getRecommend(int mysqlOffset, int mysqlSize,long userId) {
+        //参数校验
+        if(mysqlOffset<0){
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
+        }
+        if(mysqlSize<0){
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
+        }
+        List<DeliverRecomendDto> deliverRecomendDtos=new ArrayList<>();
            //获取到教练和
-          coachQualificationService.getCoach(mysqlOffset,mysqlSize,userId);
+         List<CoachQualification> coach = coachQualificationService.getCoach(mysqlOffset, mysqlSize, userId);
+         Iterator<CoachQualification> iterator = coach.iterator();
+         while(iterator.hasNext()){
+            CoachQualification next = iterator.next();
+            DeliverRecomendDto deliverRecomendDto=new DeliverRecomendDto();
+            //查询用户的简单信息
+            DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getUserId());
+            deliverRecomendDto.setDeliverSimpleUserINFODTO(simpleUserINFOById);
+            //查询该教练的第一条动态
+            PostSelectParameter postSelectParameter=new PostSelectParameter();
+            postSelectParameter.setOffset(0);
+            postSelectParameter.setSize(1);
+            postSelectParameter.setOwnerId(next.getUserId());
+            postSelectParameter.setIsOwn(1);
+            List<Post> posts = postExMapper.selectByLimit(postSelectParameter);
+            deliverRecomendDto.setPost(posts.get(0));
+            //查询教练的勋章
+            Certification certification = certificationMapper.selectByPrimaryKey(next.getCertificationId());
+            deliverRecomendDto.setCerString(certification.getQualificationType());
+            deliverRecomendDtos.add(deliverRecomendDto);
+        }
+        return deliverRecomendDtos;
     }
+    //获取热门的动态
+    public List<DeliverPostDTO> getHot(int page,int size) {
+        if(page<=0){
+            throw new CustomizeException(CustomizeErrorCode.PARAM_IS_WRONG);
+        }
+        int likeCount=100;
+        int totalCount=postService.countByLikeCount(likeCount);
+        int l = totalCount % size;
+        int totalPage=0;
+        if(l>0){
+            totalPage=totalCount/size+1;
+        }
+        if(l==0){
+            totalPage=totalCount/size;
+        }
+        if(page>totalPage){
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
+        }
+        int offset=size*(page-1);
+        PostSelectParameter postSelectParameter=new PostSelectParameter();
+        postSelectParameter.setSize(size);
+        postSelectParameter.setOffset(offset);
+        postSelectParameter.setLikeCount(likeCount);
+        List<Post> posts = postService.selectPostsByLikeCount(postSelectParameter);
+        List<DeliverPostDTO> deliverPostDTOList = setDeliverPostDTO(posts);
+        for(int i=0;i<deliverPostDTOList.size();i++) {//将查询出来的所有数据进行redis同步
+            redisPostService.insertSort(deliverPostDTOList.get(i));
+        }
+        return deliverPostDTOList;
+    }
+
+    private List<Post> selectPostsByLikeCount(PostSelectParameter postSelectParameter) {
+        List<Post> posts = postExMapper.selectByLikeCount(postSelectParameter);
+        return posts;
+    }
+
+    private int countByLikeCount(int likeCount) {
+       int totalCount= postExMapper.countByLikeCount(likeCount);
+       return totalCount;
+    }
+
+
+    //辅助方法，根据post去设置出一个完整的前台需要的post传到前台的动态
+    public List<DeliverPostDTO> setDeliverPostDTO(List<Post> posts) {
+        //动态详情的list
+        List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();
+        Iterator<Post> iterator1 = posts.iterator();
+        while(iterator1.hasNext()){
+            DeliverPostDTO deliverPostDTO1=new DeliverPostDTO();
+            //设置动态
+            Post next = iterator1.next();
+            //设置发布者的简单信息
+            DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getOwnerId());
+            deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
+            deliverPostDTO1.setPost(next);
+
+            List<Comment> comments;
+            //获取每一条动态的一级评论：
+            comments= commentService.getCommentsByOwnerId(next.getPostId(), CommentTypeEnum.POST);
+
+            Iterator<Comment> iterator = comments.iterator();
+            List<DeliverCommentDto> deliverCommentDtoList=new ArrayList<>();
+            while (iterator.hasNext()){
+                DeliverCommentDto deliverCommentDto=new DeliverCommentDto();
+                //设置一级评论
+                Comment next1 = iterator.next();
+                deliverCommentDto.setComment(next1);
+                //设置评论的的二级评论
+                deliverCommentDto.setCommentList(commentService.getCommentsByOwnerId(next1.getCommentId(),CommentTypeEnum.COMMENT));//设置二级评论的list
+                deliverCommentDtoList.add(deliverCommentDto);
+            }
+            //设置动态的所有一级评论
+            deliverPostDTO1.setComments(deliverCommentDtoList);
+            deliverPostDTOList.add(deliverPostDTO1);
+        }
+    return deliverPostDTOList;
+    }
+
 }

@@ -9,4 +9,5 @@ public class PostSelectParameter {
     private int size;
     private String order;
     private int isOwn;
+    private int likeCount;
 }

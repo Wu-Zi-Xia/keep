@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.*;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
-import com.cduestc.keep.model.Comment;
-import com.cduestc.keep.model.Friend;
-import com.cduestc.keep.model.Post;
-import com.cduestc.keep.model.User;
+import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.provider.GetRequestBody;
 import com.cduestc.keep.service.FriendService;
@@ -69,6 +66,10 @@ public class PostController {
     FriendService friendService;
     @Autowired
     ZanService zanService;
+    @Value("${redis.keep.hot.posts}")
+    String redisHotPostsSortSet;
+    @Value("${redis.keep.hot.posts.name}")
+    String redisHotPostsTableName;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
@@ -141,7 +142,7 @@ public class PostController {
     //获取推荐的用户
     @RequestMapping("getRecommend")
     //判断用户是否是有特别的编号，或者他的粉丝数量特别多，并且不是当前用户已经关注的人
-    public Object getRecommend(HttpServletRequest request,
+    public Object Recommend(HttpServletRequest request,
                                @RequestParam(name = "offset") int redisOffset,
                                @RequestParam(name = "size") int redisSize){
         //获取cookie
@@ -151,16 +152,42 @@ public class PostController {
         if(user==null){
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
-        if(00==00){//到redis中去查询
-            redisPostService.getRecommend(redisOffset,redisSize);
+        if(00==1){//到redis中去查询
+           redisPostService.getRecommend(redisOffset,redisSize);
         }
-        else{//从数据库里面去查询
+       else{//从数据库里面去查询
             int mysqlOffset=0;
             int mysqlSize=20;
-            postService.getRecommend(mysqlOffset,mysqlSize,user.getUserId());
+            List<DeliverRecomendDto> recommend = postService.getRecommend(mysqlOffset, mysqlSize, user.getUserId());
+            return ResultDto.oxOf(recommend);
         }
-        return null;
+       return null;
     }
+     @RequestMapping("getHot")
+     public Object getHot(@RequestParam("page") int page,
+                          HttpServletRequest request){
+         String token = request.getHeader("token");
+         //获取登录的用户id
+         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+         if(user==null){
+             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+         }
+//        if(redisTemplate.hasKey(redisHotPostsSortSet)){//存在键值就从redis中去查找
+//            int redisSize=10;
+//             redisPostService.getHot(page,user.getUserId(),redisSize);
+//        }
+//        else{//从mysql中去查找
+//            int mysqlSize=20;
+//            List<DeliverPostDTO> hotPosts = postService.getHot(page, mysqlSize);
+//            //从数据库里面查找之后再放入到redis中
+//            redisPostService.setHotPosts(hotPosts);
+//        }
+           int mysqlSize=20;
+           List<DeliverPostDTO> hotPosts = postService.getHot(page, mysqlSize);
+            //从数据库里面查找之后再放入到redis中
+           //redisPostService.setHotPosts(hotPosts);
+           return ResultDto.oxOf(hotPosts);
+     }
 
 
 

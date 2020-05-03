@@ -18,4 +18,8 @@ public interface PostExMapper {
     Long selectOwnerIdByKey(@Param("postId") Long postId);
 
     void updatePostCommentCount(@Param("record") UpdatePostParam updatePostParam);
+
+    int countByLikeCount(@Param("likeCount") int likeCount);
+
+    List<Post> selectByLikeCount(PostSelectParameter postSelectParameter);
 }
