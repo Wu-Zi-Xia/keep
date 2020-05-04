@@ -37,11 +37,15 @@ public class ProductService {
     ProductSpecsMapper productSpecsMapper;
     public DelieverProductDto getProductById(Long id) {
         Product product = productMapper.selectByPrimaryKey(id);
-
         if(product==null){//商品不存在
-                throw new CustomizeException(CustomizeErrorCode.PRODUCT_NOT_FOUND);
+            throw new CustomizeException(CustomizeErrorCode.PRODUCT_NOT_FOUND);
         }
         DelieverProductDto delieverProductDto=new DelieverProductDto();
+        ProductSpecsExample productSpecsExample=new ProductSpecsExample();
+        ProductSpecsExample.Criteria criteria = productSpecsExample.createCriteria();
+        criteria.andProductIdEqualTo(product.getId());
+        List<ProductSpecs> productSpecs = productSpecsMapper.selectByExample(productSpecsExample);
+        delieverProductDto.setProductSpecsList(productSpecs);
         BeanUtils.copyProperties(product,delieverProductDto);
         delieverProductDto.setAttributeList(JSON.parseObject(product.getAttributeList()));
         delieverProductDto.setPublicAttribute(JSON.parseObject(product.getPublicAttribute()));

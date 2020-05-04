@@ -3,6 +3,8 @@ package com.cduestc.keep.service;
 import com.cduestc.keep.dto.AchieveUserINFO;
 import com.cduestc.keep.dto.DeliverSimpleUserINFODTO;
 import com.cduestc.keep.dto.DeliverUserINFODto;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.mapper.UserExMapper;
 import com.cduestc.keep.mapper.UserMapper;
 import com.cduestc.keep.model.User;
@@ -75,7 +77,7 @@ public class UserService {
             userExample.createCriteria().andNicknameEqualTo(achieveUserINFO.getNickname());
             List<User> users = userMapper.selectByExample(userExample);
             if(users.size()!=0){
-                return 4500;
+                throw new CustomizeException(CustomizeErrorCode.NICK_NAME_IS_HAVE);
             }
             user.setNickname(achieveUserINFO.getNickname());
         }
@@ -130,5 +132,19 @@ public class UserService {
     public User selectUserByID(Long id) {
         User user = userMapper.selectByPrimaryKey(id);
         return user;
+    }
+
+    public String getAvatarURL(Long userId) {
+        String s = userExMapper.selectAvatarURLByID(userId);
+        return s;
+    }
+
+    public int updateAvatarURL(String newAvatarURLString, Long userId) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andUserIdEqualTo(userId);
+        User user=new User();
+        user.setAvatarUrl(newAvatarURLString);
+        int i = userMapper.updateByExampleSelective(user, userExample);
+        return i;
     }
 }

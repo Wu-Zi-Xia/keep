@@ -181,6 +181,9 @@ public class PostService {
             List<Comment> comments;
             //获取每一条动态的一级评论：
             comments= commentService.getCommentsByOwnerId(next.getPostId(), CommentTypeEnum.POST);
+            if(comments==null){
+
+            }
             List<DeliverCommentDto> deliverCommentDtoList=new ArrayList<>();
             Iterator<Comment> iterator = comments.iterator();
             while (iterator.hasNext()){

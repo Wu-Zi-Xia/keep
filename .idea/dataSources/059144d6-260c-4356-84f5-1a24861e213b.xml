@@ -1903,8 +1903,8 @@
     </column>
     <column id="428" parent="303" name="avatar_url">
       <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
+      <Comment>用户头像</Comment>
+      <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="429" parent="303" name="nickname">

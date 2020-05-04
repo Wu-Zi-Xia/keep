@@ -35,4 +35,7 @@
             #{item}
         </foreach>
     </select>
+    <select id="selectAvatarURLByID" parameterType="java.lang.Long" resultType="java.lang.String">
+        select avatar_url from keep_user where user_id=#{userId}
+    </select>
 </mapper>

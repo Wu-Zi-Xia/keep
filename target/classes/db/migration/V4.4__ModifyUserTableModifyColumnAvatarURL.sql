@@ -1,0 +1,1 @@
+alter table  keep_user modify column avatar_url varchar(200) COMMENT '用户头像';

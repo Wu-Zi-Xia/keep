@@ -1,5 +1,6 @@
 package com.cduestc.keep.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.*;
@@ -8,11 +9,8 @@ import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.provider.GetRequestBody;
-import com.cduestc.keep.service.FriendService;
-import com.cduestc.keep.service.PostService;
+import com.cduestc.keep.service.*;
 
-import com.cduestc.keep.service.RedisPostService;
-import com.cduestc.keep.service.ZanService;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +25,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 
 import javax.servlet.http.Cookie;
@@ -70,25 +70,58 @@ public class PostController {
     String redisHotPostsSortSet;
     @Value("${redis.keep.hot.posts.name}")
     String redisHotPostsTableName;
+    @Autowired
+    FileService fileService;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
-                                           @RequestBody PostDto newPost) throws IOException {
+                                           @RequestParam(value=  "files",required = false) MultipartFile files[],
+                                           @RequestParam(value = "video",required = false) MultipartFile video ) throws IOException {
        //获取前端传过来的数据
 //        String requestBody = GetRequestBody.getRequestBody(request);
 //        JSONObject jsonObject= JSON.parseObject(requestBody);
         //查找登录人
+
         String token = request.getHeader("token");
         User user=(User) request.getSession().getAttribute(sessionNamePre+token);
         if(user==null){
             return ResultDto.errorOf(1004,"用户未登录");
         }
+        MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest) request;
+        String description = multipartHttpServletRequest.getParameter("description");
+        //从files中取出数据
+        if(files==null&&video==null){
+            throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
+        }
+        if((files!=null)&&(video!=null)){
+            if(files.length==0&&video.isEmpty()){
+                throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
+            }
+        }
+        else{
+                throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
+        }
+        //上传视频，然后返回地址
+        PostDto newPost=new PostDto();
+        if(!files[0].isEmpty()){
+            String s = fileService.uploadPostImages(files);
+            newPost.setImageUrl(s);
+            newPost.setDescription(description);
+        }
+        //上传视频，然后返回地址
+        if(!video.isEmpty()){
+            String s = fileService.uploadPostVideo(video);
+            newPost.setVideoUrl(s);
+            newPost.setDescription(description);
+        }
+
         //插入数据库
         int i = postService.insertNewPost(user, newPost);
-        //向前端返回数据
-        if(i>0) {
+       //向前端返回数据
+         if(i>0)
+         {
             return ResultDto.oxOf();
-        }
+         }
         return ResultDto.errorOf(500,"发表动态失败！！");
     }
 
@@ -141,7 +174,7 @@ public class PostController {
     }
     //获取推荐的用户
     @RequestMapping("getRecommend")
-    //判断用户是否是有特别的编号，或者他的粉丝数量特别多，并且不是当前用户已经关注的人
+    //判断用户是否是有特别的编号，并且不是当前用户已经关注的人
     public Object Recommend(HttpServletRequest request,
                                @RequestParam(name = "offset") int redisOffset,
                                @RequestParam(name = "size") int redisSize){
@@ -164,6 +197,7 @@ public class PostController {
        return null;
     }
      @RequestMapping("getHot")
+    //或者他的粉丝数量特别多，或者他的粉丝数量特别多，或者他的粉丝数量特别多，或者他的粉丝数量特别多，
      public Object getHot(@RequestParam("page") int page,
                           HttpServletRequest request){
          String token = request.getHeader("token");

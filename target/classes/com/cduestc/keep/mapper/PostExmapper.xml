@@ -52,9 +52,9 @@
     update keep_post set comment_count=comment_count+#{record.num} where post_ID=#{record.postId}
 </update>
     <select id="countByLikeCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) from keep_post where like_count>=#{likeCount}
+        select count(*) from keep_post where like_count &gt;=#{likeCount}
     </select>
     <select id="selectByLikeCount" parameterType="com.cduestc.keep.provider.PostSelectParameter" resultType="com.cduestc.keep.model.Post">
-        select * from  keep_post where like_count>=#{likeCount} group by owner_ID  limit #{offset},#{size};
+        select * from  keep_post where like_count &gt;=#{likeCount} group by owner_ID  limit #{offset},#{size}
     </select>
 </mapper>

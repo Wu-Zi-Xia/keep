@@ -1,6 +1,7 @@
 package com.cduestc.keep.dto;
 
 import com.alibaba.fastjson.JSON;
+import com.cduestc.keep.model.ProductSpecs;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class DelieverProductDto {
     private String name;
     private String description;
     private String[] urls;
-
+    private List<ProductSpecs> productSpecsList;
 
 
 }
