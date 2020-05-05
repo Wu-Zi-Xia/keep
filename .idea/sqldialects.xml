@@ -38,5 +38,11 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.2__CreateCertificationTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.3__CreateCoachTable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.4__ModifyUserTableModifyColumnAvatarURL.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.5__ModifySportsTablesAddColumnTime.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.6__ModifyKeepLessonTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.7__ModifyKeepLessonAddResourceColumn.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.8__CreateSportsDataTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V4.9__ModifySportsDataTable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V5.0__ModifySportsHistoryTable.sql" dialect="MySQL" />
   </component>
 </project>

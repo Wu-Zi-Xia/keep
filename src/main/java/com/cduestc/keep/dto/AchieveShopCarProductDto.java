@@ -4,11 +4,8 @@ import lombok.Data;
 
 @Data
 public class AchieveShopCarProductDto {
+    //具体到哪一个规格的商品
     private  Long id;
-    //private String description;
-    //private String name;
-    private Long  productId;//属于哪一个产品
-    //private String  productSpecs;
-    //private String productPrice;
+    private Long  productId;//属于哪一个（总的）产品
     private int number;//商品个数
 }

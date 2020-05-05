@@ -43,9 +43,9 @@ public class RedisLessonService {
             Map entries = redisTemplate.opsForHash().entries(next);
             Object o = JSON.toJSON(entries);
             KeepLesson keepLesson = JSON.toJavaObject((JSON) o, KeepLesson.class);
-            keepLesson.setSports(null);
-            keepLesson.setHot(null);
-            keepLesson.setType(null);
+//            keepLesson.setSports(null);
+//            keepLesson.setHot(null);
+//            keepLesson.setType(null);
             lessons.add(keepLesson);
         }
         return lessons;

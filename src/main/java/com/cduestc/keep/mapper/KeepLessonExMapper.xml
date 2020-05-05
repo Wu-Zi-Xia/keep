@@ -13,6 +13,9 @@
         <result column="sports" jdbcType="VARCHAR" property="sports" />
         <result column="hot" jdbcType="INTEGER" property="hot" />
         <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="time" jdbcType="INTEGER" property="time" />
+        <result column="calorie" jdbcType="INTEGER" property="calorie" />
+        <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
     </resultMap>
     <select id="getHotLesson" resultType="com.cduestc.keep.model.KeepLesson">
         select * from keep_lesson order by hot desc

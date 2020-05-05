@@ -134,5 +134,8 @@
         <table schema="DB2ADMIN" tableName="coach" domainObjectName="Coach" >
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table schema="DB2ADMIN" tableName="sports_data" domainObjectName="SportsData" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>

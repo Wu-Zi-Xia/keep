@@ -12,6 +12,7 @@
         <result column="weight" jdbcType="INTEGER" property="weight" />
         <result column="resource_URL" jdbcType="VARCHAR" property="resourceUrl" />
         <result column="calorie" jdbcType="INTEGER" property="calorie" />
+        <result column="time" jdbcType="INTEGER" property="time" />
     </resultMap>
     <select id="count" resultType="java.lang.Integer">
         select count (*) from shank_sports

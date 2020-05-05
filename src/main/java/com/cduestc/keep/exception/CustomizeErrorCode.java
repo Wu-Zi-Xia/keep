@@ -22,7 +22,9 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     PARAM_IS_WRONG("参数非法！",2018),
     NICK_NAME_IS_HAVE("昵称已经存在！！！",2019),
     RESOURCE_IS_NULL("资源不能为空！！",2020),
-    RESOURCE_IS_FULL("不能同时上传图片和视频！！",2021);
+    RESOURCE_IS_FULL("不能同时上传图片和视频！！",2021),
+    SPORTS_DATA_IS_NOT_FOUND("还没有运动数据，快去运动起来吧！！",2022),
+    RESOURCE_NOT_FOUND("资源没有找到！！",2023);
     private String message;
     private Integer code;
     @Override

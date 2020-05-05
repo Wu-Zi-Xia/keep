@@ -50,7 +50,7 @@ public class LessonService {
             KeepLesson next = iterator.next();
             DeliverKeepLesson deliverKeepLesson=new DeliverKeepLesson();
             BeanUtils.copyProperties(next,deliverKeepLesson);
-            deliverKeepLesson.setSports(planService.getSportsURLS(next.getSports()));
+            //deliverKeepLesson.setSports(planService.getSportsURLS(next.getSports()));
             //将拥有真正的运动的list放入到redis中
             JSON jsons = (JSON) JSON.toJSON(deliverKeepLesson);
             Map paramMap = (Map) JSONObject.parseObject(jsons.toString());

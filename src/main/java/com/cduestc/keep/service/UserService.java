@@ -50,7 +50,7 @@ public class UserService {
         DeliverSimpleUserINFODTO deliverSimpleUserINFODTO = userExMapper.selectSimpleUserINFOByID(id);
         return deliverSimpleUserINFODTO;
     }
-
+    //修改用户信息
     public int update(AchieveUserINFO achieveUserINFO,Long userId) {
         User user=new User();
         if(achieveUserINFO.getHeight()!=0){

@@ -1,0 +1,1 @@
+alter table  keep_lesson add column  resource_url varchar(200) COMMENT '视频资源';

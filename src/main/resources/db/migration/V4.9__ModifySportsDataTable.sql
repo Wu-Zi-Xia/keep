@@ -1,0 +1,1 @@
+alter table  sports_data modify column  calorie int(10) COMMENT '消耗的卡路里';

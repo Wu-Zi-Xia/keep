@@ -7,5 +7,5 @@ public class DeliverSimpleUserINFODTO {
     private long userId;
     private String avatarUrl;
     private String nickname;
-
+    private String sex;
 }
