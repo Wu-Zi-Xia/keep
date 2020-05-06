@@ -11,6 +11,7 @@ import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.PostSelectParameter;
 import com.cduestc.keep.provider.ProductSelectParam;
 import com.cduestc.keep.provider.UpdatePostParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -132,7 +133,6 @@ public class PostService {
         long ID=user.getUserId();
         //动态详情的list
         List<DeliverPostDTO> deliverPostDTOList=new ArrayList<>();
-        DeliverPostDTO deliverPostDTO=new DeliverPostDTO();
         //获取发布者的简单信息
         DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(ID);
        // BeanUtils.copyProperties(user,simpleUserINFOById);
@@ -170,20 +170,23 @@ public class PostService {
             posts.add(post);
         }
         Iterator<Post> iterator1 = posts.iterator();
-
+        int j=0;
         while(iterator1.hasNext()){
             DeliverPostDTO deliverPostDTO1=new DeliverPostDTO();
             //设置发布者的简单信息
             deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
             //设置动态
             Post next = iterator1.next();
-            deliverPostDTO1.setPost(next);
+            DeliverAnathorPostDto deliverAnathorPostDto=new DeliverAnathorPostDto();
+            BeanUtils.copyProperties(next,deliverAnathorPostDto);
+            if(next.getImageUrl()!=null){//如果当前动态的图片不为空，就设置图片数组
+                deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
+            }
+            System.out.println(j++);
+            deliverPostDTO1.setPost(deliverAnathorPostDto);
             List<Comment> comments;
             //获取每一条动态的一级评论：
             comments= commentService.getCommentsByOwnerId(next.getPostId(), CommentTypeEnum.POST);
-            if(comments==null){
-
-            }
             List<DeliverCommentDto> deliverCommentDtoList=new ArrayList<>();
             Iterator<Comment> iterator = comments.iterator();
             while (iterator.hasNext()){
@@ -254,8 +257,10 @@ public class PostService {
             //设置发布者的简单信息
             DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getOwnerId());
             deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
-            deliverPostDTO1.setPost(next);
-
+            DeliverAnathorPostDto deliverAnathorPostDto=new DeliverAnathorPostDto();
+            BeanUtils.copyProperties(next,deliverAnathorPostDto);
+            deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
+            deliverPostDTO1.setPost(deliverAnathorPostDto);
             List<Comment> comments;
             //获取每一条动态的一级评论：
             comments= commentService.getCommentsByOwnerId(next.getPostId(), CommentTypeEnum.POST);
@@ -356,7 +361,10 @@ public class PostService {
         deliverPostDTO.setDeliverSimpleUserINFODTO(simpleUserINFOById);
         long postId1 = Long.parseLong(postId);
         Post post = postMapper.selectByPrimaryKey(postId1);
-        deliverPostDTO.setPost(post);
+        DeliverAnathorPostDto deliverAnathorPostDto=new DeliverAnathorPostDto();
+        BeanUtils.copyProperties(post,deliverAnathorPostDto);
+        deliverAnathorPostDto.setImageUrl(post.getImageUrl().split(","));
+        deliverPostDTO.setPost(deliverAnathorPostDto);
         List<Comment> commentsByOwnerId = commentService.getCommentsByOwnerId(postId1, CommentTypeEnum.POST);
         List<DeliverCommentDto> deliverCommentDtos=new ArrayList<>();
         if(commentsByOwnerId!=null){
@@ -462,7 +470,10 @@ public class PostService {
             //设置发布者的简单信息
             DeliverSimpleUserINFODTO simpleUserINFOById = userService.getSimpleUserINFOById(next.getOwnerId());
             deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
-            deliverPostDTO1.setPost(next);
+            DeliverAnathorPostDto deliverAnathorPostDto=new DeliverAnathorPostDto();
+            BeanUtils.copyProperties(next,deliverAnathorPostDto);
+            deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
+            deliverPostDTO1.setPost(deliverAnathorPostDto);
 
             List<Comment> comments;
             //获取每一条动态的一级评论：

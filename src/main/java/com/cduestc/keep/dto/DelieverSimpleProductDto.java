@@ -10,4 +10,5 @@ public class DelieverSimpleProductDto {
     private String urls;
     private String description;
     private String price;
+    private Integer sellerCount;
 }

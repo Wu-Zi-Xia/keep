@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class AchieveOrderDto {
+    private List<Long> ids;
     private ProductOrder order;
     private List<OrderItem> orderItems;
     private OrderShipping orderShipping;

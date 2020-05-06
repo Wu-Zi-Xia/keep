@@ -85,14 +85,17 @@ public class FileService {
         //https://wuzixia-1300212146.cos.ap-chengdu.myqcloud.com/keep/avatarURL/37.png
         //获取当前用户原有的头像的地址
         String avatarURL = userService.getAvatarURL(userId);
+
         String oldKey=getOldKey(avatarURL);
         //获取客户端
         COSClient cosClient = getCosClient();
         // Bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         // 指定要上传到的存储桶
         String bucketName = "wuzixia-1300212146";
-        //删除原有的头像
+
         cosClient.deleteObject(bucketName, oldKey);
+
+
         String originalFileName=file.getOriginalFilename();
         String newKey = "keep/avatarURL/"+System.currentTimeMillis()+originalFileName;
         FileInputStream fileInputStream=null;

@@ -58,12 +58,6 @@ public class UserService {
         }else{
             user.setHeight(null);
         }
-        if(achieveUserINFO.getAvatarUrl()!=null){
-            user.setAvatarUrl(achieveUserINFO.getAvatarUrl());
-        }
-        else{
-            user.setAvatarUrl(null);
-        }
         if(achieveUserINFO.getWeight()!=0){
             user.setWeight(achieveUserINFO.getWeight());
         }
@@ -105,8 +99,7 @@ public class UserService {
         return deliverUserINFODto;
     }
 
-    public String getSexById(User user) {
-
+    public String getSexById(User user){
         User user1 = userMapper.selectByPrimaryKey(user.getUserId());
         return user1.getSex();
     }

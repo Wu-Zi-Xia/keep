@@ -2,6 +2,7 @@ package com.cduestc.keep.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cduestc.keep.dto.DeliverAnathorPostDto;
 import com.cduestc.keep.dto.DeliverPostDTO;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
@@ -150,7 +151,7 @@ public class RedisPostService {
         Map entries = redisTemplate.opsForHash().entries(keyName);
         Object o = JSONObject.toJSON(entries);
         DeliverPostDTO deliverPostDTO = JSONObject.toJavaObject((JSON) o, DeliverPostDTO.class);
-        Post post = deliverPostDTO.getPost();
+        DeliverAnathorPostDto post = deliverPostDTO.getPost();
         post.setLikeCount(post.getLikeCount()+num);
         //将修改好的字段重新放入redis中
         JSON jsons = (JSON)JSON.toJSON(post);

@@ -9,7 +9,7 @@ import java.util.List;
 @Data//每一条数据的格式必须是这个样子的
 public class DeliverPostDTO implements Serializable {
     private DeliverSimpleUserINFODTO deliverSimpleUserINFODTO;
-    private Post post;
+    private DeliverAnathorPostDto post;
     private List<DeliverCommentDto> comments;//一级评论里面还有二级评论的list
     private boolean isEnd;
 }

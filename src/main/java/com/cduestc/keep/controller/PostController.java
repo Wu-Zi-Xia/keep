@@ -76,7 +76,8 @@ public class PostController {
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
                                            @RequestParam(value=  "files",required = false) MultipartFile files[],
-                                           @RequestParam(value = "video",required = false) MultipartFile video ) throws IOException {
+                                           @RequestParam(value = "video",required = false) MultipartFile video,
+                                           @RequestParam(value = "description",required = false) String description) throws IOException {
        //获取前端传过来的数据
 //        String requestBody = GetRequestBody.getRequestBody(request);
 //        JSONObject jsonObject= JSON.parseObject(requestBody);
@@ -87,34 +88,37 @@ public class PostController {
         if(user==null){
             return ResultDto.errorOf(1004,"用户未登录");
         }
-        MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest) request;
-        String description = multipartHttpServletRequest.getParameter("description");
         //从files中取出数据
-        if(files==null&&video==null){
+        if((files.length==0)&&video==null&&description==null){//发布动态不能为空
             throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
         }
-        if((files!=null)&&(video!=null)){
-            if(files.length==0&&video.isEmpty()){
-                throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
+        if((files.length!=0)&&(video!=null)){//不能同时发布图片和视频
+            throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_FULL);
+        }
+//        MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest) request;
+//        String description = multipartHttpServletRequest.getParameter("description");
+        PostDto newPost=new PostDto();
+        //上传图片，然后返回地址
+            if(files.length!=0){//发图片
+                String s = fileService.uploadPostImages(files);
+                newPost.setImageUrl(s);
+            }
+        //上传视频，然后返回地址
+        if(video!=null){//发视频
+            if(!video.isEmpty()){
+                String s = fileService.uploadPostVideo(video);
+                newPost.setVideoUrl(s);
             }
         }
-        else{
-                throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
+        if(description==null){
+            newPost.setDescription("");
         }
-        //上传视频，然后返回地址
-        PostDto newPost=new PostDto();
-        if(!files[0].isEmpty()){
-            String s = fileService.uploadPostImages(files);
-            newPost.setImageUrl(s);
+        if(description!=null){
             newPost.setDescription(description);
         }
-        //上传视频，然后返回地址
-        if(!video.isEmpty()){
-            String s = fileService.uploadPostVideo(video);
-            newPost.setVideoUrl(s);
+        if(video==null&&files.length==0&&description!=null){//只发文字
             newPost.setDescription(description);
         }
-
         //插入数据库
         int i = postService.insertNewPost(user, newPost);
        //向前端返回数据

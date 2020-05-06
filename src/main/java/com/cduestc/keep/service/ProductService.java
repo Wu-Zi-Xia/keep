@@ -8,12 +8,8 @@ import com.cduestc.keep.dto.DelieverSimpleProductDto;
 import com.cduestc.keep.dto.DeliverProductSpecsDto;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
-import com.cduestc.keep.mapper.ProductExMapper;
-import com.cduestc.keep.mapper.ProductMapper;
-import com.cduestc.keep.mapper.ProductSpecsMapper;
-import com.cduestc.keep.model.Product;
-import com.cduestc.keep.model.ProductSpecs;
-import com.cduestc.keep.model.ProductSpecsExample;
+import com.cduestc.keep.mapper.*;
+import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.PostSelectParameter;
 import com.cduestc.keep.provider.ProductSelectParam;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -35,6 +31,10 @@ public class ProductService {
   ProductCategoryService productCategoryService;
   @Autowired
     ProductSpecsMapper productSpecsMapper;
+   @Autowired
+    UserRecordMapper userRecordMapper;
+   @Autowired
+    ProductCategoryExMapper productCategoryExMapper;
     public DelieverProductDto getProductById(Long id) {
         Product product = productMapper.selectByPrimaryKey(id);
         if(product==null){//商品不存在
@@ -92,7 +92,7 @@ public class ProductService {
         map.put("ids",longs);
         List<Product> products = productExMapper.selectByLimit(map);
         if(products==null||products.size()==0){
-            return null;
+            throw new CustomizeException(CustomizeErrorCode.RESOURCE_NOT_FOUND);
         }
         Iterator<Product> iterator = products.iterator();
         List<DelieverSimpleProductDto> delieverSimpleProductDtos=new ArrayList<>();
@@ -100,6 +100,7 @@ public class ProductService {
             DelieverSimpleProductDto delieverSimpleProductDto=new DelieverSimpleProductDto();
             Product next = iterator.next();
             BeanUtils.copyProperties(next,delieverSimpleProductDto);
+            //delieverSimpleProductDto.setSellerCount(next.getSellerCount());
             String urls = next.getUrls();
             String[] as = urls.split(",");
             delieverSimpleProductDto.setUrls(as[0]);
@@ -123,5 +124,46 @@ public class ProductService {
          BeanUtils.copyProperties(productSpecs.get(0),deliverProductSpecsDto);
          deliverProductSpecsDto.setProductSpecs(JSON.parseObject(productSpecs.get(0).getProductSpecs()));
         return deliverProductSpecsDto;
+    }
+
+    public List<DelieverSimpleProductDto>guessLike(Long userId, int page,int size) {
+        UserRecordExample userRecordExample=new UserRecordExample();
+        userRecordExample.createCriteria().andOwnerIdEqualTo(userId);
+        List<UserRecord> userRecords = userRecordMapper.selectByExample(userRecordExample);
+        Iterator<UserRecord> iterator = userRecords.iterator();
+        List<Long> ids=new ArrayList<>();
+        while(iterator.hasNext()){
+            UserRecord next = iterator.next();
+            ids.add(next.getProductId());
+        }
+        int totalCount = productCategoryExMapper.countByParentId(ids);
+        List<Long> longs = productCategoryExMapper.selectProductIdByCategoryIds(ids);
+        int totalPage=0;
+        int i = totalCount % size;
+        if(i>0){
+            totalPage=totalCount/size+1;
+        }
+        if(i==0){
+            totalPage=totalCount/size;
+        }
+        if(page>totalPage){
+            throw  new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
+        }
+       int offset=size*(page-1);
+        Map<String,Object> map=new HashMap<>();
+        map.put("page",offset);
+        map.put("offsize",size);
+        map.put("ids",longs);
+        List<Product> products = productExMapper.selectByLimit(map);
+        List<DelieverSimpleProductDto> list=new ArrayList<>();
+        Iterator<Product> iterator1 = products.iterator();
+        while (iterator1.hasNext()){
+            Product next = iterator1.next();
+            DelieverSimpleProductDto delieverProductDto=new DelieverSimpleProductDto();
+            BeanUtils.copyProperties(next,delieverProductDto);
+            delieverProductDto.setUrls(next.getUrls().split(",")[0]);
+            list.add(delieverProductDto);
+        }
+        return list;
     }
 }

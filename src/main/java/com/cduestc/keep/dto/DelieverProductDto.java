@@ -17,6 +17,7 @@ public class DelieverProductDto {
     private String price;
     private String name;
     private String description;
+    private int sellerCount;
     private String[] urls;
     private List<ProductSpecs> productSpecsList;
 

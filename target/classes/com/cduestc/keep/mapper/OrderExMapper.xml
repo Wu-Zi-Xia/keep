@@ -20,14 +20,14 @@
         <result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
         <result column="buyer_rate" jdbcType="INTEGER" property="buyerRate" />
     </resultMap>
-    <select id="selectOrdersByUserIdLimit" parameterType="com.cduestc.keep.provider.SelectOrderParams" resultType="com.cduestc.keep.model.Order">
-        select * from `order` where user_id=#{userId}
+    <select id="selectOrdersByUserIdLimit" parameterType="com.cduestc.keep.provider.SelectOrderParams" resultType="com.cduestc.keep.model.ProductOrder">
+        select * from product_order where user_id=#{userId}
         <if test="status != null and status != ''">
         and `status`=#{status}
         </if>
         order by create_date desc limit #{offset},#{size}
     </select>
     <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
-        select count(*) from `order` where user_id=#{userId}
+        select count(*) from product_order where user_id=#{userId}
     </select>
 </mapper>

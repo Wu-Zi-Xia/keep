@@ -3,6 +3,8 @@ package com.cduestc.keep.service;
 import com.alibaba.fastjson.JSON;
 import com.cduestc.keep.dto.AchieveProductDTO;
 import com.cduestc.keep.dto.AchieveShopCarProductDto;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.mapper.*;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.pojo.Car;
@@ -21,12 +23,21 @@ public class ShopCarService {
 ProductSpecsMapper productSpecsMapper;
 @Autowired
 ProductMapper productMapper;
+@Autowired
+UserRecordService userRecordService;
 
 
    public Car insertShopCar(Car car, AchieveShopCarProductDto achieveProductDTO){
-
+       car.setId(achieveProductDTO.getProductId());
        Product product = productMapper.selectByPrimaryKey(achieveProductDTO.getProductId());
+       if(product==null){
+           throw new CustomizeException(CustomizeErrorCode.PRODUCT_NOT_FOUND);
+       }
        ProductSpecs productSpecs = productSpecsMapper.selectByPrimaryKey(achieveProductDTO.getId());
+       if(productSpecs==null){
+           throw new CustomizeException(CustomizeErrorCode.PRODUCT_NOT_FOUND);
+       }
+
        //判断商品是否在购物车里，在的话就将num加上接收过来的num参数，不在的话，新建一个productionItem
              if(!productIsExit(car,achieveProductDTO)){
                  ProductItem productItem=new ProductItem();
@@ -45,6 +56,7 @@ ProductMapper productMapper;
    public  boolean productIsExit(Car car,AchieveShopCarProductDto achieveProductDTO){
        List<ProductItem> productItems = car.getProductItems();
        if(productItems==null||productItems.size()==0){
+           car.setId(achieveProductDTO.getProductId());
            car.setSellerName("keep自营");
            car.setProductItems(new ArrayList<>());
            return false;

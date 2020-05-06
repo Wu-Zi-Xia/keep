@@ -107,11 +107,11 @@ public class OrderService {
                break;
        }
         }
-        List<Order> orders = orderExMapper.selectOrdersByUserIdLimit(selectOrderParams);
-        Iterator<Order> iterator = orders.iterator();
+        List<ProductOrder> orders = orderExMapper.selectOrdersByUserIdLimit(selectOrderParams);
+        Iterator<ProductOrder> iterator = orders.iterator();
         while(iterator.hasNext()){
             DeliverOrderDto deliverOrderDto=new DeliverOrderDto();
-            Order next = iterator.next();
+            ProductOrder next = iterator.next();
             //设置order
             deliverOrderDto.setOrder(next);
             OrderItemExample orderItemExample=new OrderItemExample();

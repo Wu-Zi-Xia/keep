@@ -6,7 +6,10 @@ import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.model.UserRecord;
+import com.cduestc.keep.provider.UserRecordInsertParam;
 import com.cduestc.keep.service.OrderService;
+import com.cduestc.keep.service.UserRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,8 @@ public class OrderController {
     OrderService orderService;
     @Value("${session.name.preFix}")
     private String sessionNamePre;
+    @Autowired
+    UserRecordService userRecordService;
     @RequestMapping("createOrder")
     @ResponseBody
     public Object createOrder(@RequestBody AchieveOrderDto achieveOrderDto, HttpServletRequest request){
@@ -33,6 +38,11 @@ public class OrderController {
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         String order = orderService.createOrder(achieveOrderDto, user);
+        //可以异步的去添加到userRecord里面
+        UserRecordInsertParam userRecord=new UserRecordInsertParam();
+        userRecord.setProductIds(achieveOrderDto.getIds());
+        userRecord.setOwnerId(user.getUserId());
+        userRecordService.insertUserRecord(userRecord);
         return ResultDto.oxOf(order);
     }
     @RequestMapping("getOrders")

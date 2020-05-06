@@ -8,10 +8,12 @@ import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.model.UserRecord;
 import com.cduestc.keep.pojo.Car;
 import com.cduestc.keep.provider.CookieProvider;
 import com.cduestc.keep.service.RedisShopCarService;
 import com.cduestc.keep.service.ShopCarService;
+import com.cduestc.keep.service.UserRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,8 @@ public class ShopCarController {
     String cookieNamePre;
     @Value("${session.name.preFix}")
     String sessionNamePre;
+    @Autowired
+    UserRecordService userRecordService;
     @RequestMapping("addShopCar")
     public @ResponseBody Object addShopCar(@RequestBody AchieveShopCarProductDto achieveProductDTO,
                                            HttpServletResponse response,
@@ -58,6 +62,11 @@ public class ShopCarController {
             Car car1 = findCar(request,response);
             //调用服务层操作购物车
             car1 = shopCarService.insertShopCar(car1, achieveProductDTO);
+            //可以异步的去插入到userRecord表
+            UserRecord userRecord=new UserRecord();
+            userRecord.setOwnerId(user.getUserId());
+            userRecord.setProductId(achieveProductDTO.getProductId());
+            userRecordService.insertUserRecord(userRecord);
             //将购物车重新放入到介质中（redis或者是cookie）
 //            if(user==null){//用户没有登录
 //                String car1String =URLEncoder.encode(JSON.toJSONString(car1),"utf-8");

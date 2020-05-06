@@ -17,4 +17,28 @@
     <select id="selectProductIdByCategoryId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select id from product_category where parent_id=#{categoryId}
     </select>
+    <select id="selectProductIdByCategoryIds" parameterType="java.util.List" resultType="java.lang.Long">
+        select id from product_category where parent_id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">#{item}
+        </foreach>
+    </select>
+    <select id="selectParentIdByid" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select parent_id from product_category where id=#{productId}
+    </select>
+    <select id="selectParentIdsByIds" parameterType="java.util.List" resultType="java.lang.Long">
+        select parent_id from product_category where id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+        group by parent_id
+    </select>
+    <select id="countByParentId" parameterType="java.util.List" resultType="java.lang.Integer">
+        select count(*) from product_category where parent_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+
+    </select>
 </mapper>

@@ -9,6 +9,5 @@ public class AchieveUserINFO{
     private Integer height;
     private Integer weight;
     private String nickname;
-    private String avatarUrl;
     private String sex;
 }
