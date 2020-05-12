@@ -129,54 +129,6 @@ public class PostController {
         return ResultDto.errorOf(500,"发表动态失败！！");
     }
 
-    //获取本人的动态
-    @RequestMapping("getPosts")
-    public @ResponseBody Object getPost(HttpServletRequest request,
-                                        @RequestParam(name = "offset",defaultValue ="0") int redisOffset,
-                                        @RequestParam(name = "size",defaultValue="4") int redisSize,
-                                        HttpServletResponse response) throws IOException {
-        if(redisOffset<0||redisSize<=0){
-           return ResultDto.errorOf(500,"参数非法！！");
-        }
-        //获取cookie
-        String token = request.getHeader("token");
-        //获取登录的用户id
-        User user = (User)request.getSession().getAttribute(sessionNamePre+token);
-        if(user==null){
-            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
-        }
-        List<DeliverPostDTO> postByOwnerID;
-        if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
-            //redis里面去取值
-            postByOwnerID=redisPostService.getPostByOwnerID(user,redisOffset,redisSize,response);
-            if (postByOwnerID == null||postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
-            }
-            if(postByOwnerID.get(0).isEnd()){
-                return ResultDto.errorOf(500,"不能再刷新了！！");
-            }
-            else{
-                return ResultDto.oxOf(postByOwnerID);
-            }
-            }
-        else {
-            int mysqlOffset=redisOffset;
-            int mysqlSize=10;
-            //从数据库里面去查找50条数据，前十条返回给前端
-             postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
-            if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
-            }
-            if(postByOwnerID.get(0).isEnd()){
-                return ResultDto.errorOf(500,"不能再刷新了！！");
-            }else{
-                response.sendRedirect(domin+"getPosts?"+"offset="+redisOffset+"&size="+redisSize);
-                return null;
-            }
-        }
-        //return ResultDto.errorOf(500,"");
-    }
-    //获取推荐的用户
     @RequestMapping("getRecommend")
     //判断用户是否是有特别的编号，并且不是当前用户已经关注的人
     public Object Recommend(HttpServletRequest request,
@@ -229,6 +181,54 @@ public class PostController {
 
 
 
+    //获取本人的动态
+    @RequestMapping("getPosts")
+    public @ResponseBody Object getPost(HttpServletRequest request,
+                                        @RequestParam(name = "offset",defaultValue ="0") int redisOffset,
+                                        @RequestParam(name = "size",defaultValue="4") int redisSize,
+                                        HttpServletResponse response) throws IOException {
+        if(redisOffset<0||redisSize<=0){
+            return ResultDto.errorOf(500,"参数非法！！");
+        }
+        //获取cookie
+        String token = request.getHeader("token");
+        //获取登录的用户id
+        User user = (User)request.getSession().getAttribute(sessionNamePre+token);
+        if(user==null){
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+        List<DeliverPostDTO> postByOwnerID;
+        if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
+            //redis里面去取值
+            postByOwnerID=redisPostService.getPostByOwnerID(user,redisOffset,redisSize,response);
+            if (postByOwnerID == null||postByOwnerID.size() == 0) {
+                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
+            }
+            if(postByOwnerID.get(0).isEnd()){
+                return ResultDto.errorOf(500,"不能再刷新了！！");
+            }
+            else{
+                return ResultDto.oxOf(postByOwnerID);
+            }
+        }
+        else {
+            int mysqlOffset=redisOffset;
+            int mysqlSize=10;
+            //从数据库里面去查找50条数据，前十条返回给前端
+            postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
+            if (postByOwnerID == null || postByOwnerID.size() == 0) {
+                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
+            }
+            if(postByOwnerID.get(0).isEnd()){
+                return ResultDto.errorOf(500,"不能再刷新了！！");
+            }else{
+                response.sendRedirect(domin+"getPosts?"+"offset="+redisOffset+"&size="+redisSize);
+                return null;
+            }
+        }
+        //return ResultDto.errorOf(500,"");
+    }
+    //获取推荐的用户
 
     //获取朋友的动态
     @RequestMapping("getFriendPosts")
@@ -255,32 +255,23 @@ public class PostController {
         if (redisTemplate.hasKey(redisFriCriSortSetF+ user.getUserId())) {
             //redis里面去取值
             postByOwnerID = redisPostService.getFriendPostByOwnerID(user, redisOffset, redisSize, response);
-            if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1002, "你的朋友还没有发布动态哦！！");
-            }
-            if (postByOwnerID.get(0).isEnd()) {
-                System.out.println("redis");
-                return ResultDto.errorOf(500, "不能再刷新了！！");
-            } else {
-                return ResultDto.oxOf(postByOwnerID);
-            }
-
+            return ResultDto.oxOf(postByOwnerID);
         } else {
             int mysqlOffset = redisOffset;
             int mysqlSize = 10;
             //从数据库里面去查找50条数据，前十条返回给前端
-            postByOwnerID = postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
-            if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1002, "你的朋友还没有发布动态哦！！");
-            }
-            if (postByOwnerID.get(0).isEnd()) {
-                return ResultDto.errorOf(500, "不能再刷新了！！");
-            } else {
+                postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
                 response.sendRedirect(domin + "getFriendPosts?" + "offset=" + redisOffset + "&size=" + redisSize);
                 return null;
-            }
+
         }
     }
+
+
+
+
+
+
 
     //获取动态详情
     @RequestMapping("getPost")

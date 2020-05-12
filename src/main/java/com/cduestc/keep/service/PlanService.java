@@ -73,10 +73,6 @@ public class PlanService {
     public int createPlan(AchievePlanDto planDto, User user, HttpServletResponse response) {
         int insert=0;
         Integer planState= planProgressExMapper.selectStateByOwnerId(user.getUserId());
-        if(planState!=null&&planState.equals(0)){//证明当前用户还有一个计划没有完成
-            insert=0;
-            return insert;
-        }
         //将redis中的计划表删除(这样可以使得用户访问到redis的时候是会去mysql中找最新的值)
         if(redisTemplate.hasKey(redisPlanSort+user.getUserId())){
             //如果已经存在与redis中，那么就删除redis中的数据

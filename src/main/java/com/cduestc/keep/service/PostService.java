@@ -224,7 +224,7 @@ public class PostService {
         postExample.setIsOwn(0);
         postExample.setOrder("asc");
         if(postCount==0){//证明没有动态
-            return null;
+            throw new CustomizeException(CustomizeErrorCode.NOT_HAVE_POSTS);
         }
         int page=postCount-offset;
 
@@ -259,7 +259,10 @@ public class PostService {
             deliverPostDTO1.setDeliverSimpleUserINFODTO(simpleUserINFOById);
             DeliverAnathorPostDto deliverAnathorPostDto=new DeliverAnathorPostDto();
             BeanUtils.copyProperties(next,deliverAnathorPostDto);
-            deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
+            if(next.getImageUrl()!=null){
+                deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
+            }
+
             deliverPostDTO1.setPost(deliverAnathorPostDto);
             List<Comment> comments;
             //获取每一条动态的一级评论：
