@@ -100,12 +100,7 @@ public class RedisPostService {
         if(offset>=friLen){//代表redis中没有用户想要查的数据，这样必须要去数据库刷新十条数据
             int mysqlOffset=Integer.parseInt(friLen.toString());
             int mysqlSize=10;
-            deliverPostDTOList = postService.getPostByOwnerID(user, mysqlOffset, mysqlSize);
-            if(!deliverPostDTOList.get(0).isEnd()){//数据没有取出来完，就可以重定向
-            response.sendRedirect(domin+"getPosts?"+"offset="+offset+"&size="+size);
-            return null;
-            }
-            return deliverPostDTOList;
+            postService.getPostByOwnerID(user, mysqlOffset, mysqlSize);
         }
         //从redis中取出用户想要的数据
         Set set = redisTemplate.opsForZSet().reverseRange(redisFriCriSortSetM + ID, offset, size);
@@ -127,12 +122,7 @@ public class RedisPostService {
         if(offset>=friLen){//代表redis中没有用户想要查的数据，这样必须要去数据库刷新十条数据
             int mysqlOffset=Integer.parseInt(friLen.toString());
             int mysqlSize=10;
-            deliverPostDTOList = postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
-            if(!deliverPostDTOList.get(0).isEnd()){//数据没有取出来完，就可以重定向
-                response.sendRedirect(domin+"getFriendPosts?"+"offset="+offset+"&size="+size);
-                return null;
-            }
-            return deliverPostDTOList;
+            postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
         }
         //从redis中取出用户想要的数据
         Set set = redisTemplate.opsForZSet().reverseRange(redisFriCriSortSetF + ID, offset, size);

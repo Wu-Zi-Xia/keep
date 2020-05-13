@@ -201,33 +201,18 @@ public class PostController {
         if(redisTemplate.hasKey(redisFriCriSortSetM+user.getUserId())){
             //redis里面去取值
             postByOwnerID=redisPostService.getPostByOwnerID(user,redisOffset,redisSize,response);
-            if (postByOwnerID == null||postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
-            }
-            if(postByOwnerID.get(0).isEnd()){
-                return ResultDto.errorOf(500,"不能再刷新了！！");
-            }
-            else{
-                return ResultDto.oxOf(postByOwnerID);
-            }
+            return ResultDto.oxOf(postByOwnerID);
         }
         else {
             int mysqlOffset=redisOffset;
             int mysqlSize=10;
             //从数据库里面去查找50条数据，前十条返回给前端
             postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
-            if (postByOwnerID == null || postByOwnerID.size() == 0) {
-                return ResultDto.errorOf(1010, "你还没有发布动态哦！！");
-            }
-            if(postByOwnerID.get(0).isEnd()){
-                return ResultDto.errorOf(500,"不能再刷新了！！");
-            }else{
-                response.sendRedirect(domin+"getPosts?"+"offset="+redisOffset+"&size="+redisSize);
-                return null;
+            return ResultDto.oxOf(postByOwnerID);
             }
         }
         //return ResultDto.errorOf(500,"");
-    }
+
     //获取推荐的用户
 
     //获取朋友的动态
@@ -260,9 +245,9 @@ public class PostController {
             int mysqlOffset = redisOffset;
             int mysqlSize = 10;
             //从数据库里面去查找50条数据，前十条返回给前端
-                postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
-                response.sendRedirect(domin + "getFriendPosts?" + "offset=" + redisOffset + "&size=" + redisSize);
-                return null;
+            List<DeliverPostDTO> friendPostByOwnerId = postService.getFriendPostByOwnerId(user, mysqlOffset, mysqlSize);
+            //response.sendRedirect(domin + "getFriendPosts?" + "offset=" + redisOffset + "&size=" + redisSize);
+                return ResultDto.oxOf(friendPostByOwnerId);
 
         }
     }
