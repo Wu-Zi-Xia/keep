@@ -42,4 +42,7 @@
         where name regexp #{search}
         limit #{offset},#{size}
     </select>
+    <select id="selectParentIdByid" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select parent_id from product_category where id=(select category_id from product where id=#{productId})
+    </select>
 </mapper>

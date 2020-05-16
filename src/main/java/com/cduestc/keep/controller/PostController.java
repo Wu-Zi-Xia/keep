@@ -253,11 +253,6 @@ public class PostController {
     }
 
 
-
-
-
-
-
     //获取动态详情
     @RequestMapping("getPost")
     public @ResponseBody  Object getPost(@RequestParam("postId") String postId,

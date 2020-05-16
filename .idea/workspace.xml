@@ -4,9 +4,15 @@
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisPostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisPostService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -203,22 +209,27 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1eb26bed" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1eb26bed" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3075f31" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2893ec32" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1eb26bed" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@57ebfa67" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@12d1afb3" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1eb26bed" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@112d52a3" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@4993e517" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@486114cb" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -335,7 +346,9 @@
       <workItem from="1589024939428" duration="3393000" />
       <workItem from="1589104896947" duration="597000" />
       <workItem from="1589285719624" duration="7718000" />
-      <workItem from="1589379718687" duration="3254000" />
+      <workItem from="1589379718687" duration="4149000" />
+      <workItem from="1589450249424" duration="63000" />
+      <workItem from="1589630095231" duration="1938000" />
     </task>
     <servers />
   </component>

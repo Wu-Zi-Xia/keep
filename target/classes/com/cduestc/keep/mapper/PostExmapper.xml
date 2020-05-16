@@ -57,4 +57,5 @@
     <select id="selectByLikeCount" parameterType="com.cduestc.keep.provider.PostSelectParameter" resultType="com.cduestc.keep.model.Post">
         select * from  keep_post where like_count &gt;=#{likeCount} group by owner_ID  limit #{offset},#{size}
     </select>
+
 </mapper>

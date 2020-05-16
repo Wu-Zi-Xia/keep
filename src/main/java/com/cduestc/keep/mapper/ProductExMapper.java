@@ -16,5 +16,7 @@ public interface ProductExMapper {
     long countBySearch(@Value("search") String search);
     List<ProductSimpleINFO> selectBySearch(ProductSelectParam productSelectParam);
     int countByParentId(List<Long> ids);
+
+    long selectParentIdByid(@Value("productId") Long productId);
 }
 

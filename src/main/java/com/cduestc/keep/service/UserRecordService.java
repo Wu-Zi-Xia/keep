@@ -1,6 +1,7 @@
 package com.cduestc.keep.service;
 
 import com.cduestc.keep.mapper.ProductCategoryExMapper;
+import com.cduestc.keep.mapper.ProductExMapper;
 import com.cduestc.keep.mapper.UserRecordExMapper;
 import com.cduestc.keep.mapper.UserRecordMapper;
 import com.cduestc.keep.model.UserRecord;
@@ -18,8 +19,12 @@ public class UserRecordService {
     UserRecordExMapper userRecordExMapper;
     @Autowired
     ProductCategoryExMapper productCategoryExMapper;
+    @Autowired
+    ProductExMapper productExMapper;
     public void insertUserRecord(UserRecord userRecord){
-        long l = productCategoryExMapper.selectParentIdByid(userRecord.getProductId());
+        //这里其实先去product表去查出CategoryId，
+        // 然后再去ProductCategory表里面去查ParentId,
+        long l = productExMapper.selectParentIdByid(userRecord.getProductId());
         userRecord.setProductId(l);
         userRecordMapper.insert(userRecord);
     }
