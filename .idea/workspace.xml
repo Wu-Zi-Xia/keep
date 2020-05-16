@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/PostExmapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/mapper/ProductExMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DelieverProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/dto/DelieverProductDto.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -219,16 +210,6 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@12d1afb3" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@4993e517" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5921db82" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceNode@486114cb" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
@@ -348,7 +329,7 @@
       <workItem from="1589285719624" duration="7718000" />
       <workItem from="1589379718687" duration="4149000" />
       <workItem from="1589450249424" duration="63000" />
-      <workItem from="1589630095231" duration="1938000" />
+      <workItem from="1589630095231" duration="3027000" />
     </task>
     <servers />
   </component>
