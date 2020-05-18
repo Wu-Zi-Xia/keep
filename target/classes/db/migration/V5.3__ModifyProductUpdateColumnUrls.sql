@@ -1,0 +1,1 @@
+alter table  product modify column  urls  varchar(1000) COMMENT '商品资源';

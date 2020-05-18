@@ -28,6 +28,7 @@ public class UserRecordService {
         userRecord.setProductId(l);
         userRecordMapper.insert(userRecord);
     }
+
     public void insertUserRecord(UserRecordInsertParam userRecord){
         List<Long> longs = productCategoryExMapper.selectParentIdsByIds(userRecord.getProductIds());
         userRecord.setProductIds(longs);
