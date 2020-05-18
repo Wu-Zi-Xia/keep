@@ -28,8 +28,8 @@ UserRecordService userRecordService;
 
 
    public Car insertShopCar(Car car, AchieveShopCarProductDto achieveProductDTO){
-       car.setId(achieveProductDTO.getProductId());
-       Product product = productMapper.selectByPrimaryKey(achieveProductDTO.getProductId());
+       //car.setId();
+      Product product = productMapper.selectByPrimaryKey(achieveProductDTO.getProductId());
        if(product==null){
            throw new CustomizeException(CustomizeErrorCode.PRODUCT_NOT_FOUND);
        }
@@ -41,6 +41,7 @@ UserRecordService userRecordService;
        //判断商品是否在购物车里，在的话就将num加上接收过来的num参数，不在的话，新建一个productionItem
              if(!productIsExit(car,achieveProductDTO)){
                  ProductItem productItem=new ProductItem();
+                 productItem.setProductId(achieveProductDTO.getProductId());
                  productItem.setId(achieveProductDTO.getId());
                  productItem.setNumber(achieveProductDTO.getNumber());
                  productItem.setPrice(productSpecs.getProductPrice());
@@ -56,7 +57,7 @@ UserRecordService userRecordService;
    public  boolean productIsExit(Car car,AchieveShopCarProductDto achieveProductDTO){
        List<ProductItem> productItems = car.getProductItems();
        if(productItems==null||productItems.size()==0){
-           car.setId(achieveProductDTO.getProductId());
+           //car.setId(achieveProductDTO.getProductId());
            car.setSellerName("keep自营");
            car.setProductItems(new ArrayList<>());
            return false;

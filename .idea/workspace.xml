@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/UserRecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/UserRecordService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -346,7 +348,8 @@
       <workItem from="1589630095231" duration="4464000" />
       <workItem from="1589686050619" duration="2828000" />
       <workItem from="1589703897276" duration="20702000" />
-      <workItem from="1589763665178" duration="10088000" />
+      <workItem from="1589763665178" duration="11566000" />
+      <workItem from="1589788893795" duration="3967000" />
     </task>
     <servers />
   </component>

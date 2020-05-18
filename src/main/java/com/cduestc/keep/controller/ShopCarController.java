@@ -53,35 +53,21 @@ public class ShopCarController {
     @RequestMapping("addShopCar")
     public @ResponseBody Object addShopCar(@RequestBody AchieveShopCarProductDto achieveProductDTO,
                                            HttpServletResponse response,
-                                           HttpServletRequest request){
-        try {
-            String token = request.getHeader("token");
-            User user= (User) request.getSession().getAttribute(sessionNamePre + token);
-            //User user =null;
-            //从redis中提取购物车
-            Car car1 = findCar(request,response);
-            //调用服务层操作购物车
-            car1 = shopCarService.insertShopCar(car1, achieveProductDTO);
-            //可以异步的去插入到userRecord表
-            UserRecord userRecord=new UserRecord();
-            userRecord.setOwnerId(user.getUserId());
-            userRecord.setProductId(achieveProductDTO.getProductId());
-            userRecordService.insertUserRecord(userRecord);
-            //将购物车重新放入到介质中（redis或者是cookie）
-//            if(user==null){//用户没有登录
-//                String car1String =URLEncoder.encode(JSON.toJSONString(car1),"utf-8");
-//                Cookie car1Cookie = new Cookie("car1", car1String);
-//                car1Cookie.setMaxAge(3600*24);
-//                response.addCookie(car1Cookie);
-//                return ResultDto.oxOf("操作成功！！");
-                  //用户已经登录，直接存入redis中
-                saveCarToRedis(user.getNickname(),car1);
-                return ResultDto.oxOf("操作成功！！");
-        } catch (Exception e){
-            e.printStackTrace();
-            return ResultDto.errorOf(500,"操作失败！！");
-        }
-
+                                           HttpServletRequest request) throws UnsupportedEncodingException {
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        //User user =null;
+        //从redis中提取购物车
+        Car car1 = findCar(request, response);
+        //调用服务层操作购物车
+        car1 = shopCarService.insertShopCar(car1, achieveProductDTO);
+        //可以异步的去插入到userRecord表
+        UserRecord userRecord = new UserRecord();
+        userRecord.setOwnerId(user.getUserId());
+        userRecord.setProductId(achieveProductDTO.getProductId());
+        userRecordService.insertUserRecord(userRecord);
+        saveCarToRedis(user.getNickname(), car1);
+        return ResultDto.oxOf("操作成功");
     }
     //辅助方法提取购物车
     @RequestMapping("findShopCar")

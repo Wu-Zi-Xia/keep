@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Data
 public class ProductItem implements Serializable {
     private Long id;
+    private Long productId;
     private String productName;//商品名字
     private Double price;//价格
     private String resourceUrl;//商品图片地址
