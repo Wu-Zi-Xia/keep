@@ -40,4 +40,10 @@
     <select id="selectAllCurrentState" resultType="com.cduestc.keep.model.PlanProgress">
         select * from plan_progress
     </select>
+    <update id="resetStatus" parameterType="java.lang.Long">
+        update plan_progress set start_planID=(select start_planID from plan_progress where owner_ID=#{userId})
+    </update>
+    <update id="updateState" parameterType="com.cduestc.keep.dto.UpdatePlanProgressDTO">
+        update plan_progress set state=#{status} where owner_ID=#{userId}
+    </update>
 </mapper>

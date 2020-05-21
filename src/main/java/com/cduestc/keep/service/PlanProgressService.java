@@ -1,5 +1,7 @@
 package com.cduestc.keep.service;
 
+import com.cduestc.keep.dto.UpdatePlanProgressDTO;
+import com.cduestc.keep.mapper.PlanProgressExMapper;
 import com.cduestc.keep.model.PlanProgress;
 import com.cduestc.keep.mapper.PlanProgressMapper;
 import com.cduestc.keep.model.PlanProgressExample;
@@ -13,6 +15,8 @@ import java.util.List;
 public class PlanProgressService {
     @Autowired
     PlanProgressMapper planProgressMapper;
+    @Autowired
+    PlanProgressExMapper planProgressExMapper;
     //创建一个计划的进程记录
     public int createProgress(PlanProgress planProgress){
         int insert = planProgressMapper.insert(planProgress);
@@ -36,7 +40,7 @@ public class PlanProgressService {
             return false;
         }
         PlanProgress planProgress = planProgresses.get(0);
-        if(planProgress.getCurrentState()==planProgress.getEndPlanid()){
+        if(planProgress.getState()==1){
          return true;
         }else
         {
@@ -44,4 +48,11 @@ public class PlanProgressService {
         }
     }
 
+    public void resetPlanProgressState(Long userId) {
+        planProgressExMapper.resetStatus(userId);
+        UpdatePlanProgressDTO updatePlanProgressDTO=new UpdatePlanProgressDTO();
+        updatePlanProgressDTO.setStatus(0l);
+        updatePlanProgressDTO.setUserId(userId);
+        planProgressExMapper.updateState(updatePlanProgressDTO);
+    }
 }

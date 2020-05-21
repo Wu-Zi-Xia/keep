@@ -1,5 +1,6 @@
 package com.cduestc.keep.mapper;
 
+import com.cduestc.keep.dto.UpdatePlanProgressDTO;
 import com.cduestc.keep.model.Plan;
 import com.cduestc.keep.model.PlanProgress;
 import org.apache.ibatis.annotations.Param;
@@ -15,4 +16,7 @@ public interface PlanProgressExMapper {
     Long selectCurrentStateByOwnerId(@Param("userId") Long userId);
 
     List<PlanProgress> selectAllCurrentState();
+
+    void resetStatus(@Param("userId") Long userId);
+    void updateState(UpdatePlanProgressDTO u);
 }

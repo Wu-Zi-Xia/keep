@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
 @Slf4j
 @Controller
 public class PlanController {
@@ -75,7 +77,7 @@ public class PlanController {
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         if(user==null){
-            return ResultDto.errorOf(1004,"用户未登录");
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         //判断当前的整个计划是否已经结束了
         if(planProgressService.isEnd(user)){//结束了当前的计划,
@@ -100,7 +102,7 @@ public class PlanController {
             System.out.println("mysql");
             List<DeliverPlanDTO> allPlansByUserId = planService.getAllPlansByUserId(user);
             if(allPlansByUserId==null){
-                return ResultDto.errorOf(500,"还没有属于自己的计划！！！");
+                throw new CustomizeException(CustomizeErrorCode.PLAN_IS_NOT_FOUND);
             }else{
             //放入到redis之后，进行重定向
             response.sendRedirect(domin+"getPlans");
@@ -108,14 +110,48 @@ public class PlanController {
             }
         }
     }
-     @RequestMapping("deletePlan")
-    public Object deletePlan(HttpServletRequest request){
+    @RequestMapping("resetPlanState")
+    public @ResponseBody  Object resetPlanState(HttpServletRequest request){
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+        planProgressService.resetPlanProgressState(user.getUserId());
+        return ResultDto.oxOf("操作成功！！");
+    }
+     @RequestMapping("hasPlan")
+      public @ResponseBody Object hasPlan(HttpServletRequest request){
          String token = request.getHeader("token");
          User user =(User) request.getSession().getAttribute(sessionNamePre + token);
          if(user==null){
              throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
          }
-         return null;
+         //判断是否有计划
+         boolean b = planService.hasPlan(user.getUserId());
+         return ResultDto.oxOf(b);
+     }
+     @RequestMapping("deletePlan")
+     @ResponseBody
+     public Object deletePlan(HttpServletRequest request){
+         String token = request.getHeader("token");
+         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+         if(user==null){
+             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+         }
+         if(redisTemplate.hasKey(redisPlanSort+user.getUserId())){//判断redis中是否有那个键,有就删除
+             Long len = redisTemplate.opsForZSet().zCard(redisPlanSort + user.getUserId());
+             Set set = redisTemplate.opsForZSet().reverseRange(redisPlanSort + user.getUserId(), 0, len);
+             Iterator iterator = set.iterator();
+             while(iterator.hasNext()){
+                 Object next = iterator.next();
+                 redisTemplate.delete(next);
+             }
+             redisTemplate.delete(redisPlanSort+user.getUserId());
+         }
+         //删除mysql中的数据
+         planService.deletePlan(user.getUserId());
+         return ResultDto.oxOf(200);
      }
 
 
@@ -127,18 +163,28 @@ public class PlanController {
         String token = request.getHeader("token");
         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
         if(user==null){
-            return ResultDto.errorOf(1004,"用户未登录");
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         long l = Long.parseLong(planID);
         if(redisTemplate.hasKey(redisPlanTable+planID)){//判断redis中是否有值
+            //删除redis中的东西
+            Long len = redisTemplate.opsForZSet().zCard(redisPlanSort + user.getUserId());
+            Set set = redisTemplate.opsForZSet().reverseRange(redisPlanSort + user.getUserId(), 0, len);
+            Iterator iterator = set.iterator();
+            while(iterator.hasNext()){
+                Object next = iterator.next();
+                redisTemplate.delete(next);
+            }
+            redisTemplate.delete(redisPlanSort+user.getUserId());
+            //修改数据
             planService.updateState(l,user);
         }
-        else{//如果没有就去数据库里面拿并且放入到redis再重定向访问这个接口
-            planService.getAllPlansByUserId(user);
-            response.sendRedirect(domin+"updatePlan?planId="+planID);
-            return ResultDto.oxOf();
+        else{//如果没有就直接去修改数据库
+
+            planService.updateState(l,user);
+
         }
-return null;
+          return null;
     }
     @RequestMapping("getPlan")
     public @ResponseBody Object getPlan(@RequestParam("planId") String planId,

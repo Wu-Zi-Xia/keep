@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.AchievePlanDto;
 import com.cduestc.keep.dto.DeliverPlanDTO;
+import com.cduestc.keep.dto.UpdatePlanProgressDTO;
 import com.cduestc.keep.mapper.*;
 import com.cduestc.keep.model.*;
 import com.cduestc.keep.provider.Sports;
@@ -151,18 +152,16 @@ public class PlanService {
 
     //修改当前计划为已经完成的状态 接口
     public int updateState(Long ID,User user){
-        //修改redis中的信息
-        Map entries = redisTemplate.opsForHash().entries(redisPlanTable + ID);
-        DeliverPlanDTO deliverPlanDTO = (DeliverPlanDTO)JSONObject.
-                toJavaObject((JSON)JSONObject.toJSON(entries),
-                        DeliverPlanDTO.class);
-        deliverPlanDTO.setState(1);
-       //再存入redis
-        JSON jsons = (JSON)JSON.toJSON(deliverPlanDTO);
-        Map paramMap = (Map)JSONObject.parseObject(jsons.toString());
-        redisTemplate.opsForHash().putAll(redisPlanTable+ID,paramMap);
-
-        //可以异步的去修改数据库中的状态
+        PlanProgressExample planProgressExample=new PlanProgressExample();
+        planProgressExample.createCriteria().andOwnerIdEqualTo(user.getUserId());
+        List<PlanProgress> planProgresses = planProgressMapper.selectByExample(planProgressExample);
+        //证明用户已经完成了计划
+        if(planProgresses.get(0).getCurrentState().longValue()==planProgresses.get(0).getEndPlanid().longValue()){
+            UpdatePlanProgressDTO u=new UpdatePlanProgressDTO();
+            u.setUserId(user.getUserId());
+            u.setStatus(1l);
+            planProgressExMapper.updateState(u);
+        }
         Plan plan=new Plan();
         plan.setPlanId(ID);
         plan.setState(1);
@@ -332,6 +331,29 @@ public class PlanService {
             }
         }
         return sportsList;
+    }
+
+    public void deletePlan(Long userId) {
+        //删除计划
+        PlanExample planExample=new PlanExample();
+        planExample.createCriteria().andOwnerIdEqualTo(userId);
+        planMapper.deleteByExample(planExample);
+        //删除计划进程表
+        PlanProgressExample planProgressExample=new PlanProgressExample();
+        planProgressExample.createCriteria().andOwnerIdEqualTo(userId);
+        planProgressMapper.deleteByExample(planProgressExample);
+    }
+
+    public boolean hasPlan(Long userId) {
+        PlanExample planExample=new PlanExample();
+        planExample.createCriteria().andOwnerIdEqualTo(userId);
+        List<Plan> plans = planMapper.selectByExample(planExample);
+        if(plans.size()!=0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
