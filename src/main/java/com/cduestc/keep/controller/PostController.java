@@ -75,19 +75,17 @@ public class PostController {
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
-                                           @RequestParam(value=  "files",required = false) MultipartFile files[],
                                            @RequestParam(value = "video",required = false) MultipartFile video,
                                            @RequestParam(value = "description",required = false) String description) throws IOException {
-       //获取前端传过来的数据
-//        String requestBody = GetRequestBody.getRequestBody(request);
-//        JSONObject jsonObject= JSON.parseObject(requestBody);
-        //查找登录人
 
+        //查找登录人
         String token = request.getHeader("token");
         User user=(User) request.getSession().getAttribute(sessionNamePre+token);
         if(user==null){
             return ResultDto.errorOf(1004,"用户未登录");
         }
+        MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
+        MultipartFile[] files = getImageFiles(multipartRequest);
         //从files中取出数据
         if((files.length==0)&&video==null&&description==null){//发布动态不能为空
             throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_NULL);
@@ -95,8 +93,7 @@ public class PostController {
         if((files.length!=0)&&(video!=null)){//不能同时发布图片和视频
             throw new CustomizeException(CustomizeErrorCode.RESOURCE_IS_FULL);
         }
-//        MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest) request;
-//        String description = multipartHttpServletRequest.getParameter("description");
+
         PostDto newPost=new PostDto();
         //上传图片，然后返回地址
             if(files.length!=0){//发图片
@@ -128,6 +125,24 @@ public class PostController {
          }
         return ResultDto.errorOf(500,"发表动态失败！！");
     }
+     //辅助方法，获取图片
+    public  MultipartFile[] getImageFiles(MultipartHttpServletRequest request){
+        List<MultipartFile> files=new ArrayList<>();
+        MultipartFile file=null;
+        String baseFileName="file";
+        for(int i=1;i<10;i++){
+             file= request.getFile(baseFileName + i);
+            if(file==null){//如果第一个值就为null，证明没有传图片过来，或者遍历到一个null的值，就直接退出
+                break;
+            }
+            files.add(file);
+        }
+        //将list转成数组
+        MultipartFile[] files1 = new MultipartFile[files.size()];
+        files.toArray(files1);
+        return files1;
+    }
+
 
     @RequestMapping("getRecommend")
     //判断用户是否是有特别的编号，并且不是当前用户已经关注的人

@@ -4,6 +4,8 @@ import com.cduestc.keep.dto.AchievePlanDto;
 import com.cduestc.keep.dto.DeliverPlanDTO;
 import com.cduestc.keep.dto.ResultDto;
 import com.cduestc.keep.dto.SportsDto;
+import com.cduestc.keep.exception.CustomizeErrorCode;
+import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.model.Plan;
 import com.cduestc.keep.model.PlanProgress;
 import com.cduestc.keep.model.User;
@@ -106,6 +108,16 @@ public class PlanController {
             }
         }
     }
+     @RequestMapping("deletePlan")
+    public Object deletePlan(HttpServletRequest request){
+         String token = request.getHeader("token");
+         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+         if(user==null){
+             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+         }
+         return null;
+     }
+
 
     //修改一个计划的当前状态
     @RequestMapping("updatePlan")

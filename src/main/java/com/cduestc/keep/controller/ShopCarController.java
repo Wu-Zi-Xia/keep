@@ -68,9 +68,7 @@ public class ShopCarController {
         return ResultDto.oxOf();
     }
     @RequestMapping("deleteShopCar")
-    public @ResponseBody Object removeShopCar(HttpServletRequest request,
-                                              @RequestParam(name="id",required = false) long id,
-                                              @RequestParam(name="productId",required = false) long productId){
+    public @ResponseBody Object removeShopCar(HttpServletRequest request){
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         try{
