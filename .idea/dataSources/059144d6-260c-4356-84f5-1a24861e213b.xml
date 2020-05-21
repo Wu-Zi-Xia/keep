@@ -1899,8 +1899,8 @@
     </column>
     <column id="429" parent="302" name="image_url">
       <Position>3</Position>
-      <Comment>图片url</Comment>
-      <DataType>varchar(200)|0s</DataType>
+      <Comment>图片资源</Comment>
+      <DataType>varchar(1000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="430" parent="302" name="video_url">
@@ -2230,9 +2230,8 @@
     </column>
     <column id="482" parent="307" name="urls">
       <Position>9</Position>
-      <Comment>商品urls</Comment>
-      <DataType>varchar(500)|0s</DataType>
-      <NotNull>1</NotNull>
+      <Comment>商品资源</Comment>
+      <DataType>varchar(1000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="483" parent="307" name="price">
