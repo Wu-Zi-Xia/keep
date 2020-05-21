@@ -16,4 +16,8 @@ public class RedisShopCarService {
     public void addProduct(){
 
     }
+
+    public void deleteShopCar(String nickname) {
+        redisTemplate.opsForHash().delete("shopCar",nickname);
+    }
 }

@@ -22,6 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
@@ -50,6 +51,35 @@ public class ShopCarController {
     String sessionNamePre;
     @Autowired
     UserRecordService userRecordService;
+    @RequestMapping("deleteShopCarById")
+    public @ResponseBody Object removeShopCarById(HttpServletRequest request,
+                                              @RequestParam(name="id",required = false) long id,
+                                              @RequestParam(name="productId",required = false) long productId){
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        Car car = findCar(request);
+        try{
+            Car car1 = shopCarService.deleteShopCarById(id, productId, car);
+            saveCarToRedis(user.getNickname(),car1);
+        }catch (Exception e){
+            throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
+        }
+
+        return ResultDto.oxOf();
+    }
+    @RequestMapping("deleteShopCar")
+    public @ResponseBody Object removeShopCar(HttpServletRequest request,
+                                              @RequestParam(name="id",required = false) long id,
+                                              @RequestParam(name="productId",required = false) long productId){
+        String token = request.getHeader("token");
+        User user = (User) request.getSession().getAttribute(sessionNamePre + token);
+        try{
+            redisShopCarService.deleteShopCar(user.getNickname());
+        }catch (Exception e){
+            throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
+        }
+        return ResultDto.oxOf();
+    }
     @RequestMapping("addShopCar")
     public @ResponseBody Object addShopCar(@RequestBody AchieveShopCarProductDto achieveProductDTO,
                                            HttpServletResponse response,
@@ -58,7 +88,7 @@ public class ShopCarController {
         User user = (User) request.getSession().getAttribute(sessionNamePre + token);
         //User user =null;
         //从redis中提取购物车
-        Car car1 = findCar(request, response);
+        Car car1 = findCar(request);
         //调用服务层操作购物车
         car1 = shopCarService.insertShopCar(car1, achieveProductDTO);
         //可以异步的去插入到userRecord表
@@ -71,7 +101,7 @@ public class ShopCarController {
     }
     //辅助方法提取购物车
     @RequestMapping("findShopCar")
-    public @ResponseBody Car findCar( HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+    public @ResponseBody Car findCar( HttpServletRequest request){
         String token = request.getHeader("token");
         User user= (User) request.getSession().getAttribute(sessionNamePre + token);
         if(user==null){

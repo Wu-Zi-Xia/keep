@@ -4,9 +4,11 @@
     <list default="true" id="2a55306c-fc60-40a9-b3aa-782e24cd3cda" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/controller/ShopCarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/pojo/ProductItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisShopCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/RedisShopCarService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cduestc/keep/service/ShopCarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/pojo/ProductItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/keep.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/controller/ShopCarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisShopCarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/RedisShopCarService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cduestc/keep/service/ShopCarService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,13 +46,6 @@
         <item name="keep@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="keep: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="keep@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="keep: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="product: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -349,7 +344,13 @@
       <workItem from="1589686050619" duration="2828000" />
       <workItem from="1589703897276" duration="20702000" />
       <workItem from="1589763665178" duration="11566000" />
-      <workItem from="1589788893795" duration="3967000" />
+      <workItem from="1589788893795" duration="4844000" />
+      <workItem from="1589874389121" duration="766000" />
+      <workItem from="1589901071690" duration="3769000" />
+      <workItem from="1589981022253" duration="1265000" />
+      <workItem from="1589987325709" duration="1705000" />
+      <workItem from="1590023073889" duration="265000" />
+      <workItem from="1590032396064" duration="262000" />
     </task>
     <servers />
   </component>

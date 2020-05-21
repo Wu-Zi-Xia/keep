@@ -112,4 +112,20 @@ UserRecordService userRecordService;
         return car1;
     }
 
+    public Car deleteShopCarById(long id,long productId,Car car) {
+       Car car1=new Car();
+        List<ProductItem> productItems = car.getProductItems();
+        Iterator<ProductItem> iterator = productItems.iterator();
+        while(iterator.hasNext()){
+            ProductItem next = iterator.next();
+            if(next.getId()==id&&next.getProductId()==productId){
+                iterator.remove();
+            }
+        }
+        if(productItems.size()==0){
+            productItems=null;
+        }
+        car1.setProductItems(productItems);
+        return car1;
+    }
 }
