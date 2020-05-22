@@ -221,7 +221,7 @@ public class PostController {
         else {
             int mysqlOffset=redisOffset;
             int mysqlSize=10;
-            //从数据库里面去查找50条数据，前十条返回给前端
+            //从数据库里面去查找10条数据，前5条返回给前端
             postByOwnerID= postService.getPostByOwnerID(user,mysqlOffset,mysqlSize);
             return ResultDto.oxOf(postByOwnerID);
             }

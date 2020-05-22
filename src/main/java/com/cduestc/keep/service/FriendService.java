@@ -42,7 +42,7 @@ public class FriendService {
         friend.setFriendFriendid(userId);
         friend.setFriendUserid(user.getUserId());
         int insert = friendMapper.insert(friend);
-        //异步的删除redis中的我关注的朋友的动态的表
+        //异步的删除redis中的我的朋友圈的动态的表
        if(redisTemplate.hasKey(redisFriCirMyFriendSort+user.getUserId())){
            Set redisPostIds = redisTemplate.opsForZSet().range(redisFriCirMyFriendSort + user.getUserId(), 0, -1);
            Iterator iterator = redisPostIds.iterator();
@@ -52,7 +52,6 @@ public class FriendService {
            }
            redisTemplate.delete(redisFriCirMyFriendSort+user.getUserId());
        }
-
         //可以异步的将我关注的这个朋友的动态都放入到我的朋友圈表
         List<Post> posts = postService.selectPostsByOwnerId(userId);
         List<FriendCircle> friendCircles=new ArrayList<>();
@@ -93,7 +92,7 @@ public class FriendService {
         criteria.andFriendUseridEqualTo(user.getUserId());
         //删除这条朋友的关系
         friendMapper.deleteByExample(friendExample);
-        //异步的删除redis中的我关注的朋友的动态的表
+        //异步的删除redis中的我的朋友圈表
         if(redisTemplate.hasKey(redisFriCirMyFriendSort+user.getUserId())){
             Set redisPostIds = redisTemplate.opsForZSet().range(redisFriCirMyFriendSort + user.getUserId(), 0, -1);
             Iterator iterator = redisPostIds.iterator();

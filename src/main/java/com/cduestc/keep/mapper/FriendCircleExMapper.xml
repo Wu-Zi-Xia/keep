@@ -50,7 +50,7 @@
     order by create_date desc
     limit #{parameter.offset},#{parameter.size}
 </select>
-    <select id="countByOwnerId"   resultType="java.lang.Integer">
+    <select id="countByOwnerId" resultType="java.lang.Integer">
     select count(*) from friend_circle where owner_ID=#{id} and is_own=#{isOwn}
 </select>
 </mapper>

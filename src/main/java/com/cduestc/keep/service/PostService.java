@@ -208,6 +208,18 @@ public class PostService {
         for(int i=0;i<deliverPostDTOList.size();i++) {//将查询出来的所有数据进行redis同步
             redisPostService.insertSort(deliverPostDTOList.get(i), user.getUserId());
         }
+        //判断数据长度小于5就直接返回到前台
+        if(deliverPostDTOList.size()<=5){
+            return deliverPostDTOList;
+        }
+        //判断数据长度大于5但是小于10，将
+        if(deliverPostDTOList.size()>5&&deliverPostDTOList.size()<=10){
+            List<DeliverPostDTO> deliverPostDTOList1=new ArrayList<>();
+            for(int i=0;i<5;i++){
+                deliverPostDTOList1.add(deliverPostDTOList.get(i));
+            }
+            return deliverPostDTOList1;
+        }
         return deliverPostDTOList;
     }
 
@@ -290,6 +302,18 @@ public class PostService {
 
         for(int i=0;i<deliverPostDTOList.size();i++) {//将查询出来的所有数据进行redis同步
             redisPostService.insertFriendSort(deliverPostDTOList.get(i), user.getUserId());
+        }
+        //判断数据长度小于5就直接返回到前台
+        if(deliverPostDTOList.size()<=5){
+            return deliverPostDTOList;
+        }
+        //判断数据长度大于5但是小于10，将
+        if(deliverPostDTOList.size()>5&&deliverPostDTOList.size()<=10){
+            List<DeliverPostDTO> deliverPostDTOList1=new ArrayList<>();
+            for(int i=0;i<5;i++){
+                deliverPostDTOList1.add(deliverPostDTOList.get(i));
+            }
+            return deliverPostDTOList1;
         }
         return deliverPostDTOList;
     }
