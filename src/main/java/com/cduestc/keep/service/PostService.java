@@ -264,7 +264,9 @@ public class PostService {
             if(next.getImageUrl()!=null){
                 deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
             }
-
+            if(next.getVideoUrl()!=null){
+                deliverAnathorPostDto.setVideoUrl(next.getVideoUrl().split(","));
+            }
             deliverPostDTO1.setPost(deliverAnathorPostDto);
             List<Comment> comments;
             //获取每一条动态的一级评论：
