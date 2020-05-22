@@ -182,7 +182,9 @@ public class PostService {
             if(next.getImageUrl()!=null){//如果当前动态的图片不为空，就设置图片数组
                 deliverAnathorPostDto.setImageUrl(next.getImageUrl().split(","));
             }
-            System.out.println(j++);
+            if(next.getVideoUrl()!=null){
+                deliverAnathorPostDto.setVideoUrl(next.getVideoUrl().split(","));
+            }
             deliverPostDTO1.setPost(deliverAnathorPostDto);
             List<Comment> comments;
             //获取每一条动态的一级评论：

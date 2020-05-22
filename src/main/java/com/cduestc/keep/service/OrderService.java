@@ -30,8 +30,7 @@ public class OrderService {
     @Autowired
     OrderExMapper orderExMapper;
     public String createOrder(AchieveOrderDto achieveOrderDto, User user) {
-
-           //生成一个订单的id
+        //生成一个订单的id
         String orderId = providerOrderId.getOrderId();
         ProductOrder order=achieveOrderDto.getOrder();
         //然后向订单表中插入数据
