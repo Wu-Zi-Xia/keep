@@ -92,37 +92,31 @@ public class PlanService {
         List<String> planStringList=new ArrayList<>();
         for(int i=0;i<planDto.getDays();i++){
             StringBuilder s=new StringBuilder();
-            if(idListMap.get("A")!=null){
+            int j=5;
+            while(j>0){
+                if(idListMap.get("A")!=null){
+                    s.append(",A"+(idListMap.get("A").get(getRandom(0,idListMap.get("A").size()-1))));
+                }
+                if(idListMap.get("C")!=null){
 
-                s.append("A"+(idListMap.get("A").get(getRandom(0,idListMap.get("A").size()-1))));
-            }
-            if(idListMap.get("F")!=null){
+                    s.append(",C"+(idListMap.get("C").get(getRandom(0,idListMap.get("C").size()-1))));
+                }
+                if(idListMap.get("B")!=null){
 
-                s.append(",F"+(idListMap.get("F").get(getRandom(0,idListMap.get("F").size()-1))));
-            }
-            if(idListMap.get("C")!=null){
+                    s.append(",B"+(idListMap.get("B").get(getRandom(0,idListMap.get("B").size()-1))));
+                }
 
-                s.append(",C"+(idListMap.get("C").get(getRandom(0,idListMap.get("C").size()-1))));
-            }
-            if(idListMap.get("B")!=null){
+                if(idListMap.get("E")!=null){
 
-                s.append(",B"+(idListMap.get("B").get(getRandom(0,idListMap.get("B").size()-1))));
-            }
+                    s.append(",E"+(idListMap.get("E").get(getRandom(0,idListMap.get("E").size()-1))));
+                }
+                if(idListMap.get("S")!=null){
 
-            if(idListMap.get("E")!=null){
-
-                s.append(",E"+(idListMap.get("E").get(getRandom(0,idListMap.get("E").size()-1))));
-            }
-            if(idListMap.get("T")!=null){
-
-                s.append(",T"+(idListMap.get("T").get(getRandom(0,idListMap.get("T").size()-1))));
-            }
-            if(idListMap.get("S")!=null){
-
-                s.append(",S" +(idListMap.get("S").get(getRandom(0,idListMap.get("S").size()-1))));
-            }
-
-            planStringList.add(s.toString());
+                    s.append(",S" +(idListMap.get("S").get(getRandom(0,idListMap.get("S").size()-1))));
+                }
+                j--;
+        }
+        planStringList.add(s.toString().substring(1));
         }
         Iterator<String> iterator = planStringList.iterator();
         int i=0;

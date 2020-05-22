@@ -62,7 +62,7 @@ public class PlanController {
         String token = request.getHeader("token");
         User user = (User) request.getSession().getAttribute(sessionNamePre +token);
         if(user==null){
-            return ResultDto.errorOf(1004,"用户未登录");
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         int insert = planService.createPlan(planDto, user,response);
         if(insert>0){
