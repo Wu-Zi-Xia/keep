@@ -2,6 +2,7 @@ package com.cduestc.keep.mapper;
 
 import com.cduestc.keep.dto.DeliverSimpleUserINFODTO;
 import com.cduestc.keep.model.User;
+import com.cduestc.keep.provider.SearchUserParams;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserExMapper {
     List<String> selectAvatarURLByIDs(Set members);
 
     String selectAvatarURLByID(@Param("userId") Long userId);
+
+    List<DeliverSimpleUserINFODTO> searchUser(SearchUserParams searchUserParams);
 }

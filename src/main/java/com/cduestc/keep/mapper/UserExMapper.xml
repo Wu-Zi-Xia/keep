@@ -38,4 +38,9 @@
     <select id="selectAvatarURLByID" parameterType="java.lang.Long" resultType="java.lang.String">
         select avatar_url from keep_user where user_id=#{userId}
     </select>
+    <select id="searchUser" parameterType="com.cduestc.keep.provider.SearchUserParams" resultType="com.cduestc.keep.dto.DeliverSimpleUserINFODTO">
+
+        select user_id,avatar_url,nickname,sex from keep_user where nickname regexp #{search}
+        and user_id not in(select friend_friendID from keep_friend where friend_userID=#{userId})
+    </select>
 </mapper>

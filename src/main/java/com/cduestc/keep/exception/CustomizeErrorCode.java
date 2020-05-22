@@ -25,7 +25,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     RESOURCE_IS_FULL("不能同时上传图片和视频！！",2021),
     SPORTS_DATA_IS_NOT_FOUND("还没有运动数据，快去运动起来吧！！",2022),
     RESOURCE_NOT_FOUND("资源没有找到！！",2023),
-    PLAN_IS_NOT_FOUND("你还没有计划哦，去生成一个吧！！",2024);
+    PLAN_IS_NOT_FOUND("你还没有计划哦，去生成一个吧！！",2024),
+    USER_IS_NOT_FOUND("用户未找到！！",2025);
     private String message;
     private Integer code;
     @Override

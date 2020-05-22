@@ -9,6 +9,7 @@ import com.cduestc.keep.mapper.UserExMapper;
 import com.cduestc.keep.mapper.UserMapper;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.model.UserExample;
+import com.cduestc.keep.provider.SearchUserParams;
 import com.cduestc.keep.provider.StringProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,5 +140,13 @@ public class UserService {
         user.setAvatarUrl(newAvatarURLString);
         int i = userMapper.updateByExampleSelective(user, userExample);
         return i;
+    }
+
+    public List<DeliverSimpleUserINFODTO> searchUser(User user,String search) {
+        SearchUserParams searchUserParams=new SearchUserParams();
+        searchUserParams.setSearch(search);
+        searchUserParams.setUserId(user.getUserId());
+        List<DeliverSimpleUserINFODTO> deliverSimpleUserINFODTOS = userExMapper.searchUser(searchUserParams);
+        return deliverSimpleUserINFODTOS;
     }
 }
