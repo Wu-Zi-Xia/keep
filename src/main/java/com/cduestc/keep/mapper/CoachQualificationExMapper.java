@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface CoachQualificationExMapper {
-    long selectCoachNum(@Param("ids") List<Long> ids);
+    long selectCoachNum();
 
     List<CoachQualification> selectCoachByLimit(SelectCoachParams selectCoachParams);
 }

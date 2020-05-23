@@ -29,4 +29,14 @@
     <select id="getFriendIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select friend_friendID from keep_friend where friend_userID=#{userId}
     </select>
+    <select id="getFans" parameterType="java.lang.Long" resultType="com.cduestc.keep.dto.DeliverSimpleUserINFODTO">
+        select user_id,avatar_url,nickname,sex from keep_user where user_id in
+        (select friend_friendID from keep_friend where friend_userID=#{userId})
+
+    </select>
+    <select id="getFocus" parameterType="java.lang.Long" resultType="com.cduestc.keep.dto.DeliverSimpleUserINFODTO">
+        select user_id,avatar_url,nickname,sex from keep_user where user_id in(
+        select friend_userID from keep_friend where friend_friendID=#{userId}
+        )
+    </select>
 </mapper>

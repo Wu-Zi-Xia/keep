@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cduestc.keep.dto.DeliverAnathorPostDto;
 import com.cduestc.keep.dto.DeliverPostDTO;
+import com.cduestc.keep.dto.DeliverRecomendDto;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
 import com.cduestc.keep.mapper.UserExMapper;
@@ -45,6 +46,12 @@ public class RedisPostService {
     String redisHotPostsSortSet;
     @Value("${redis.keep.hot.posts.name}")
     String redisHotPostsTableName;
+    @Autowired
+    FriendService friendService;
+    @Value("redis.keep.recomend.posts")
+    String recomendPostSort;
+    @Value("redis.keep.recomend.posts.name")
+    String rrecomendPostTable;
     //插入到redis中
     public  void insert(String tableName, Object post,String type){
         //将计划信息放入到redis中
@@ -80,6 +87,15 @@ public class RedisPostService {
         Long postId = post.getPost().getPostId();
         redisTemplate.opsForZSet().add(redisHotPostsSortSet,redisHotPostsTableName+postId.toString(),createDate);
         redisTemplate.opsForHash().putAll(redisHotPostsTableName+postId,postMap);
+    }
+    public void insertSort(DeliverRecomendDto post){
+        JSON o = (JSON) JSON.toJSON(post);
+        String text = o.toString();
+        Map postMap= JSONObject.parseObject(text);
+        Long createDate = post.getPost().getCreateDate();
+        Long postId = post.getPost().getPostId();
+        redisTemplate.opsForZSet().add(recomendPostSort,rrecomendPostTable+postId.toString(),createDate);
+        redisTemplate.opsForHash().putAll(rrecomendPostTable+postId,postMap);
     }
 
     public void insertFriendSort(DeliverPostDTO post,Long ID){
@@ -163,11 +179,24 @@ public class RedisPostService {
       return   redisTemplate.hasKey(keyName);
     }
 
-    public void getRecommend(int redisOffset, int redisSize) {
-
-    }
-
-    public void setHotPosts(List<DeliverPostDTO> hotPosts) {
+    public List<DeliverPostDTO> getRecommend(Long redisOffset, Long redisSize,Long userId) {
+        Long totalCount = redisTemplate.opsForZSet().size(recomendPostSort);
+            if(redisOffset.longValue()>=totalCount.longValue()){
+                postService.getRecommend(redisOffset,10l);
+            }
+        List<Long> friendIdByUserId = friendService.friendExMapper.getFriendIdByUserId(userId);
+        Set set = redisTemplate.opsForZSet().reverseRange(recomendPostSort, redisOffset, redisSize);
+        List<DeliverPostDTO> deliverPostDTOs=new ArrayList<>();
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()){
+            Object next = iterator.next();
+            Map entries = redisTemplate.opsForHash().entries(next);
+            DeliverPostDTO result = JSONObject.parseObject(JSONObject.toJSONString(entries),DeliverPostDTO.class);
+            if(!isHave(friendIdByUserId,result.getDeliverSimpleUserINFODTO().getUserId())){
+                deliverPostDTOs.add(result);
+            }
+        }
+        return deliverPostDTOs;
 
     }
     //获取热门的动态
@@ -186,8 +215,30 @@ public class RedisPostService {
             totalPage=totalCount/size;
         }
         if(page>totalPage){//如果已经超过了最大的page，那么就去mysql里面去取值
-            //postService.getHot()
+            postService.getHot(page,10);
         }
-        return null;
+        int offset=size*(page-1);
+        size=size-1;
+        List<Long> friendIdByUserId = friendService.friendExMapper.getFriendIdByUserId(userId);
+        Set set = redisTemplate.opsForZSet().reverseRange(redisHotPostsSortSet, offset, size);
+        List<DeliverPostDTO> deliverPostDTOs=new ArrayList<>();
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()){
+            Object next = iterator.next();
+            Map entries = redisTemplate.opsForHash().entries(next);
+            DeliverPostDTO result = JSONObject.parseObject(JSONObject.toJSONString(entries),DeliverPostDTO.class);
+            if(!isHave(friendIdByUserId,result.getDeliverSimpleUserINFODTO().getUserId())){
+                deliverPostDTOs.add(result);
+            }
+        }
+        return deliverPostDTOs;
+    }
+    public boolean isHave(List<Long> longs,Long l){
+        for(Long l1:longs){
+            if(l1.longValue()==l.longValue()){
+                return true;
+            }
+        }
+        return false;
     }
 }

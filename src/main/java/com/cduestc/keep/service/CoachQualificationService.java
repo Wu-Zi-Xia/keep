@@ -17,12 +17,13 @@ public class CoachQualificationService {
     private CoachQualificationExMapper coachQualificationExMapper;
     @Autowired
     private FriendService friendService;
+    @Autowired
+    CoachQualificationMapper coachQualificationMapper;
 
-    public  List<CoachQualification> getCoach(long mysqlOffset, long mysqlSize,long userId) {
-        //获取当前用户的所有关注的人
-        List<Long> friendIdByUserId = friendService.getFriendIdByUserId(userId);
-        //获得(没有被当前用户关注的)教练的总数,
-        long coachNum = coachQualificationExMapper.selectCoachNum(friendIdByUserId);
+    public  List<CoachQualification> getCoach(long mysqlOffset, long mysqlSize) {
+
+
+        long coachNum = coachQualificationExMapper.selectCoachNum();
         long l = coachNum - mysqlOffset;
         if(l<0){//代表请求已经超过
             throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
@@ -33,7 +34,6 @@ public class CoachQualificationService {
         SelectCoachParams selectCoachParams=new SelectCoachParams();
         selectCoachParams.setOffset(mysqlOffset);
         selectCoachParams.setSize(mysqlSize);
-        selectCoachParams.setIds(friendIdByUserId);
         List<CoachQualification> coachQualifications = coachQualificationExMapper.selectCoachByLimit(selectCoachParams);
         return coachQualifications;
     }

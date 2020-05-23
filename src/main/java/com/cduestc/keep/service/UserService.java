@@ -5,8 +5,12 @@ import com.cduestc.keep.dto.DeliverSimpleUserINFODTO;
 import com.cduestc.keep.dto.DeliverUserINFODto;
 import com.cduestc.keep.exception.CustomizeErrorCode;
 import com.cduestc.keep.exception.CustomizeException;
+import com.cduestc.keep.mapper.FriendExMapper;
+import com.cduestc.keep.mapper.FriendMapper;
 import com.cduestc.keep.mapper.UserExMapper;
 import com.cduestc.keep.mapper.UserMapper;
+import com.cduestc.keep.model.Friend;
+import com.cduestc.keep.model.FriendExample;
 import com.cduestc.keep.model.User;
 import com.cduestc.keep.model.UserExample;
 import com.cduestc.keep.provider.SearchUserParams;
@@ -25,10 +29,12 @@ public class UserService {
     UserExMapper userExMapper;
     @Autowired
     FriendService friendService;
+    @Autowired
+    FriendExMapper friendExMapper;
     public int insertUser(String number, HttpSession session) {
         User user=new User();
         user.setUserNumber(number);
-        user.setAvatarUrl("https://wuzixia-1300212146.cos.ap-chengdu.myqcloud.com/keep/avatarURL/37.png");
+        user.setAvatarUrl("https://wuzixia-1300212146.cos.ap-chengdu.myqcloud.com/keep/avatarURL/37.JPG");
         String random = StringProvider.getRandomString(10);
         long l = System.currentTimeMillis();
         String randomNickname=random+l;
@@ -148,5 +154,15 @@ public class UserService {
         searchUserParams.setUserId(user.getUserId());
         List<DeliverSimpleUserINFODTO> deliverSimpleUserINFODTOS = userExMapper.searchUser(searchUserParams);
         return deliverSimpleUserINFODTOS;
+    }
+
+    public List<DeliverSimpleUserINFODTO> getFans(Long userId) {
+        List<DeliverSimpleUserINFODTO> fans = friendExMapper.getFans(userId);
+        return fans;
+    }
+
+    public List<DeliverSimpleUserINFODTO> getFocus(Long userId) {
+        List<DeliverSimpleUserINFODTO> focus = friendExMapper.getFocus(userId);
+        return focus;
     }
 }

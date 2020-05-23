@@ -72,6 +72,10 @@ public class PostController {
     String redisHotPostsTableName;
     @Autowired
     FileService fileService;
+    @Value("redis.keep.recomend.posts")
+    String recomendPostSort;
+    @Value("redis.keep.recomend.posts.name")
+    String rrecomendPostTable;
     //创建动态(已经测试)
     @RequestMapping(value = "createPost",method = RequestMethod.POST)
     public @ResponseBody Object createPost(HttpServletRequest request,
@@ -147,8 +151,8 @@ public class PostController {
     @RequestMapping("getRecommend")
     //判断用户是否是有特别的编号，并且不是当前用户已经关注的人
     public Object Recommend(HttpServletRequest request,
-                               @RequestParam(name = "offset") int redisOffset,
-                               @RequestParam(name = "size") int redisSize){
+                               @RequestParam(name = "offset") Long redisOffset,
+                               @RequestParam(name = "size") Long redisSize){
         //获取cookie
         String token = request.getHeader("token");
         //获取登录的用户id
@@ -156,13 +160,13 @@ public class PostController {
         if(user==null){
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
-        if(00==1){//到redis中去查询
-           redisPostService.getRecommend(redisOffset,redisSize);
+        if(1==1){//到redis中去查询
+           redisPostService.getRecommend(redisOffset,redisSize,user.getUserId());
         }
        else{//从数据库里面去查询
-            int mysqlOffset=0;
-            int mysqlSize=20;
-            List<DeliverRecomendDto> recommend = postService.getRecommend(mysqlOffset, mysqlSize, user.getUserId());
+            Long mysqlOffset=0l;
+            Long mysqlSize=10l;
+            List<DeliverRecomendDto> recommend = postService.getRecommend(mysqlOffset, mysqlSize);
             return ResultDto.oxOf(recommend);
         }
        return null;
@@ -177,21 +181,17 @@ public class PostController {
          if(user==null){
              throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
          }
-//        if(redisTemplate.hasKey(redisHotPostsSortSet)){//存在键值就从redis中去查找
-//            int redisSize=10;
-//             redisPostService.getHot(page,user.getUserId(),redisSize);
-//        }
-//        else{//从mysql中去查找
-//            int mysqlSize=20;
-//            List<DeliverPostDTO> hotPosts = postService.getHot(page, mysqlSize);
-//            //从数据库里面查找之后再放入到redis中
-//            redisPostService.setHotPosts(hotPosts);
-//        }
-           int mysqlSize=20;
-           List<DeliverPostDTO> hotPosts = postService.getHot(page, mysqlSize);
-            //从数据库里面查找之后再放入到redis中
-           //redisPostService.setHotPosts(hotPosts);
-           return ResultDto.oxOf(hotPosts);
+         List<DeliverPostDTO> hotPosts;
+        if(redisTemplate.hasKey(redisHotPostsSortSet)){//存在键值就从redis中去查找
+            int redisSize=5;
+            List<DeliverPostDTO> hot = redisPostService.getHot(page, user.getUserId(), redisSize);
+            return ResultDto.oxOf(hot);
+        }
+        else{//从mysql中去查找
+            int mysqlSize=10;
+             hotPosts= postService.getHot(page, mysqlSize);
+        }
+        return ResultDto.oxOf(hotPosts);
      }
 
 

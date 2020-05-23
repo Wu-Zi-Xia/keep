@@ -223,8 +223,6 @@ public class PostService {
         return deliverPostDTOList;
     }
 
-
-
     //获取朋友的动态
     public List<DeliverPostDTO> getFriendPostByOwnerId(User user,int offset,int size) {
 
@@ -414,7 +412,7 @@ public class PostService {
         return deliverPostDTO;
     }
      //获取推荐的动态
-    public  List<DeliverRecomendDto> getRecommend(int mysqlOffset, int mysqlSize,long userId) {
+    public  List<DeliverRecomendDto> getRecommend(Long mysqlOffset, Long mysqlSize) {
         //参数校验
         if(mysqlOffset<0){
             throw new CustomizeException(CustomizeErrorCode.PRODUCT_IS_ENPTY);
@@ -424,7 +422,7 @@ public class PostService {
         }
         List<DeliverRecomendDto> deliverRecomendDtos=new ArrayList<>();
            //获取到教练和
-         List<CoachQualification> coach = coachQualificationService.getCoach(mysqlOffset, mysqlSize, userId);
+         List<CoachQualification> coach = coachQualificationService.getCoach(mysqlOffset, mysqlSize);
          Iterator<CoachQualification> iterator = coach.iterator();
          while(iterator.hasNext()){
             CoachQualification next = iterator.next();
@@ -445,6 +443,19 @@ public class PostService {
             deliverRecomendDto.setCerString(certification.getQualificationType());
             deliverRecomendDtos.add(deliverRecomendDto);
         }
+        for(int i=0;i<deliverRecomendDtos.size();i++) {//将查询出来的所有数据进行redis同步
+            redisPostService.insertSort(deliverRecomendDtos.get(i));
+        }
+         if(deliverRecomendDtos.size()<5){
+             return deliverRecomendDtos;
+         }
+         if(deliverRecomendDtos.size()>5){
+             List<DeliverRecomendDto> deliverRecomendDtos1=new ArrayList<>();
+             for(int i=0;i<5;i++){
+                 deliverRecomendDtos1.add(deliverRecomendDtos.get(i));
+             }
+             return deliverRecomendDtos1;
+         }
         return deliverRecomendDtos;
     }
     //获取热门的动态
@@ -475,7 +486,17 @@ public class PostService {
         for(int i=0;i<deliverPostDTOList.size();i++) {//将查询出来的所有数据进行redis同步
             redisPostService.insertSort(deliverPostDTOList.get(i));
         }
-        return deliverPostDTOList;
+        if(deliverPostDTOList.size()<5){
+            return deliverPostDTOList;
+        }
+        if(deliverPostDTOList.size()>5){
+            List<DeliverPostDTO> deliverPostDTOList1=new ArrayList<>();
+            for(int i=0;i<5;i++){
+                deliverPostDTOList1.add(deliverPostDTOList.get(i));
+            }
+            return deliverPostDTOList1;
+        }
+        return null;
     }
 
     private List<Post> selectPostsByLikeCount(PostSelectParameter postSelectParameter) {

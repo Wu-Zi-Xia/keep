@@ -71,4 +71,32 @@ public class UserController {
          }
          return ResultDto.oxOf(deliverSimpleUserINFODTOS);
      }
+     @RequestMapping("getFans")
+     @ResponseBody
+    public Object getFans(HttpServletRequest request){
+         String token = request.getHeader("token");
+         User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+         if(user==null){
+             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+         }
+         List<DeliverSimpleUserINFODTO> fans = userService.getFans(user.getUserId());
+         if(fans.size()==0){
+             throw new CustomizeException(CustomizeErrorCode.NOT_HAVE_FANS);
+         }
+         return ResultDto.oxOf(fans);
+     }
+    @RequestMapping("getFocus")
+    @ResponseBody
+    public Object getFocus(HttpServletRequest request){
+        String token = request.getHeader("token");
+        User user =(User) request.getSession().getAttribute(sessionNamePre + token);
+        if(user==null){
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+        List<DeliverSimpleUserINFODTO> focus = userService.getFocus(user.getUserId());
+        if(focus.size()==0){
+            throw new CustomizeException(CustomizeErrorCode.NOT_HAVE_FOCUS);
+        }
+        return ResultDto.oxOf(focus);
+    }
 }
